@@ -1,0 +1,19 @@
+# dependencies
+node_modules
+
+# logs
+npm-debug.log
+
+# Nuxt build
+.nuxt
+
+# Nuxt generate
+dist
+
+# dotenv environment variables file
+.env
+
+# Others
+.idea
+.history
+.DS_Store
