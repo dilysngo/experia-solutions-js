@@ -1,77 +1,97 @@
 <template>
-    <section class="login-page">
-        <div class="row row-default no-gutters">
-            <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-form">
-                <form
-                    class="form-style"
-                    @submit.prevent
-                >
-                    <p>
-                        <img
-                            src="/images/logo.png"
-                            alt="logo"
-                            class="logo"
-                        >
-                    </p>
-                    <p class="txt-desc">
-                        Nuxt.js presets all the configuration needed to make your development of a Vue.js application enjoyable.
-                    </p>
-                    <input
-                        type="text"
-                        placeholder="Your Email"
-                        class="form-input"
-                        :class="{'border-danger': errors.has('email')}"
-                        name="email"
-                        maxlength="100"
-                        v-model="email"
-                        v-validate="'required|email'"
+    <section class="login-page d-flex">
+        <div class="banner-left d-flex flex-column justify-content-between">
+            <div class="container-logo">
+                <nuxt-link to="/">
+                    <img
+                        src="/images/logo-experia.png"
+                        alt="logo"
+                        class="logo"
                     >
-                    <p
-                        v-show="errors.has('email')"
-                        class="text-danger text-error"
-                    >
-                        {{ errors.first('email') }}
-                    </p>
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        autocomplete="new-password"
-                        class="form-input"
-                        :class="{'border-danger': errors.has('password')}"
-                        name="password"
-                        maxlength="20"
-                        v-model="password"
-                        v-validate="'required|min:6'"
-                    >
-                    <p
-                        v-show="errors.has('password')"
-                        class="text-danger text-error"
-                    >
-                        {{ errors.first('password') }}
-                    </p>
-                    <button
-                        class="btn-normal"
-                        @click="login"
-                    >
-                        Login
-                    </button>
-                    <p
-                        style="color: #f93c3c; margin-top: 20px; font-size: 12px; text-align: center;"
-                        v-if="signinMessage"
-                    >
-                        {{ signinMessage }}
-                    </p>
-                </form>
+                </nuxt-link>
+            </div>
+            <div class="container-info">
+                <div class="row-info">
+                    <h4>Contact info</h4>
+                    <div class="box-content">
+                        Tel: 021 - 12323455
+                        <br>
+                        Mobile : 0909 123 123
+                    </div>
+                </div>
+                <div class="row-info">
+                    <h4>Address</h4>
+                    <div class="box-content">
+                        Nguyen Dinh Chieu Street, Ward 4, District 3, 
+                        Ho Chi Minh City.
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="box-term">
-            <a
-                href="https://github.com/felixle236/frontend-seed"
-                class="txt-link"
-                target="_blank"
-            >
-                Github
-            </a>
+        <div class="content-right">
+            <div class="wrapper-content">
+                <div class="container-title">
+                    <h3>Sign In</h3>
+                    <h2>Welcome to Eperia Group</h2>
+                </div>
+                <div class="container-form d-flex flex-wrap">
+                    <div class="box-input">
+                        <label for="email">Email</label>
+                        <input
+                            id="email"
+                            type="text"
+                            placeholder="Your Email"
+                            class="form-input"
+                            :class="{'': errors.has('email')}"
+                            name="email"
+                            maxlength="100"
+                            v-model="email"
+                            v-validate="'required|email'"
+                        >
+                        <p
+                            v-show="errors.has('email')"
+                            class="text-danger text-error"
+                        >
+                            {{ errors.first('email') }}
+                        </p>
+                    </div>
+                    <div class="box-input">
+                        <label for="pass">Password</label>
+                        <input
+                            id="pass"
+                            type="password"
+                            placeholder="Password"
+                            autocomplete="new-password"
+                            class="form-input"
+                            :class="{'border-danger': errors.has('password')}"
+                            name="password"
+                            maxlength="20"
+                            v-model="password"
+                            v-validate="'required|min:6'"
+                        >
+                        <p
+                            v-show="errors.has('password')"
+                            class="text-danger text-error"
+                        >
+                            {{ errors.first('password') }}
+                        </p>
+                    </div>
+                    <div class="box-submit">
+                        <button
+                            class="btn-submit"
+                            @click="login"
+                        >
+                            Sign in
+                        </button>
+                        <nuxt-link
+                            to="/forgot-password"
+                            class="btn-fogot"
+                        >
+                            Fogot password?
+                        </nuxt-link>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </template>

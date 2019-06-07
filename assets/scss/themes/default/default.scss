@@ -1,8 +1,8 @@
 .theme-default{
     //----Color
-    $color-primary: $white;
-    $color-second: $blue-lighter;
-    $color-third: $gray-darker;
+    $color-primary: $black-main;
+    $color-second: $white;
+    $color-third: $red;
     $color-fourth: $blue-darker;
     $color-fifth: $gray;
     $color-sixth: $blue-dark;
@@ -10,17 +10,21 @@
     $color-eighth: $black-light;
     $color-ninth: $blue-light;
     $color-tenth: $gray-light;
-    $color-eleventh: $red;
+    $color-eleventh: $gray-darker;
     $color-twelfth: $green-darker;
     //----Font
-    $font-primary: 'SofiaProRegular';
-    $font-second: 'SofiaProLight';
-    $font-third: 'SofiaProSemiBold';
-    $font-fourth: 'SofiaProSemiBold-Italic';
-    $font-fifth: 'Graduate-Regular';
+    $font-primary: 'RobotoRegular';
+    $font-second: 'RobotoMedium';
+    $font-third: 'GilroyBold';
+    $font-fourth: 'GilroyMedium';
+    $font-fifth: 'GilroyRegular';
+    $font-sixth: 'RobotoLight';
 
     @import './general/general.scss';
     @import './components/box-left.scss';
+    @import './components/site-header.scss';
+    @import './components/block-template.scss';
     @import './pages/login.scss';
     @import './pages/dashboard.scss';
+    @import './pages/screens.scss';
 }

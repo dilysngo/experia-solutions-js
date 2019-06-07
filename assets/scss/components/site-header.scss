@@ -1,0 +1,31 @@
+.site-header{
+    height: 61px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+    background-color: $color-second;
+    .box-status{
+        p{
+            margin: 0 15px 0 0;
+            color: #173b74;
+            font-family: $font-fourth;
+            font-size: 15px;
+        }
+        span{
+            color: $color-third;
+        }
+    }
+    .box-account{
+        padding: 0 45px 0 15px;
+        border-left: 1px solid rgba(0, 0, 0, 0.05);
+        h6{
+            color: $color-primary;
+            font-family: $font-third;
+            font-size: 14px;
+        }
+        .log-out {
+            opacity: 0.5;
+            color: $color-primary;
+            font-family: $font-fourth;
+            font-size: 13px;
+        }
+    }
+}

@@ -15,6 +15,7 @@ ul{
 }
 ::-webkit-scrollbar-track
 {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     background-color: #ffffff;
 }
@@ -93,19 +94,19 @@ input[type=text], input[type=password]{
     overflow: hidden;
     font-family: $font-primary;
     font-size: $font-size-normal;
-    background-color: $color-third;
+    background-color: $color-second;
     .col-left{
         float: left;
         height: 100%;
-        background-color: #fafafa;
+        width: 190px;
     }
     .col-right{
         overflow-y: auto;
         height:100%;
         // padding: 48px 40px;
-        // width: calc(100% - 88px);
-        // width: calc(100% - 120px);
+        width: calc(100% - 190px);
         // transition: 0.4s linear;
+        background-color: #f0f2f5;
         &::-webkit-scrollbar-track{
             background-color: $color-third;
         }
@@ -118,126 +119,37 @@ input[type=text], input[type=password]{
     }
 }
 .content-menu{
-    background-color: #212121;
     height: 100%;
-    width: 70px;
-    position: relative;
-    z-index: 2;
-    .logo{
-        padding: 17px 20px;
-        margin-bottom: 8px;
-        max-width: 75px;
-        position: relative;
-        left: -2px;
+    width: 100%;
+    padding: 0 20px;
+    .logo {
+        margin: 5px 0 40px;
     }
 }
 .menu-left{
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-    max-height: calc(100% - 218px);
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-        background-color: transparent;
-    }
-    &::-webkit-scrollbar-thumb {
-        border: 1px solid #212121;
-    }
-    &::-webkit-scrollbar-track {
-        -webkit-box-shadow: none;
-        background-color: transparent;
-    }
-    .menu-item{
-        padding: 15px 17px;
-        width: 100%;
-        border-left: 4px solid transparent;
-        &.active{
-            border-left-color: $color-second;
-            .i-con{
-                color: $color-second;
-            }
-        }
-        &.logout{
-            position: absolute;
-            bottom: 10px;
-            // padding: 14px 26px;
-            
-        }
-        &.notify{
-            position: absolute;
-            bottom: 70px;
-            padding: 14px 26px;
-        }
-        &:hover{
-            .i-con{
-                color: $color-second;
-            }
+    .item-menu{
+        padding: 10px 0;
+        &:not(:last-child){
+            margin-bottom: 12px;
         }
     }
     .menu-link{
-        padding: 4px;
-        height: 32px;
-        width: 32px;
-        display: block;
-        text-align: center;
-        position: relative;
-        &.new-message{
-            position: relative;
-            &:after {
-                content: '';
-                display: inline-block;
-                font-size: 4px;
-                position: absolute;
-                width: 4px;
-                height: 4px;
-                border-radius: 50%;
-                background-color: #ff0000;
-            }
-        }
+        color: $color-primary;
+        font-family: $font-primary;
+        font-size: 16px;
     }
-    .i-con {
-        font-size: 24px;
-        object-fit: contain;
-        color: #3f3f3f;
-        &.icon-notify, &.icon-logout{
-            font-size: 21px;
-        }
-        &.icon-notify{
-            color: #555555;
-        }
+    .icon-site{
+        font-size: 17px;
+        margin-right: 12px;
     }
 }
 .page-container{
     height: 100%;
+    min-height: calc(100vh - 61px);
+    padding: 35px 40px;
     .chart-box{
         height: 100%;
         padding-bottom: 30px;
-    }
-}
-.page-header{
-    margin-bottom: 32px;
-    .page-title{
-        color: #747474;
-        font-size: $font-size-biggest;
-        font-family: $font-second;
-        line-height: 32px;
-        display: inline-block;
-        vertical-align: -4px;
-        width: 72%;
-    }
-    .btn-refresh{
-        min-width: 80px;
-        height: 40px;
-        border-radius: 4px 0 0 4px;
-        background-color: #0e0e0e;
-        border: none;
-        outline: none;
-        text-align: left;
-        padding-left: 24px;
-        position: absolute;
-        right: -25px;
-        top: 0;
-        cursor: pointer;
     }
 }
 .group-search{
@@ -278,6 +190,7 @@ input[type=text], input[type=password]{
 }
 .text-error{
     font-size: 12px;
+    font-family: $font-primary;
 }
 .page-footer{
     color: #8a8a8a;
@@ -307,14 +220,13 @@ input[type=text], input[type=password]{
     right: 0;
 }
 .img-avatar{
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     position: relative;
     @include border-radius(50%);
-    padding: 3px;
-    margin-right: 2px;
+    margin-right: 15px;
     object-fit: cover;
-    border: 1px solid #efefef;  
+    border: 2px solid rgba(255, 255, 255, 0.13);  
 }
 .message-default{
     padding: 55px 80px;
