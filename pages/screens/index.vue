@@ -1,7 +1,7 @@
 <template>
     <section class="page-container page-screens">
         <div class="page-header d-flex">
-            <h4>My Screens (<span>10</span>)</h4>
+            <h4>My Screens ({{ totalTemplate }})</h4>
             <div class="form-search">
                 <input
                     type="text"
@@ -39,6 +39,7 @@ export default {
     },
     data() {
         return {
+            totalTemplate: 10,
             templates: [
                 {id: 1, thumb: '/images/template-thumbnail.png', name: 'Lotteria Promotion ', size: '16:9', dateCreate: '23/10'},
                 {id: 2, thumb: '/images/template-thumbnail.png', name: 'Telescopes 101', size: '16:9', dateCreate: '12/10'},

@@ -29,6 +29,14 @@
                     <i class="icon-trash icon-site" />
                 </nuxt-link>
             </div>
+            <div class="template-using">
+                <nuxt-link 
+                    to="/"
+                    class="btn-link"
+                >
+                    Using this template
+                </nuxt-link>
+            </div>
         </div>
         <div class="template-info">
             <h3
@@ -42,7 +50,7 @@
                     <span>{{ template.size }}</span>
                 </div>
                 <div class="temp-date-create">
-                    <i class="icon-date icon-site" />
+                    <i class="icon-clock icon-site" />
                     <span>{{ template.dateCreate }}</span>
                 </div>
             </div>

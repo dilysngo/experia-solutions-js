@@ -26,6 +26,9 @@
             color: $color-primary;
             font-family: $font-fourth;
             font-size: 13px;
+            &:hover{
+                color: $color-third;
+            }
         }
     }
 }

@@ -22,9 +22,17 @@
 
     @import './general/general.scss';
     @import './components/box-left.scss';
+    @import './components/filter.scss';
+    @import './components/banner-left.scss';
     @import './components/site-header.scss';
     @import './components/block-template.scss';
     @import './pages/login.scss';
+    @import './pages/forgot-password.scss';
+    @import './pages/recover-password.scss';
+    @import './pages/register.scss';
     @import './pages/dashboard.scss';
     @import './pages/screens.scss';
+    @import './pages/playlists.scss';
+    @import './pages/templates.scss';
+    @import './pages/media.scss';
 }

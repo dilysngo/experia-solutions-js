@@ -126,11 +126,56 @@ input[type=text], input[type=password]{
         margin: 5px 0 40px;
     }
 }
+.blank-page{
+    height: 100vh;
+    .banner-left{
+        background-image: url('/images/bg-login.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        width: 500px;
+        padding: 63px 130px 73px 70px;
+        color: $color-second;
+    }
+    .content-right{
+        width: calc(100% - 500px);
+    }
+}
 .menu-left{
     .item-menu{
         padding: 10px 0;
         &:not(:last-child){
             margin-bottom: 12px;
+        }
+        &:hover{
+            a{
+                color: $color-third;
+            }
+            i{
+                color: $color-primary;
+            }
+        }
+        .nuxt-link-exact-active{
+            color: $color-third;
+            i{
+                color: $color-primary;
+            }
+        }
+    }
+    .item-create-menu{
+        border-radius: 4px;
+        background-color: #cc322f;
+        padding: 10px 18px;
+        a,i:before{
+            color: $color-second;
+        }
+        &:hover {
+            a,i:before{
+                color: $color-second;
+            }
+        }
+        .nuxt-link-exact-active{
+            color: $color-second;
         }
     }
     .menu-link{
@@ -139,8 +184,8 @@ input[type=text], input[type=password]{
         font-size: 16px;
     }
     .icon-site{
-        font-size: 17px;
-        margin-right: 12px;
+        font-size: 19px;
+        margin-right: 8px;
     }
 }
 .page-container{
@@ -237,5 +282,44 @@ input[type=text], input[type=password]{
         font-size: 15px;
         margin-top: 10px;
         line-height: 25px;
+    }
+}
+.page-container{
+    .page-header{
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 22px;
+        h4{
+            color: #000000;
+            font-family: $font-sixth;
+            font-size: 25px;
+            font-weight: 300;
+            display: inline-block;
+            position: relative;
+        }
+    }
+}
+.form-search{
+    position: relative;
+    .search-input{
+        width: 220px;
+        border-radius: 4px;
+        border: 1px solid #e0e0e0;
+        background-color: transparent;
+        color: $color-primary;
+        font-family: $font-primary;
+        font-size: 15px;
+        padding: 10px 15px 10px 52px;
+        margin: 0;
+        background-color: #ffffff;
+        height: 100%;
+    }
+    .icon-search{
+        position: absolute;
+        font-size: 18px;
+        color: rgba(54, 55, 64, 0.5);
+        top: 50%;
+        left: 18px;
+        transform: translateY(-50%);
     }
 }

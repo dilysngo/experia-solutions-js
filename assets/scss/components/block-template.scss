@@ -2,14 +2,12 @@
     margin-bottom: 30px;
     .template-thumbnail{
         position: relative;
-        &:hover .template-action{
-            opacity: 1;
-        }
         .img-thumb{
             border-radius: 7px 7px 0 0;
             width: 100%;
         }
-        .template-action {
+        .template-action,
+        .template-using{
             border-radius: 7px 7px 0 0;
             position: absolute;
             top: 0;
@@ -17,7 +15,7 @@
             right: 0;
             bottom: 0;
             background-color: rgba(54, 55, 64, 0.84);
-            opacity: 0;
+            visibility: hidden;
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -32,7 +30,6 @@
     .template-action{
         .icon-site{
             font-size: 16px;
-            color: #000000;
         }
         .btn-link{
             width: 36px;
@@ -43,6 +40,20 @@
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+        .btn-link:hover{
+            i:before{
+                color: $color-third;
+            }
+        }
+    }
+    .template-using{
+        .btn-link{
+            font-size: 14px;
+            border-radius: 4px;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 9px 27px;
         }
     }
     .template-info{
@@ -63,6 +74,7 @@
         span{
             color: rgba(0, 0, 0, 0.33);
             font-size: 15px;
+            margin-left: 5px;
         }
     }
 }

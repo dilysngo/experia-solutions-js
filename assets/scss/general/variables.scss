@@ -74,16 +74,18 @@
 }
 .icon-play:before {
     content: "\e906";
-    color: #cc322f;
+    color: #000000;
 }
 .icon-trash:before {
     content: "\e907";
-}
-.icon-search:before {
-    content: "\e908";
+    color: #000000;
 }
 .icon-creative:before {
     content: "\e900";
+    color: #000000;
+}
+.icon-search:before {
+    content: "\e908";
 }
 .icon-media:before {
     content: "\e901";
@@ -110,9 +112,9 @@
 }
 
 // Color
-$black: #000;
+$black: #000000;
 $black-light: #0f0f0f;
-$white: #fff;
+$white: #ffffff;
 $red: #cc322f;;
 $gray-light: #f0f2f5;
 $gray:  #8b8b8b;

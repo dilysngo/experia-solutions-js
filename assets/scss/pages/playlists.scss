@@ -1,0 +1,113 @@
+.page-playlists{
+    .btn-new-plist{
+        color: $color-primary;
+        font-size: 14px;
+        display: flex;
+        padding: 9px 18px;
+        background-color: $color-second;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        margin-left: 12px;
+        .icon-site{
+            font-size: 20px;
+            margin-right: 6px;
+        }
+        .icon-site:before{
+            color: $color-third;
+        }
+    }
+}
+.block-playlist{
+    background-color: $color-second;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    .playlist-thumbnail{
+        padding: 16px 9px 0;
+        position: relative;
+        .box-img{
+            padding: 0 8px;
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 33.3333%;
+            flex: 0 0 33.3333%;
+            max-width: 33.3333%;
+            img{
+                border-radius: 7px 7px 0 0;
+                margin: 0 auto;
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+    .playlist-thumbnail:hover{
+        .playlist-action{
+            visibility: visible;
+        }
+    }
+    .thumbnail-more{
+        position: absolute;
+        padding: 0 18px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        align-items: center;
+        font-size: 15px;
+        font-family: $font-second;
+        color: $color-second;
+        border-radius: 0 7px 0 0;
+        background-color: rgba(54, 55, 64, 0.4);
+    }
+    .playlist-action{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 7px 7px 0 0;
+        background-color: rgba(54, 55, 64, 0.84);
+        justify-content: center;
+        align-items: center;
+        visibility: hidden;
+        .btn-link{
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            background-color: $color-second;
+            margin: 0 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover{
+                .icon-site:before{
+                    color: $color-third;
+                }
+            }
+        }
+        .icon-site{
+            font-size: 16px;
+        }
+    }
+    .playlist-info{
+        padding: 8px 16px 10px;
+        .playlist-name{
+            color: $color-primary;
+            font-family: $font-second;
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+        .playlist-infor-more{
+            justify-content: space-between;
+            color: #9a9b9f;
+            font-size: 15px;
+            .play-time{
+                margin-right: 20px;
+            }
+            .total span,
+            .icon-site:before{
+                color: $color-third;
+            }
+            .total span{
+                font-family: $font-second;
+            }
+        }
+    }
+}

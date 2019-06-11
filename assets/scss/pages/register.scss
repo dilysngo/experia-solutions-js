@@ -1,4 +1,4 @@
-.content-login{
+.content-register{
     max-width: 665px;
     width: 100%;
     margin: 107px auto 0;
@@ -14,7 +14,14 @@
             color: $color-primary;
             font-family: $font-second;
             font-size: 46px;
-            margin-bottom: 65px;
+            margin-bottom: 10px;
+        }
+        p{
+            color: $color-primary;
+            font-family: $font-second;
+            font-size: 15px;
+            font-style: italic;
+            margin-bottom: 42px;
         }
     }
     .container-form{
@@ -25,10 +32,6 @@
             flex: 0 0 50%;
             max-width: 50%;
             padding: 0 15px;
-            .box-error{
-                height: 18px;
-                padding: 0;
-            }
         }
         .box-submit{
             -webkit-box-flex: 0;
@@ -36,6 +39,10 @@
             flex: 0 0 100%;
             max-width: 100%;
             padding: 0 15px;
+            margin-top: 28px;
+        }
+        .box-submit{
+            margin-top: 28px;
         }
         label{
             color: rgba(54, 55, 64, 0.3);
@@ -44,7 +51,6 @@
             font-weight: 700;
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            display: block;
         }
         input{
             color: #363740;
@@ -55,22 +61,8 @@
             border: 1px solid rgba(185, 196, 213, 0.44);
             border-radius: 3px;
             background-color: $color-second;
-            width: 100%;
-            margin-bottom: 0;
-            &.error{
-                border-color: $color-third;
-            }
-        }
-        .box-error{
-            -webkit-box-flex: 0;
-            -ms-flex: 0 0 100%;
-            flex: 0 0 100%;
-            max-width: 100%;
-            padding: 0 15px;
-            height: 18px;
         }
         .text-error{
-            height: 18px;
             margin-bottom: 0;
         }
         .btn-submit{
@@ -85,16 +77,18 @@
             padding: 12px 40px;
             background-color: $color-third;
             margin-right: 25px;
-            &:focus{
-                outline: 0;
-            }
         }
-        .btn-fogot{
+        .have-account{
+            display: inline-block;
             color: $color-primary;
             font-family: $font-second;
             font-size: 14px;
             line-height: 21px;
+        }
+        .btn-to-signin{
+            color: $color-primary;
             text-decoration: underline;
+            font-family: $font-second;
         }
     }
 }

@@ -19,7 +19,7 @@
             </li>
             <li class="item-menu">
                 <nuxt-link
-                    to="/"
+                    to="/playlists"
                     class="menu-link"
                 >
                     <i class="icon-play-lists icon-site" />
@@ -28,7 +28,7 @@
             </li>
             <li class="item-menu">
                 <nuxt-link
-                    to="/"
+                    to="/templates"
                     class="menu-link"
                 >
                     <i class="icon-templates icon-site" />
@@ -37,17 +37,17 @@
             </li>
             <li class="item-menu">
                 <nuxt-link
-                    to="/"
+                    to="/media"
                     class="menu-link"
                 >
                     <i class="icon-media icon-site" />
                     Media Library
                 </nuxt-link>
             </li>
-            <li class="item-menu">
+            <li class="item-menu item-create-menu">
                 <nuxt-link
                     to="/"
-                    class="menu-link"
+                    class="menu-link "
                 >
                     <i class="icon-creative icon-site" />
                     Create New
