@@ -2,6 +2,32 @@
     .item-g{
         background-color: #ffffff;
         border-radius: 7px;
+        margin-bottom: 30px;
+    }
+    .add-media{
+        height: calc(100% - 30px);
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        .btn-add-media{
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            border: 1px solid #ededed;
+            background-color: #ffffff;
+            margin-bottom: 31px;
+            .icon-site{
+                font-size: 30px;
+                color: $color-third;
+            }
+            &:focus{
+                outline: 0;
+            }
+        }
+        p{
+            font-size: 14px;
+        }
     }
 }
 .g-thumbnail{
@@ -40,6 +66,7 @@
         }
         .icon-site{
             font-size: 16px;
+            color: $color-primary;
         }
     }
     &:hover{

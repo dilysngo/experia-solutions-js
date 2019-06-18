@@ -1,0 +1,91 @@
+.container-create{
+    background-color: #ffffff;
+    min-height: calc(100vh - 188px);
+    .box-tool{
+        box-shadow: 0 0 7px rgba(0, 0, 0, 0.09);
+        width: 100px;
+        padding: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: baseline;
+        .btn-tool{
+            width: 38px;
+            height: 38px;
+            border: 1px solid #f0f2f5;
+            background-color: #ffffff;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            margin-bottom: 6px;
+            cursor: pointer;
+            &:nth-child(odd){
+                margin-right: 4px;
+            }
+            &:focus{
+                outline-color: $color-third;
+            }
+            .icon-site{
+                font-size: 18px;
+            }
+        }
+    }
+    .box-widget{
+        width: calc(100% - 100px);
+    }
+    .toolbar{
+        box-shadow: 0 0 0 rgba(35, 35, 35, 0.33);
+        padding: 14px 20px;
+        .toolbar-left{
+            p{
+                display: inline-block;
+                margin-right: 15px;
+                margin-bottom: 0;
+                font-size: 13px;
+                .icon-site{
+                    margin-right: 7px;
+                }
+            }
+            .btn-tool{
+                border: 0;
+                background-color: #ffffff;
+                height: 18px;
+                margin: 0 6px;
+                &:focus{
+                    outline: 0;
+                }
+                .icon-site{
+                    font-size: 18px;
+                    &.icon-undo,
+                    &.icon-next{
+                        font-size: 10px;
+                    }
+                }
+            }
+        }
+        .toolbar-right{
+            .btn-tool{
+                font-family: $font-second;
+                font-size: 12px;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                padding: 7px 30px;
+                border-radius: 3px;
+                border: 1px solid #e0e0e0;
+                background-color: #ffffff;
+                margin-left: 12px;
+                .icon-site{
+                    color: #ffffff;
+                    font-size: 13px;
+                }
+                &:disabled{
+                    background-color: #f0f2f5;
+                    border-color: #f0f2f5;
+                }
+            }
+            .btn-preview{
+                color: #ffffff;
+                background-color: $color-third;
+            }
+        }
+    }
+}

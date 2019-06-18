@@ -1,66 +1,101 @@
 // Import Font
 @font-face {
-    font-family: 'RobotoLight';
-    src: url('/fonts/Roboto-Light/Roboto-Light.eot');
-    src: url('/fonts/Roboto-Light/Roboto-Light.eot?#iefix') format('embedded-opentype'), url('/fonts/Roboto-Light/Roboto-Light.woff2') format('woff2'), url('/fonts/Roboto-Light/Roboto-Light.woff') format('woff'), url('/fonts/Roboto-Light/Roboto-Light.ttf') format('truetype'), url('/fonts/Roboto-Light/Roboto-Light.svg#Roboto-Light') format('svg');
+    font-family: "RobotoLight";
+    src: url("/fonts/Roboto-Light/Roboto-Light.eot");
+    src: url("/fonts/Roboto-Light/Roboto-Light.eot?#iefix")
+            format("embedded-opentype"),
+        url("/fonts/Roboto-Light/Roboto-Light.woff2") format("woff2"),
+        url("/fonts/Roboto-Light/Roboto-Light.woff") format("woff"),
+        url("/fonts/Roboto-Light/Roboto-Light.ttf") format("truetype"),
+        url("/fonts/Roboto-Light/Roboto-Light.svg#Roboto-Light") format("svg");
     font-weight: 300;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'RobotoMedium';
-    src: url('/fonts/Roboto-Medium/Roboto-Medium.eot');
-    src: url('/fonts/Roboto-Medium/Roboto-Medium.eot?#iefix') format('embedded-opentype'), url('/fonts/Roboto-Medium/Roboto-Medium.woff2') format('woff2'), url('/fonts/Roboto-Medium/Roboto-Medium.woff') format('woff'), url('/fonts/Roboto-Medium/Roboto-Medium.ttf') format('truetype'), url('/fonts/Roboto-Medium/Roboto-Medium.svg#Roboto-Medium') format('svg');
+    font-family: "RobotoMedium";
+    src: url("/fonts/Roboto-Medium/Roboto-Medium.eot");
+    src: url("/fonts/Roboto-Medium/Roboto-Medium.eot?#iefix")
+            format("embedded-opentype"),
+        url("/fonts/Roboto-Medium/Roboto-Medium.woff2") format("woff2"),
+        url("/fonts/Roboto-Medium/Roboto-Medium.woff") format("woff"),
+        url("/fonts/Roboto-Medium/Roboto-Medium.ttf") format("truetype"),
+        url("/fonts/Roboto-Medium/Roboto-Medium.svg#Roboto-Medium")
+            format("svg");
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'RobotoRegular';
-    src: url('/fonts/Roboto-Regular/Roboto-Regular.eot');
-    src: url('/fonts/Roboto-Regular/Roboto-Regular.eot?#iefix') format('embedded-opentype'), url('/fonts/Roboto-Regular/Roboto-Regular.woff2') format('woff2'), url('/fonts/Roboto-Regular/Roboto-Regular.woff') format('woff'), url('/fonts/Roboto-Regular/Roboto-Regular.ttf') format('truetype'), url('/fonts/Roboto-Regular/Roboto-Regular.svg#Roboto-Regular') format('svg');
+    font-family: "RobotoRegular";
+    src: url("/fonts/Roboto-Regular/Roboto-Regular.eot");
+    src: url("/fonts/Roboto-Regular/Roboto-Regular.eot?#iefix")
+            format("embedded-opentype"),
+        url("/fonts/Roboto-Regular/Roboto-Regular.woff2") format("woff2"),
+        url("/fonts/Roboto-Regular/Roboto-Regular.woff") format("woff"),
+        url("/fonts/Roboto-Regular/Roboto-Regular.ttf") format("truetype"),
+        url("/fonts/Roboto-Regular/Roboto-Regular.svg#Roboto-Regular")
+            format("svg");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'GilroyBold';
-    src: url('/fonts/Gilroy-Bold/Gilroy-Bold.eot');
-    src: url('/fonts/Gilroy-Bold/Gilroy-Bold.eot?#iefix') format('embedded-opentype'), url('/fonts/Gilroy-Bold/Gilroy-Bold.woff2') format('woff2'), url('/fonts/Gilroy-Bold/Gilroy-Bold.woff') format('woff'), url('/fonts/Gilroy-Bold/Gilroy-Bold.ttf') format('truetype'), url('/fonts/Gilroy-Bold/Gilroy-Bold.svg#Gilroy-Bold') format('svg');
+    font-family: "GilroyBold";
+    src: url("/fonts/Gilroy-Bold/Gilroy-Bold.eot");
+    src: url("/fonts/Gilroy-Bold/Gilroy-Bold.eot?#iefix")
+            format("embedded-opentype"),
+        url("/fonts/Gilroy-Bold/Gilroy-Bold.woff2") format("woff2"),
+        url("/fonts/Gilroy-Bold/Gilroy-Bold.woff") format("woff"),
+        url("/fonts/Gilroy-Bold/Gilroy-Bold.ttf") format("truetype"),
+        url("/fonts/Gilroy-Bold/Gilroy-Bold.svg#Gilroy-Bold") format("svg");
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'GilroyMedium';
-    src: url('/fonts/Gilroy-Medium/Gilroy-Medium.eot');
-    src: url('/fonts/Gilroy-Medium/Gilroy-Medium.eot?#iefix') format('embedded-opentype'), url('/fonts/Gilroy-Medium/Gilroy-Medium.woff2') format('woff2'), url('/fonts/Gilroy-Medium/Gilroy-Medium.woff') format('woff'), url('/fonts/Gilroy-Medium/Gilroy-Medium.ttf') format('truetype'), url('/fonts/Gilroy-Medium/Gilroy-Medium.svg#Gilroy-Medium') format('svg');
+    font-family: "GilroyMedium";
+    src: url("/fonts/Gilroy-Medium/Gilroy-Medium.eot");
+    src: url("/fonts/Gilroy-Medium/Gilroy-Medium.eot?#iefix")
+            format("embedded-opentype"),
+        url("/fonts/Gilroy-Medium/Gilroy-Medium.woff2") format("woff2"),
+        url("/fonts/Gilroy-Medium/Gilroy-Medium.woff") format("woff"),
+        url("/fonts/Gilroy-Medium/Gilroy-Medium.ttf") format("truetype"),
+        url("/fonts/Gilroy-Medium/Gilroy-Medium.svg#Gilroy-Medium")
+            format("svg");
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'GilroyRegular';
-    src: url('/fonts/Gilroy-Regular/Gilroy-Regular.eot');
-    src: url('/fonts/Gilroy-Regular/Gilroy-Regular.eot?#iefix') format('embedded-opentype'), url('/fonts/Gilroy-Regular/Gilroy-Regular.woff2') format('woff2'), url('/fonts/Gilroy-Regular/Gilroy-Regular.woff') format('woff'), url('/fonts/Gilroy-Regular/Gilroy-Regular.ttf') format('truetype'), url('/fonts/Gilroy-Regular/Gilroy-Regular.svg#Gilroy-Regular') format('svg');
+    font-family: "GilroyRegular";
+    src: url("/fonts/Gilroy-Regular/Gilroy-Regular.eot");
+    src: url("/fonts/Gilroy-Regular/Gilroy-Regular.eot?#iefix")
+            format("embedded-opentype"),
+        url("/fonts/Gilroy-Regular/Gilroy-Regular.woff2") format("woff2"),
+        url("/fonts/Gilroy-Regular/Gilroy-Regular.woff") format("woff"),
+        url("/fonts/Gilroy-Regular/Gilroy-Regular.ttf") format("truetype"),
+        url("/fonts/Gilroy-Regular/Gilroy-Regular.svg#Gilroy-Regular")
+            format("svg");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'icomoon';
-    src:  url('/fonts/icomoon.eot?9bbdx3');
-    src:  url('/fonts/icomoon.eot?9bbdx3#iefix') format('embedded-opentype'),
-    url('/fonts/icomoon.ttf?9bbdx3') format('truetype'),
-    url('/fonts/icomoon.woff?9bbdx3') format('woff'),
-    url('/fonts/icomoon.svg?9bbdx3#icomoon') format('svg');
+    font-family: "icomoon";
+    src: url("/fonts/icomoon.eot?15zyaq");
+    src: url("/fonts/icomoon.eot?15zyaq#iefix") format("embedded-opentype"),
+        url("/fonts/icomoon.ttf?15zyaq") format("truetype"),
+        url("/fonts/icomoon.woff?15zyaq") format("woff"),
+        url("/fonts/icomoon.svg?15zyaq#icomoon") format("svg");
     font-weight: normal;
     font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="icon-"],
+[class*=" icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: 'icomoon' !important;
+    font-family: "icomoon" !important;
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -72,20 +107,84 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+.icon-loading:before {
+    content: "\e920";
+}
+.icon-plus:before {
+    content: "\e91f";
+}
+.icon-undo:before {
+    content: "\e90b";
+}
+.icon-next:before {
+    content: "\e90c";
+}
+.icon-layout-down:before {
+    content: "\e90d";
+}
+.icon-layout-up:before {
+    content: "\e90e";
+}
+.icon-trash-fill:before {
+    content: "\e90f";
+}
+.icon-youtube:before {
+    content: "\e910";
+}
+.icon-twitter:before {
+    content: "\e911";
+}
+.icon-sand-watch:before {
+    content: "\e912";
+}
+.icon-shapes:before {
+    content: "\e913";
+}
+.icon-play-button:before {
+    content: "\e914";
+}
+.icon-text-type:before {
+    content: "\e915";
+}
+.icon-internet:before {
+    content: "\e916";
+}
+.icon-facebook:before {
+    content: "\e917";
+}
+.icon-rss:before {
+    content: "\e918";
+}
+.icon-cloudy:before {
+    content: "\e919";
+}
+.icon-wall-clock:before {
+    content: "\e91a";
+}
+.icon-text-block:before {
+    content: "\e91b";
+}
+.icon-gallery:before {
+    content: "\e91c";
+}
+.icon-picture:before {
+    content: "\e91d";
+}
+.icon-text:before {
+    content: "\e91e";
+}
 .icon-play:before {
     content: "\e906";
-    color: #000000;
 }
 .icon-trash:before {
     content: "\e907";
-    color: #000000;
-}
-.icon-creative:before {
-    content: "\e900";
-    color: #000000;
 }
 .icon-search:before {
     content: "\e908";
+}
+.icon-creative:before {
+    content: "\e900";
 }
 .icon-media:before {
     content: "\e901";
@@ -102,31 +201,29 @@
 .icon-templates:before {
     content: "\e905";
 }
-.icon-clock:before {
+.icon-celandar:before {
     content: "\e909";
-    color: #cc322f;
 }
-.icon-see-full:before {
+.icon-sizes:before {
     content: "\e90a";
-    color: #cc322f;
 }
 
 // Color
 $black: #000000;
 $black-light: #0f0f0f;
 $white: #ffffff;
-$red: #cc322f;;
+$red: #cc322f;
 $gray-light: #f0f2f5;
-$gray:  #8b8b8b;
+$gray: #8b8b8b;
 $gray-dark: #5c6069;
 $gray-darker: #16191c;
-$blue-light: #E9ECFF; 
+$blue-light: #e9ecff;
 $blue: #1c5df4;
 $blue-lighter: #49b3af;
 $blue-dark: #3d83e1;
-$blue-darker:  #253752;
+$blue-darker: #253752;
 $green: #2adf80;
-$green-darker: #00caa3; 
+$green-darker: #00caa3;
 $yellow: #fdd130;
 $black-main: #363740;
 
@@ -140,44 +237,49 @@ $font-size-big: 14px;
 $font-size-bigger: 15px;
 $font-size-biggest: 32px;
 
-// h1 
-h1, h2, h3, h4, h5, h6 {
-    margin: 0
+// h1
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
 }
-.pd-0{
+.pd-0 {
     padding: 0 !important;
 }
-.pdr-5{
+.pdr-5 {
     padding-right: 5px !important;
 }
-.pdl-5{
+.pdl-5 {
     padding-left: 5px !important;
 }
 .pdr-15 {
     padding-right: 15px !important;
 }
-.mt-0{
+.mt-0 {
     margin-top: 0 !important;
 }
-.mt-45{
+.mt-45 {
     margin-top: 45px !important;
 }
-.mb-0{
+.mb-0 {
     margin-bottom: 0 !important;
 }
-.mb-6{
+.mb-6 {
     margin-bottom: 6px !important;
 }
-.mb-15{
+.mb-15 {
     margin-bottom: 15px !important;
 }
-.mb-20{
+.mb-20 {
     margin-bottom: 20px !important;
 }
-.mb-30{
+.mb-30 {
     margin-bottom: 30px !important;
 }
-.w50{
+.w50 {
     width: 50px;
     display: inline-block;
     flex: initial;

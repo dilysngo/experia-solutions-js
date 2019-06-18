@@ -11,121 +11,92 @@
                 <input
                     id="firstName"
                     type="text"
-                    class="form-input"
-                    :class="{'': errors.has('first-name')}"
                     name="firstName"
-                    maxlength="50"
+                    maxlength="20"
+                    v-model="data.firstName"
+                    class="form-input"
+                    :class="{'error' : errorFirstName}"
                 >
-                <p
-                    v-show="errors.has('first-name')"
-                    class="text-danger text-error"
-                >
-                    {{ errors.first('first-name') }}
-                </p>
             </div>
             <div class="box-input">
                 <label for="lastName">Last Name</label>
                 <input
                     id="lastName"
                     type="text"
-                    class="form-input"
-                    :class="{'': errors.has('last-name')}"
                     name="lastName"
-                    maxlength="50"
+                    maxlength="20"
+                    v-model="data.lastName"
+                    class="form-input"
+                    :class="{'error' : errorLastName}"
                 >
-                <p
-                    v-show="errors.has('last-name')"
-                    class="text-danger text-error"
-                >
-                    {{ errors.first('last-name') }}
-                </p>
             </div>
             <div class="box-input">
                 <label for="phone">Phone No</label>
                 <input
                     id="phone"
                     type="text"
-                    class="form-input"
-                    :class="{'': errors.has('phone')}"
                     name="phone"
-                    maxlength="20"
+                    maxlength="12"
+                    v-model="data.phone"
+                    @keyup="keyphone"
+                    class="form-input"
+                    :class="{'error' : errorPhone}"
                 >
-                <p
-                    v-show="errors.has('phone')"
-                    class="text-danger text-error"
-                >
-                    {{ errors.first('phone') }}
-                </p>
             </div>
             <div class="box-input">
                 <label for="email">Email</label>
                 <input
                     id="email"
                     type="text"
-                    placeholder="Your Email"
-                    class="form-input"
-                    :class="{'': errors.has('email')}"
                     name="email"
-                    maxlength="100"
-                    v-model="email"
-                    v-validate="'required|email'"
+                    maxlength="50"
+                    v-model="data.email"
+                    class="form-input"
+                    :class="{'error' : errorEmail}"
                 >
-                <p
-                    v-show="errors.has('email')"
-                    class="text-danger text-error"
-                >
-                    {{ errors.first('email') }}
-                </p>
             </div>
-            <div class="box-input">
+            <div class="box-input box-input-pass">
                 <label for="pass">Password</label>
                 <input
                     id="pass"
                     type="password"
-                    class="form-input"
-                    :class="{'border-danger': errors.has('password')}"
                     name="password"
-                    maxlength="20"
-                    v-model="password"
-                    v-validate="'required|min:6'"
+                    maxlength="30"
+                    v-model="data.password"
+                    class="form-input"
+                    :class="{'error' : errorPass}"
                 >
-                <p
-                    v-show="errors.has('password')"
-                    class="text-danger text-error"
-                >
-                    {{ errors.first('password') }}
-                </p>
             </div>
-            <div class="box-input">
+            <div class="box-input box-input-pass">
                 <label for="cf-pass">Comfirm Password</label>
                 <input
                     id="cf-pass"
                     type="password"
-                    class="form-input"
-                    :class="{'border-danger': errors.has('cf-password')}"
                     name="cf-password"
-                    maxlength="20"
-                    v-model="password"
-                    v-validate="'required|min:6'"
+                    maxlength="30"
+                    v-model="data.cfPass"
+                    class="form-input"
+                    :class="{'error' : errorPass}"
                 >
+            </div>
+            <div class="box-error">
                 <p
-                    v-show="errors.has('cf-password')"
                     class="text-danger text-error"
                 >
-                    {{ errors.first('cf-password') }}
+                    {{ messError }}
                 </p>
             </div>
             <div class="box-submit">
                 <button
                     class="btn-submit"
-                    @click="signup"
+                    @click="register"
                 >
-                    Sign Up
+                    Sign up
                 </button>
                 <p class="have-account">
                     Already have an account?
                     <nuxt-link
-                        to="/login"
+                        to="/"
                         class="btn-to-signin"
                     >
                         Sign in
@@ -139,6 +110,137 @@
 import {mapGetters, mapActions} from 'vuex';
 
 export default {
-    layout: 'blank'
+    layout: 'blank',
+    data: () => ({
+        messError: '',
+        errorFirstName: '',
+        errorLastName: '',
+        errorPhone: '',
+        errorEmail: '',
+        errorPass: '',
+        data: {
+            firstName: '',
+            lastName: '',
+            phone: '',
+            email: '',
+            pass: '',
+            cfPass: ''
+        },
+    }),
+    methods: {
+        async register() {
+            if (!this.validateFirstName())
+                return;
+            if (!this.validateLastName())
+                return;
+            if (!this.validatePhone())
+                return;
+            if (!this.validateEmail())
+                return;
+            if (!this.validatePassword())
+                return;
+            if (this.data.password !== this.data.cfPass) {
+                this.errorPass = true;
+                this.messError = 'Comfirm password incorrect';
+                return;
+            }
+            //TODO Register
+            this.$router.push('/login');
+        },
+        validateFirstName() {
+            if (!this.data.firstName) {
+                this.errorFirstName = true;
+                this.messError = 'Name is required';
+                return false;
+            }
+            else {
+                if (/\d/.test(this.data.firstName)) {
+                    this.errorFirstName = true;
+                    this.messError = 'Name do not contains number';
+                    return false;
+                }
+                else {
+                    this.errorFirstName = false;
+                    this.messError = '';
+                    return true;
+                }
+            }
+        },
+        validateLastName() {
+            if (!this.data.lastName) {
+                this.errorLastName = true;
+                this.messError = 'Name is required';
+                return false;
+            }
+            else {
+                if (/\d/.test(this.data.lastName)) {
+                    this.errorLastName = true;
+                    this.messError = 'Name do not contains number';
+                    return false;
+                }
+                else {
+                    this.errorLastName = false;
+                    this.messError = '';
+                    return true;
+                }
+            }
+        },
+        validatePhone() {
+            if (!this.data.phone) {
+                this.errorPhone = true;
+                this.messError = 'The phone is required.';
+                return false;
+            }
+            else {
+                this.errorPhone = false;
+                this.messError = '';
+                return true;
+            }
+        },
+        validateEmail() {
+            if (!this.data.email) {
+                this.errorEmail = true;
+                this.messError = 'The email is required.';
+                return false;
+            }
+            else {
+                const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                if (!regex.test(this.data.email)) {
+                    this.errorEmail = true;
+                    this.messError = 'Must be a valid email.';
+                    return false;
+                }
+                else {
+                    this.errorEmail = false;
+                    this.messError = '';
+                    return true;
+                }
+            }
+        },
+        validatePassword() {
+            if (!this.data.password) {
+                this.errorPass = true;
+                this.messError = 'The password is required.';
+                return false;
+            }
+            if (this.data.password.length < 6 || this.data.password.length > 20) {
+                this.errorPass = true;
+                this.messError = 'Must be at least 6 and maximum 20 characters.';
+                return false;
+            }
+            else {
+                this.errorPass = false;
+                this.messError = '';
+                return true;
+            }
+        },
+        keyphone() {
+            this.data.phone = this.data.phone.replace(/[^0-9\-]/g, '');
+            if (this.data.phone.length === 3)
+                this.data.phone = this.data.phone + '-';
+            if (this.data.phone.length === 7)
+                this.data.phone = this.data.phone + '-';
+        }
+    }
 };
 </script>

@@ -5,11 +5,11 @@
             <div class="d-flex">
                 <filter-select
                     placeholder="Ratio 16:9"
-                    :data="dataCategory"
+                    :data="dataSize"
                 />
                 <filter-select
                     placeholder="Category"
-                    :data="dataSize"
+                    :data="dataCategory"
                 />
                 <div class="form-search">
                     <input
@@ -59,12 +59,12 @@ export default {
                 {id: 4, thumb: '/images/template-thumbnail.png', name: 'The Glossary Of Telescopes', size: '16:9', dateCreate: '26/10'},
                 {id: 5, thumb: '/images/template-thumbnail.png', name: 'Dentists Are Smiling Over Pain', size: '16:9', dateCreate: '30/10'}
             ],
-            dataSize: [
-                {name: 'Ratio 16:9', value: 1}, 
-                {name: 'CC-Affiliate Partner', value: 2},
-                {name: 'CC-Cold', value: 3},
-            ],
             dataCategory: [
+                {name: 'Category 1', value: 1}, 
+                {name: 'Category 2', value: 2},
+                {name: 'Category 3', value: 3},
+            ],
+            dataSize: [
                 {name: 'All Sreens', value: '', isTitle: true},
                 {name: 'Landscape', value: '', isTitle: true},
                 {name: 'Wide screen', value: '16:9', supTitle: '1920 x 1080, 1280 x 720'},

@@ -234,8 +234,9 @@ input[type=text], input[type=password]{
     }
 }
 .text-error{
-    font-size: 12px;
+    font-size: 10px;
     font-family: $font-primary;
+    font-style: italic;
 }
 .page-footer{
     color: #8a8a8a;

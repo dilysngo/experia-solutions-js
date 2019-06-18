@@ -30,6 +30,7 @@
     .template-action{
         .icon-site{
             font-size: 16px;
+            color: $color-primary;
         }
         .btn-link{
             width: 36px;
@@ -75,6 +76,10 @@
             color: rgba(0, 0, 0, 0.33);
             font-size: 15px;
             margin-left: 5px;
+        }
+        .icon-sizes,
+        .icon-celandar{
+            color: $color-third;
         }
     }
 }

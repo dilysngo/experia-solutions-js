@@ -16,14 +16,6 @@
                     class="form-input"
                     :class="{'error' : errorEmail}"
                 >
-                <div class="box-error">
-                    <p
-                        v-show="errorEmail"
-                        class="text-danger text-error"
-                    >
-                        {{ messErrorEmail }}
-                    </p>
-                </div>
             </div>
             <div class="box-input">
                 <label for="pass">Password</label>
@@ -36,17 +28,10 @@
                     class="form-input"
                     :class="{'error' : errorPass}"
                 >
-                <div class="box-error">
-                    <p
-                        v-show="errorPass"
-                        class="text-danger text-error"
-                    >
-                        {{ messErrorPass }}
-                    </p>
-                </div>
             </div>
             <div class="box-error">
                 <p
+                    v-show="errorEmail || errorPass"
                     class="text-danger text-error"
                 >
                     {{ errorMessage }}
@@ -79,9 +64,7 @@ export default {
     data: () => ({
         errorMessage: '',
         errorEmail: '',
-        messErrorEmail: '',
         errorPass: '',
-        messErrorPass: '',
         dataUser: {
             email: '',
             password: '',
@@ -97,12 +80,9 @@ export default {
             'signin'
         ]),
         async login() {
-            let flag = true;
             if (!this.validateEmail())
-                flag = false;
+                return;
             if (!this.validatePassword())
-                flag = false;
-            if (flag === false)
                 return;
 
             // let dataUser = await this.signin(this.dataUser);
@@ -120,19 +100,19 @@ export default {
         validateEmail() {
             if (!this.dataUser.email) {
                 this.errorEmail = true;
-                this.messErrorEmail = 'The email is required.';
+                this.errorMessage = 'The email is required.';
                 return false;
             }
             else {
                 const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 if (!regex.test(this.dataUser.email)) {
                     this.errorEmail = true;
-                    this.messErrorEmail = 'Must be a valid email.';
+                    this.errorMessage = 'Must be a valid email.';
                     return false;
                 }
                 else {
                     this.errorEmail = false;
-                    this.messErrorEmail = '';
+                    this.errorMessage = '';
                     return true;
                 }
             }
@@ -140,17 +120,17 @@ export default {
         validatePassword() {
             if (!this.dataUser.password) {
                 this.errorPass = true;
-                this.messErrorPass = 'The password is required.';
+                this.errorMessage = 'The password is required.';
                 return false;
             }
             if (this.dataUser.password.length < 6 || this.dataUser.password.length > 20) {
                 this.errorPass = true;
-                this.messErrorPass = 'Must be at least 6 and maximum 20 characters.';
+                this.errorMessage = 'Must be at least 6 and maximum 20 characters.';
                 return false;
             }
             else {
                 this.errorPass = false;
-                this.messErrorPass = '';
+                this.errorMessage = '';
                 return true;
             }
         }

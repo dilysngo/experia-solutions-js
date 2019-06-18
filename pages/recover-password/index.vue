@@ -68,15 +68,7 @@ export default {
             cfPassword: '',
         },
     }),
-    computed: {
-        ...mapGetters('user', [
-            'signinMessage'
-        ])
-    },
     methods: {
-        ...mapActions('user', [
-            'signin'
-        ]),
         async recover() {
             if (!this.validatePassword())
                 return;
@@ -86,15 +78,6 @@ export default {
                 return;
             }
 
-            // let dataUser = await this.signin(this.dataUser);
-
-            // if (dataUser && dataUser.Success){
-            // }
-            // else {
-            //     this.errorUser = true;
-            //     this.errorPass = true;
-            //     this.errorMessage = dataUser ? 'Email or Password incorrect' : this.signinMessage;
-            // }
             this.$router.push('/');
 
         },

@@ -23,13 +23,22 @@
             <div class="container-media">
                 <div class="row">
                     <div class="col-md-3">
-                        <div class="item-g">
+                        <div class="item-g add-media">
                             <input
                                 type="file"
                                 id="fileGallery"
                                 ref="files"
                                 multiple
+                                hidden
                             >
+                            <button
+                                class="btn-add-media"
+                                id="addMedia"
+                                @click="addMedia"
+                            >
+                                <i class="icon-plus icon-site" />
+                            </button>
+                            <p>Upload new file</p>
                         </div>
                     </div>
                     <div
@@ -83,20 +92,20 @@
                                         v-if="gItem.lenght"
                                         class="g-lenght"
                                     >
-                                        <i class="icon-play-lists icon-site" />
+                                        <i class="icon-play icon-site" />
                                         <span>{{ gItem.lenght }}</span>
                                     </div>
                                     <div
                                         v-else
                                         class="g-size"
                                     >
-                                        <i class="icon-play-lists icon-site" />
+                                        <i class="icon-picture icon-site" />
                                         <span>{{ gItem.size }}</span>
                                     </div>
                                     <div
                                         class="g-created"
                                     >
-                                        <i class="icon-clock icon-site" />
+                                        <i class="icon-celandar icon-site" />
                                         <span>{{ gItem.dateCreated }}</span>
                                     </div>
                                 </div>
@@ -129,6 +138,11 @@ export default {
                 {id: 4, name: 'Fashion Designer', size: '36kb', dateCreated: '1/2', type: '.svg', url: 'images/gallery-3.png'}
             ]
         };
+    },
+    methods: {
+        addMedia() {
+            this.$refs.files.click();
+        }
     }
 };
 </script>

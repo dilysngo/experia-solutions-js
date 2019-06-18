@@ -76,14 +76,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            .icon-site{
+                font-size: 16px;
+                color: $color-primary;
+            }
             &:hover{
                 .icon-site:before{
                     color: $color-third;
                 }
             }
-        }
-        .icon-site{
-            font-size: 16px;
         }
     }
     .playlist-info{

@@ -46,11 +46,11 @@
             </h3>
             <div class="temp-infor-more d-flex">
                 <div class="temp-sizes">
-                    <i class="icon-see-full icon-site" />
+                    <i class="icon-sizes icon-site" />
                     <span>{{ template.size }}</span>
                 </div>
                 <div class="temp-date-create">
-                    <i class="icon-clock icon-site" />
+                    <i class="icon-celandar icon-site" />
                     <span>{{ template.dateCreate }}</span>
                 </div>
             </div>

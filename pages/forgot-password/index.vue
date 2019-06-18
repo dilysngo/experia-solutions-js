@@ -17,14 +17,14 @@
                     class="form-input"
                     :class="{'error' : errorEmail}"
                 >
-                <div class="box-error">
-                    <p
-                        v-show="errorEmail"
-                        class="text-danger text-error"
-                    >
-                        {{ messErrorEmail }}
-                    </p>
-                </div>
+            </div>
+            <div class="box-error">
+                <p
+                    v-show="errorEmail"
+                    class="text-danger text-error"
+                >
+                    {{ messErrorEmail }}
+                </p>
             </div>
             <div class="box-submit">
                 <button
@@ -53,28 +53,11 @@ export default {
         errorEmail: '',
         messErrorEmail: '',
     }),
-    computed: {
-        ...mapGetters('user', [
-            'signinMessage'
-        ])
-    },
     methods: {
-        ...mapActions('user', [
-            'signin'
-        ]),
         async forgot() {
             if (!this.validateEmail())
-                return;;
-
-            // let dataUser = await this.signin(this.dataUser);
-
-            // if (dataUser && dataUser.Success){
-            // }
-            // else {
-            //     this.errorUser = true;
-            //     this.errorPass = true;
-            //     this.errorMessage = dataUser ? 'Email or Password incorrect' : this.signinMessage;
-            // }
+                return;
+            
             this.$router.push('/');
 
         },

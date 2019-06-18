@@ -46,7 +46,7 @@
             </li>
             <li class="item-menu item-create-menu">
                 <nuxt-link
-                    to="/"
+                    to="/create"
                     class="menu-link "
                 >
                     <i class="icon-creative icon-site" />
