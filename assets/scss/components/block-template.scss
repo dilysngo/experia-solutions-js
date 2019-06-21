@@ -1,0 +1,85 @@
+.block-template{
+    margin-bottom: 30px;
+    .template-thumbnail{
+        position: relative;
+        .img-thumb{
+            border-radius: 7px 7px 0 0;
+            width: 100%;
+        }
+        .template-action,
+        .template-using{
+            border-radius: 7px 7px 0 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(54, 55, 64, 0.84);
+            visibility: hidden;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+    }
+    .template-action{
+        .icon-site{
+            font-size: 16px;
+            color: $color-primary;
+        }
+        .btn-link{
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            background-color: #ffffff;
+            margin: 0 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .btn-link:hover{
+            i:before{
+                color: $color-third;
+            }
+        }
+    }
+    .template-using{
+        .btn-link{
+            font-size: 14px;
+            border-radius: 4px;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 9px 27px;
+        }
+    }
+    .template-info{
+        padding: 8px 16px 10px;
+        border-radius: 0 0 10px 10px;
+        background-color: #ffffff;
+        .template-name{
+            font-family: $font-second;
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+    }
+    .temp-infor-more{
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        span{
+            color: rgba(0, 0, 0, 0.33);
+            font-size: 15px;
+            margin-left: 5px;
+        }
+        .icon-sizes,
+        .icon-celandar{
+            color: $color-third;
+        }
+    }
+}

@@ -2,49 +2,56 @@
     <div class="content-menu">
         <nuxt-link to="/">
             <img
-                src="/images/logo.png"
+                src="/images/logo-experia-ds.png"
                 alt="logo menu"
                 class="logo"
             >
         </nuxt-link>
         <ul class="menu-left">
-            <li
-                class="menu-item"
-                :class="this.$route.path === '/' && 'active'"
-            >
+            <li class="item-menu">
                 <nuxt-link
-                    to="/"
+                    to="/screens"
                     class="menu-link"
                 >
-                    <i class="i-con fa fa-home" />
+                    <i class="icon-my-board icon-site" />
+                    Screens
                 </nuxt-link>
             </li>
-            <li
-                class="menu-item"
-                :class="this.$route.path.toLowerCase().startsWith('/message') && 'active'"
-                v-if="$auth.isAuthenticated()"
-            >
+            <li class="item-menu">
                 <nuxt-link
-                    to="/message"
+                    to="/playlists"
                     class="menu-link"
                 >
-                    <i class="i-con icon-message" />
-                    <span
-                        class="notify-message"
-                        v-show="hasMenuNewMessage"
-                    />
+                    <i class="icon-play-lists icon-site" />
+                    Playlists
                 </nuxt-link>
             </li>
-            <li
-                class="menu-item logout"
-                v-if="$auth.isAuthenticated()"
-            >
-                <a
+            <li class="item-menu">
+                <nuxt-link
+                    to="/templates"
                     class="menu-link"
-                    @click="logout"
                 >
-                    <i class="i-con icon-logout" />
-                </a>
+                    <i class="icon-templates icon-site" />
+                    Templates
+                </nuxt-link>
+            </li>
+            <li class="item-menu">
+                <nuxt-link
+                    to="/media"
+                    class="menu-link"
+                >
+                    <i class="icon-media icon-site" />
+                    Media Library
+                </nuxt-link>
+            </li>
+            <li class="item-menu item-create-menu">
+                <nuxt-link
+                    to="/create"
+                    class="menu-link "
+                >
+                    <i class="icon-creative icon-site" />
+                    Create New
+                </nuxt-link>
             </li>
         </ul>
     </div>
