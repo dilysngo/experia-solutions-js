@@ -96,7 +96,94 @@
                         </h3>
                     </div>
                 </div>
-                <div class="box-properties" />
+                <div class="box-properties">
+                    <div class="action-properties">
+                        <i class="fa fa-angle-left" />
+                        <i class="fa fa-angle-right" />
+                    </div>
+                    <h3>
+                        Creative Properties
+                    </h3>
+                    <div class="box-input">
+                        <label for="name">Creative Name</label>
+                        <input
+                            id="name"
+                            type="text"
+                            name="name"
+                            maxlength="50"
+                            class="properties-input"
+                            value="Untitled Creative"
+                        >
+                    </div>
+                    <div class="box-input">
+                        <label for="name">Creative Name</label>
+                        <input
+                            id="name1"
+                            type="text"
+                            name="name1"
+                            maxlength="50"
+                            class="properties-input"
+                            value="Untitled Creative"
+                        >
+                    </div>
+                    <hr>
+                    <h3>
+                        Creative Settingss
+                    </h3>
+                    <div class="box-input">
+                        <label for="ratio">Aspect Ratio</label>
+                        <filter-select
+                            placeholder="16:9"
+                            :data="dataSizeProperties"
+                        />
+                    </div>
+                    <div class="box-input">
+                        <label for="duration">Duration</label>
+                        <input
+                            id="duration"
+                            type="number"
+                            name="duration"
+                            class="properties-input"
+                            value="10"
+                            min="10"
+                            max="100"
+                            step="10"
+                        >
+                        <div class="quantity-nav">
+                            <div
+                                class="quantity-button quantity-up"
+                            />
+                            <div class="quantity-button quantity-down" />
+                        </div>
+                    </div>
+                    <div class="box-input d-flex">
+                        <input
+                            id="updateDuration"
+                            type="checkbox"
+                            name="updateDuration"
+                            class="properties-input"
+                        >
+                        <label
+                            class="label-checkbox"
+                            for="updateDuration"
+                        >
+                            Update duration in playlists
+                        </label>
+                    </div>
+                    <hr>
+                    <h3>
+                        Appearance
+                    </h3>
+                    <div class="box-input">
+                        <input
+                            id="appearance"
+                            type="text"
+                            name="appearance"
+                            maxlength="50"
+                            class="properties-input"
+                        >
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -142,8 +229,28 @@ export default {
                 {id: 'btn13', name: 'icon-rss'},
                 {id: 'btn14', name: 'icon-youtube'},
                 {id: 'btn15', name: 'icon-facebook'},
-            ]
+            ],
+            dataSizeProperties: [
+                {name: '16:9', value: '16:9'},
+                {name: '9:16', value: '9:16'},
+                {name: '4:3', value: '4:3'},
+                {name: '3:4', value: '3:4'},
+                {name: '16:10', value: '16:10'},
+                {name: '10:16', value: '10:16'},
+            ],
         };
-    }
+    },
+    mounted: function() {
+        $('.action-properties .fa-angle-left').click(function() {
+            $('.action-properties .fa-angle-left').css('display','none');
+            $('.action-properties .fa-angle-right').css('display','block');
+            $('.box-properties').addClass('open');
+        });
+        $('.action-properties .fa-angle-right').click(function() {
+            $('.action-properties .fa-angle-right').css('display','none');
+            $('.action-properties .fa-angle-left').css('display','block');
+            $('.box-properties').removeClass('open');
+        });
+    },
 };
 </script>
