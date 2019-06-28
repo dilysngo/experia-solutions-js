@@ -37,6 +37,12 @@
                 >
                     {{ errorMessage }}
                 </p>
+                <p
+                    v-if="messSuccess"
+                    class="text-success"
+                >
+                    {{ messSuccess }}
+                </p>
             </div>
             <div class="box-submit">
                 <button
@@ -63,12 +69,16 @@ export default {
     data: () => ({
         errorMessage: '',
         errorPass: '',
+        messSuccess: '',
         data: {
             password: '',
             cfPassword: '',
         },
     }),
     methods: {
+        ...mapActions('user', [
+            'resetPassword'
+        ]),
         async recover() {
             if (!this.validatePassword())
                 return;
@@ -78,8 +88,15 @@ export default {
                 return;
             }
 
-            this.$router.push('/');
+            let data = {id: this.$route.params.id , password: this.data.password};
 
+            let result = await this.resetPassword(data).catch(err => {
+                console.log(err);
+                return false;
+            });
+            if (result)
+                this.messSuccess = "Reset password success! Please login again.";
+            console.log('result', result);
         },
         validatePassword() {
             if (!this.data.password || !this.data.cfPassword) {

@@ -15,15 +15,21 @@
                     maxlength="100"
                     v-model="email"
                     class="form-input"
-                    :class="{'error' : errorEmail}"
+                    :class="{'error' : messErrorEmail}"
                 >
             </div>
             <div class="box-error">
                 <p
-                    v-show="errorEmail"
+                    v-show="messErrorEmail"
                     class="text-danger text-error"
                 >
                     {{ messErrorEmail }}
+                </p>
+                <p
+                    class="text-success"
+                    v-if="messSuccess"
+                >
+                    {{ messSuccess }}
                 </p>
             </div>
             <div class="box-submit">
@@ -50,32 +56,34 @@ export default {
     layout: 'blank',
     data: () => ({
         email: '',
-        errorEmail: '',
         messErrorEmail: '',
+        messSuccess: ''
     }),
     methods: {
+        ...mapActions('user' ,[
+            'forgotPassword'
+        ]),
         async forgot() {
             if (!this.validateEmail())
                 return;
             
-            this.$router.push('/');
-
+            let checkEmail = await this.forgotPassword(this.email);
+            if (!checkEmail)
+                this.messErrorEmail = 'Account not exist!';
+            else this.messSuccess = "Check your email inbox. We will immediately send a message to your account's email address.";
         },
         validateEmail() {
             if (!this.email) {
-                this.errorEmail = true;
                 this.messErrorEmail = 'The email is required!';
                 return false;
             }
             else {
                 const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 if (!regex.test(this.email)) {
-                    this.errorEmail = true;
                     this.messErrorEmail = 'The email is wrong!';
                     return false;
                 }
                 else {
-                    this.errorEmail = false;
                     this.messErrorEmail = '';
                     return true;
                 }

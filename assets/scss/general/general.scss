@@ -238,6 +238,12 @@ input[type=text], input[type=password]{
     font-family: $font-primary;
     font-style: italic;
 }
+.text-success{
+    font-size: 10px;
+    font-family: $font-primary;
+    font-style: italic;
+    color: $green;
+}
 .page-footer{
     color: #8a8a8a;
     margin: 31px 0;

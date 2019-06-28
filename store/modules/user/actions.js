@@ -17,18 +17,31 @@ export default {
         return user;
     },
     async signup({commit}, data) {
+        delete data.cfPass;
         const userAuth = await this.$axios.$post('/api/users/signup', data);
+        
         return storeUserAuthentication(commit, userAuth);
+        // return userAuth;
     },
     async signin({commit}, {email, password}) {
         commit(types.USER_SIGNIN_MESSAGE, '');
-        const userAuth = await this.$axios.$post('/api/users/signin', {email, password}).catch(err => {
-            commit(types.USER_SIGNIN_MESSAGE, err.message);
-        });
+        const userAuth = await this.$axios.$post('/api/users/signin', {email, password});
         return storeUserAuthentication(commit, userAuth);
     },
+
+    async forgotPassword({commit}, email) {
+        const user = await this.$axios.$get(`/api/users/forgot-password?email=${email}`);
+        return user;
+    },
+
+    async resetPassword({commit}, data) {
+        const reset = await this.$axios.$patch(`/api/users/reset-password/${data.id}`, {newPassword: data.password});
+        return reset;
+    },
+
     signout({commit}) {
         storeUserAuthentication(commit);
+        this.$router.push('/login');
     }
 };
 

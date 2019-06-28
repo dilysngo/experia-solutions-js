@@ -14,7 +14,6 @@
                     maxlength="100"
                     v-model="dataUser.email"
                     class="form-input"
-                    :class="{'error' : errorEmail}"
                 >
             </div>
             <div class="box-input">
@@ -26,12 +25,11 @@
                     maxlength="20"
                     v-model="dataUser.password"
                     class="form-input"
-                    :class="{'error' : errorPass}"
                 >
             </div>
             <div class="box-error">
                 <p
-                    v-show="errorEmail || errorPass"
+                    v-show="errorMessage"
                     class="text-danger text-error"
                 >
                     {{ errorMessage }}
@@ -46,9 +44,15 @@
                 </button>
                 <nuxt-link
                     to="/forgot-password"
-                    class="btn-fogot"
+                    class="btn-fogot m-r-5"
                 >
                     Fogot password?
+                </nuxt-link>|
+                <nuxt-link
+                    to="/register"
+                    class="btn-fogot"
+                >
+                    Sign up
                 </nuxt-link>
             </div>
         </div>
@@ -63,8 +67,6 @@ export default {
     middleware: ['non-authentication'],
     data: () => ({
         errorMessage: '',
-        errorEmail: '',
-        errorPass: '',
         dataUser: {
             email: '',
             password: '',
@@ -85,33 +87,27 @@ export default {
             if (!this.validatePassword())
                 return;
 
-            // let dataUser = await this.signin(this.dataUser);
-
-            // if (dataUser && dataUser.Success){
-            // }
-            // else {
-            //     this.errorUser = true;
-            //     this.errorPass = true;
-            //     this.errorMessage = dataUser ? 'Email or Password incorrect' : this.signinMessage;
-            // }
-            this.$router.push('/screens');
+            let dataUser = await this.signin(this.dataUser).catch(err => {
+                console.log('errerr', err);
+                this.errorMessage = err.message;
+                return false;
+            });
+            if (!this.errorMessage)
+                this.$router.push('/screens');
 
         },
         validateEmail() {
             if (!this.dataUser.email) {
-                this.errorEmail = true;
                 this.errorMessage = 'The email is required.';
                 return false;
             }
             else {
                 const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 if (!regex.test(this.dataUser.email)) {
-                    this.errorEmail = true;
                     this.errorMessage = 'Must be a valid email.';
                     return false;
                 }
                 else {
-                    this.errorEmail = false;
                     this.errorMessage = '';
                     return true;
                 }
@@ -119,17 +115,14 @@ export default {
         },
         validatePassword() {
             if (!this.dataUser.password) {
-                this.errorPass = true;
                 this.errorMessage = 'The password is required.';
                 return false;
             }
             if (this.dataUser.password.length < 6 || this.dataUser.password.length > 20) {
-                this.errorPass = true;
                 this.errorMessage = 'Must be at least 6 and maximum 20 characters.';
                 return false;
             }
             else {
-                this.errorPass = false;
                 this.errorMessage = '';
                 return true;
             }

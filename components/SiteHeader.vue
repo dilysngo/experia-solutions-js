@@ -9,19 +9,35 @@
             <div class="wrapper-avatar">
                 <img 
                     class="img-avatar"
-                    src="/images/avatar.png"
+                    :src="userAuth && userAuth.profile && userAuth.profile.avatar || 'images/default-avatar.jpg'"
                     alt="Avatar"
                 >
             </div>
             <div class="info-account">
-                <h6>Lewis</h6>
-                <nuxt-link
+                <h6>{{ userAuth && userAuth.profile && userAuth.profile.firstName }}</h6>
+                <a
                     class="log-out"
-                    to="/"
+                    @click="signout"
                 >
                     Log out
-                </nuxt-link>
+                </a>
             </div>
         </div>
     </div>
 </template>
+
+<script>
+import {mapGetters, mapActions} from 'vuex';
+export default {
+    computed: {
+        ...mapGetters('user', [
+            'userAuth'
+        ])
+    },
+    methods: {
+        ...mapActions('user', [
+            'signout'
+        ])
+    }
+};
+</script>
