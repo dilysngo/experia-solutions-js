@@ -35,7 +35,7 @@ export default {
     },
 
     async resetPassword({commit}, data) {
-        const reset = await this.$axios.$patch(`/api/users/reset-password/${data.id}`, {newPassword: data.password});
+        const reset = await this.$axios.$patch(`/api/users/reset-password/${data.id}`, {newPassword: data.password, keyRandom: data.keyRandom});
         return reset;
     },
 

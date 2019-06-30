@@ -49,7 +49,7 @@
                     class="btn-submit"
                     @click="recover"
                 >
-                    Continute
+                    Continue
                 </button>
                 <nuxt-link
                     to="/login"
@@ -88,10 +88,13 @@ export default {
                 return;
             }
 
-            let data = {id: this.$route.params.id , password: this.data.password};
-
+            let data = {id: this.$route.params.id , password: this.data.password, keyRandom: this.$route.query.key};
+            console.log('this.$route', this.$route);
             let result = await this.resetPassword(data).catch(err => {
                 console.log(err);
+                this.errorMessage = err.message;
+                this.errorPass = true;
+                this.messSuccess = '';
                 return false;
             });
             if (result)
