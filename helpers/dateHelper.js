@@ -8,6 +8,7 @@ export function convertMonthToWord(month) {
 
 export function convertToString(date, option) {
     if (date) {
+        date = new Date(date);
         option = checkDateOptions(option);
         return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], option);
     }

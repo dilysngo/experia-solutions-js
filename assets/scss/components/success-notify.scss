@@ -1,7 +1,7 @@
 .notifications{
     top:10% !important;
 }
-.notify-complete{
+.notify-complete,.notify-error, .notify-warning{
     min-width: 235px;
     width: auto;
     border-radius: 3px;
@@ -9,6 +9,7 @@
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.21);
     margin-top:10px; 
     margin-right: 40px;
+    border: 1px solid #e0e0e0;
     .box-inline{
         display: inline-block;
         vertical-align: middle;
@@ -20,7 +21,7 @@
             width: 54%;
         }
         &:nth-child(3){
-            width: 30%;
+            width: 26%;
         }
         &:last-child{
             padding-right: 0;
@@ -54,6 +55,57 @@
             border-radius: 3px;
             outline: none;
             background-color: transparent;
+        }
+    }
+}
+.notify-error{
+    .fa-exclamation-triangle{
+        color: $red;
+    }
+    .box-inline{
+        &:nth-child(1){
+            border-right: 2px solid rgba(216, 216, 216, 0.1);
+            width: 18%;
+        }
+        &:nth-child(2){
+            width: 52%;
+        }
+        &:nth-child(3){
+            width: 26%;
+        }
+        h3{
+            color: $red;
+        }
+    }
+}
+.notify-warning{
+    .fa-exclamation-triangle{
+        color: $yellow;
+    }
+    .box-inline{
+        &:nth-child(1){
+            border-right: 2px solid rgba(216, 216, 216, 0.1);
+            width: 18%;
+        }
+        &:nth-child(2){
+            width: 52%;
+        }
+        &:nth-child(3){
+            width: 26%;
+        }
+        h3{
+            color: $yellow;
+        }
+    }
+}
+.notify-complete {
+    .fa-check-circle-o {
+        color: $green-darker;
+        font-size: 25px;
+    }
+    .box-inline{
+        h3{
+            color: $green-darker;
         }
     }
 }
