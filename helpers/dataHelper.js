@@ -12,6 +12,10 @@ export function convertToCurrency(value, option) {
     return value.toLocaleString(option.format, {style: 'currency', currency: option.currency});
 };
 
+export function convertToSize(size) {
+    return (size / 1000000).toFixed(2) + 'MB';
+}
+
 export function setCookie(cname, cvalue, exdays) {
     let d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -24,4 +28,9 @@ export function getCookie(cookieName, stringCookie) {
     if (!strCookie)
         return null;
     return unescape(strCookie[0] ? strCookie[0].toString().replace(/^[^=]+./, '') : '');
+};
+
+export function pagination(page , limit) {
+    let skip = (page - 1) * limit;
+    return skip;
 };

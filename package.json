@@ -1,7 +1,7 @@
 {
-    "name": "frontend-seed",
+    "name": "experia-solutions",
     "version": "2.1.7",
-    "description": "Frontend seed",
+    "description": "Experia solutions",
     "author": "Felix Le <felix.le.236@gmail.com>",
     "private": true,
     "scripts": {

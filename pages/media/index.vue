@@ -4,6 +4,7 @@
             <h4>Gallery ({{ totalPlaylists }})</h4>
             <div class="header-right d-flex">
                 <filter-select
+                    @input="handlerType" 
                     placeholder="All file"
                     :data="dataTypeFile"
                 />
@@ -13,7 +14,7 @@
                         placeholder="Search for..."
                         class="search-input"
                         name="search"
-                        maxlength="50"
+                        v-model="keyword"
                     >
                     <i class="icon-search icon-site" />
                 </div>
@@ -52,18 +53,27 @@
                         >
                             <div
                                 class="g-thumbnail"
-                                :style="{ 'background-image': 'url(' + urlFake + gItem.imageInfo.url + ')' }"
+                                :style="{ 'background-image': gItem.type !== mediaType.Video ? 'url(' + urlFake + gItem.imageInfo.url + ')' : '' }"
                             >
                                 <div
                                     class="g-view"
                                 >
-                                    <img 
+                                    <!-- <img 
                                         v-if="gItem.type == mediaType.Video"
                                         :id="'video-' + gItem.id"
                                         src="images/image-video.png" 
                                         class="img-fluid"
                                         alt=""
+                                    > -->
+                                    <video
+                                        v-if="gItem.type == mediaType.Video"
+                                        loop
+                                        ref="videoReview"
+                                        preload="auto"
+                                        crossOrigin="anonymous"
                                     >
+                                        <source :src="urlFake + gItem.videoInfo.url ">
+                                    </video>
                                     <!-- <img 
                                         v-else
                                         :src="urlFake + gItem.imageInfo.url" 
@@ -72,18 +82,18 @@
                                     > -->
                                 </div>
                                 <div class="g-action d-flex">
-                                    <nuxt-link 
-                                        to="/"
+                                    <a
+                                        @click="showMedia(gItem)"
                                         class="btn-link"
                                     >
                                         <i class="icon-play icon-site" />
-                                    </nuxt-link>
-                                    <nuxt-link 
-                                        to="/"
+                                    </a>
+                                    <a
+                                        @click="deleteItem(gItem)"
                                         class="btn-link"
                                     >
                                         <i class="icon-trash icon-site" />
-                                    </nuxt-link>
+                                    </a>
                                 </div>
                             </div>
                             <div class="g-info">
@@ -102,40 +112,99 @@
                                         v-else
                                         class="g-size"
                                     >
-                                        <i class="icon-picture icon-site" />
-                                        <span>{{ gItem.size }}</span>
+                                        <i
+                                            class="icon-site"
+                                            :class="gItem.imageInfo ? 'icon-picture' : 'icon-play'" 
+                                        />
+                                        <span>{{ (gItem.imageInfo ? gItem.imageInfo.size : gItem.videoInfo.size) | convertToSize }}</span>
                                     </div>
                                     <div
                                         class="g-created"
                                     >
                                         <i class="icon-celandar icon-site" />
-                                        <span>{{ gItem.createdAt | convertToString }}</span>
+                                        <span>{{ gItem.createdAt | convertToDateString }}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="paginate">
+                    <no-ssr>
+                        <pagination
+                            id="pagination"
+                            :skip="skip"
+                            :limit="limit"
+                            :total="total" 
+                            @change="changePage"
+                        />
+                    </no-ssr>
+                </div>
             </div>
         </div>
+        <div
+            id="modalVideo"    
+            class="modal fade modal-media frame-image"
+            data-backdrop="static"
+            data-keyboard="false"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <button
+                        @click="closeMedia"
+                        class="btn-close"
+                        data-dismiss="modal"
+                        data-backdrop="static"
+                        data-keyboard="false"
+                    >
+                        <img src="~/assets/images/close.svg">
+                    </button>
+                    <video
+                        v-show="mediaShow && mediaShow.type === mediaType.Video"
+                        id="videoDisplay"
+                        controls
+                        poster="data:image/gif,AAAA"
+                        class="item-video"
+                    >
+                        <source type="video/mp4">
+                    </video>
+                    <img
+                        v-show="mediaShow && mediaShow.type === mediaType.Image"
+                        :src="urlFake + (mediaShow && mediaShow.imageInfo && mediaShow.imageInfo.url)"
+                        class="img-preview"
+                    >
+                </div>
+            </div>
+        </div>
+        <popup-confirm
+            ref="popupConfirm"
+            id="deleteMedia"
+            @success="handleDeleteMedia"
+        />
     </section>
 </template>
 <script>
 import FilterSelect from '~/components/FilterSelect';
 import {mapGetters, mapActions} from 'vuex';
 import {MediaType} from '~/common/commonType';
-import {convertToString} from '~/helpers/dateHelper';
+import {convertToDateString} from '~/helpers/dateHelper';
+import {convertToSize, pagination} from '~/helpers/dataHelper';
+import Pagination from '~/components/Pagination';
+import PopupConfirm from '~/components/PopupConfirm';
 
 export default {
     components: {
         FilterSelect,
+        Pagination,
+        PopupConfirm
     },
     data() {
         return {
             totalPlaylists: 5,
             dataTypeFile: [
-                {name: 'Image', value: 1}, 
-                {name: 'Video', value: 2},
+                {name: 'All', value: ''}, 
+                {name: 'Image', value: MediaType.Image}, 
+                {name: 'Video', value: MediaType.Video},
             ],
             gallery: [
                 {id: 1, name: 'What Is Botox', size: '236kb', dateCreated: '5/3', type: '.jpg', url: 'images/gallery-1.png'},
@@ -144,7 +213,15 @@ export default {
                 {id: 4, name: 'Fashion Designer', size: '36kb', dateCreated: '1/2', type: '.svg', url: 'images/gallery-3.png'}
             ],
             mediaType: MediaType,
-            urlFake: process.env.CDN_BASE + '/experia-solutions-dev/'
+            keyword: '',
+            type: '',
+            skip: 0,
+            limit: 11,
+            total: 0,
+            timeOut: null,
+            mediaShow: null,
+            // urlFake: process.env.CDN_BASE + '/experia-solutions-dev/',
+            urlFake: '',
         };
     },
     computed: {
@@ -155,14 +232,34 @@ export default {
             'mediaList'
         ])
     },
+    watch: {
+        keyword: function(newData) {
+            clearTimeout(this.timeOut);
+            this.timeOut = setTimeout(() => {
+                this.getAllMedia();
+            }, 500);
+        }
+    },
     async created() {
-        await this.findMedias();
+        await this.getAllMedia();
     },
     methods: {
         ...mapActions('media', 
             ['findMedias', 'createMedia', 'uploadMedia', 'updateThumbnail', 'deleteMedia']),
         addMedia() {
             this.$refs.files.click();
+        },
+        async changePage(page){
+            let data = pagination(page, this.limit);
+            this.skip = data;
+            await this.getAllMedia();
+        },
+        async getAllMedia() {
+            let data = await this.findMedias({keyword: this.keyword, type: this.type, limit: this.limit, skip: this.skip}).catch(err => {
+                if (err)
+                    console.log(err.message);
+            });
+            this.total = data && data.pagination && data.pagination.total;
         },
         async changeMedia(event) {
             let formData = new FormData();
@@ -183,14 +280,47 @@ export default {
                     group: 'success',
                     title: 'Success',
                     text: 'Upload success!',
-                });    
+                });
+                await this.getAllMedia();   
                 document.getElementById('fileGallery').value = '';
             } 
+        },
+        async handlerType(item) {
+            this.type = item.value;
+            await this.getAllMedia();
+        },
+        showMedia(item) {
+            console.log('item', item);
+            this.mediaShow = item;
+            if (item.type === this.mediaType.Video) {
+                let frameVideo = document.getElementById('videoDisplay');
+                console.log('asdsadsasad', $('#modalVideo'));
+                frameVideo.src = this.urlFake + item.videoInfo.url;
+                frameVideo.load();
+                frameVideo.play();
+            }
+            $('#modalVideo').modal('show');
+        },
+        closeMedia() {
+            if (this.mediaShow.type === this.mediaType.Video) {
+                let frameVideo = document.getElementById('videoDisplay');
+                frameVideo.pause();
+            }
+        },
+        deleteItem(item) {
+            this.$refs.popupConfirm.open(item);
+        },
+        async handleDeleteMedia(item) {
+            await this.deleteMedia(item.id);
+            await this.getAllMedia();
         }
     },
     filters: {
-        convertToString(date) {
-            return convertToString(date);
+        convertToDateString(date) {
+            return convertToDateString(date);
+        },
+        convertToSize(size) {
+            return convertToSize(size);
         }
     }
 };

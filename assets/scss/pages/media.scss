@@ -10,6 +10,7 @@
         align-items: center;
         flex-direction: column;
         justify-content: center;
+        min-height: 250px;
         .btn-add-media{
             width: 60px;
             height: 60px;
@@ -32,7 +33,12 @@
 }
 .g-thumbnail{
     position: relative;
-    min-height: 200px;
+    height: 200px;
+    overflow: hidden;
+    video {
+        height: 100%;
+        width: 100%;
+    }
     .g-view{
         img{
             width: 100%;
@@ -90,6 +96,39 @@
         font-size: 15px;
         i:before{
             color: $color-third;
+        }
+    }
+}
+.modal-media{
+    .modal-content{
+        background-color: transparent;
+        border-radius: 0;
+        border: none;
+        box-shadow: inherit;
+        .item-video{
+            width: 100%;
+            background-repeat: no-repeat ;
+            background-size: 100%;
+            background-position: center center;
+        }
+    }
+}
+
+.frame-image{
+    .modal-content{
+        height: 470px;
+        background-color: rgba(0, 0, 0, 0.27) !important;
+        .img-preview{
+            height: 100%;
+            margin: 0 auto;
+        }
+    }
+}
+
+@media only screen and (min-width: 576px){
+    .modal-media{
+        .modal-dialog{
+            max-width: 838px;
         }
     }
 }
