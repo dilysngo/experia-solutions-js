@@ -123,11 +123,14 @@ export default {
             lastName: '',
             phone: '',
             email: '',
-            pass: '',
+            password: '',
             cfPass: ''
         },
     }),
     methods: {
+        ...mapActions('user', [
+            'signup'
+        ]),
         async register() {
             if (!this.validateFirstName())
                 return;
@@ -144,8 +147,13 @@ export default {
                 this.messError = 'Comfirm password incorrect';
                 return;
             }
-            //TODO Register
-            this.$router.push('/login');
+            let register = await this.signup(this.data).catch(err => {
+                this.messError = err.message;
+                return false;
+            });
+            if (!this.messError)
+
+                this.$router.push('/screens');
         },
         validateFirstName() {
             if (!this.data.firstName) {

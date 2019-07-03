@@ -76,17 +76,55 @@ input[type=text], input[type=password]{
 }
 
 .btn-normal{
-    min-width: 96px;
-    @include border-radius(4px);
-    background-image: linear-gradient(135deg, #0073dd 0%, #4ab9b7 100%);
-    color: #ffffff;
-    font-size: $font-size-normal;
-    font-family: $font-third;
-    border: none;
-    cursor: pointer;
+    color: $color-primary;
+    font-family: $font-primary;
+    font-size: 13px;
+    font-weight: normal;
+    padding: 8px 12px;
+    @include border-radius(3px);
+    border: 1px solid #dcdcdc;
+    background-color: transparent;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.07);
+    height: 36px;
     display: inline-block;
+    vertical-align: top;
+    min-width: 112px;
     text-align: center;
-    padding: 8px;
+    margin-left: 6px;
+    @include transition(all, 0.2s, ease);
+    cursor: pointer;
+    &:hover{
+        background-color: $color-third;
+        color: #ffffff;
+        border-color: $color-third;
+    }
+    &:first-child{
+        margin-left: 0;
+    }
+    &.btn-white{
+        color: #606266;
+        border: 1px solid #dcdfe6;
+        background-color: #ffffff;
+    }
+    &.btn-disable{
+        pointer-events: none;
+        opacity: 0.5;
+    }
+    &.btn-red{
+        &:hover{
+            background-color: #f65c5c;
+            border-color: #f65c5c;
+        }
+    }
+    &.btn-green{
+        border-color:#36c5d3;
+        background-color: #36c5d3;
+        color: #fff;
+        &:hover{
+            border-color: $color-second;
+            background-color: $color-second;
+        }
+    }
 }
 
 .main-content{
@@ -238,6 +276,12 @@ input[type=text], input[type=password]{
     font-family: $font-primary;
     font-style: italic;
 }
+.text-success{
+    font-size: 10px;
+    font-family: $font-primary;
+    font-style: italic;
+    color: $green;
+}
 .page-footer{
     color: #8a8a8a;
     margin: 31px 0;
@@ -322,5 +366,71 @@ input[type=text], input[type=password]{
         top: 50%;
         left: 18px;
         transform: translateY(-50%);
+    }
+}
+.btn-close{
+    background-color: #fff;
+    border: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    z-index: 10;
+    cursor: pointer;
+    &.border-black{
+        border: 1px solid $black;
+    }
+    img{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+.paginate {
+    margin-top: 20px;
+    ul {
+        padding-left: 0;
+        margin-bottom: 0;
+        li {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            a {
+                box-sizing: border-box;
+                display: inline-block;
+                min-width: 1.5em;
+                // padding: 9.5px 15px;
+                margin-left: -1px;
+                text-align: center;
+                text-decoration: none !important;
+                cursor: pointer;
+                background-color: #fff;
+                color: #969c9c;
+                border: 1px solid #e5e6e6;
+                border-left: 0px;
+                line-height: 36px;
+                width: 36px;
+                height: 36px;
+            }
+            &:first-child{
+                a{
+                    border-left: 1px solid #e5e6e6;
+                } 
+            }
+            &:hover a{
+                background-color: #f9f9f9;
+                color: #888b94;
+            }
+            &.active a {
+                color: $color-primary;
+            }
+            &.disabled a{
+                cursor:not-allowed;
+                background-color: #ffffff61;
+            }
+        }
     }
 }

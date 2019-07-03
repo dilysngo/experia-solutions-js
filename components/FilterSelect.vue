@@ -119,6 +119,7 @@ export default {
         this.reset();
         if (this.select > 0)
             this.selected = this.list.find(item => item.value === this.select);
+        else this.selected = this.list[0];
     },
     mounted() {
     },

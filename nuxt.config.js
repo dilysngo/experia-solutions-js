@@ -36,6 +36,7 @@ module.exports = {
         {src: '~/plugins/vee-validate'},
         {src: '~/plugins/socket.io', ssr: false},
         {src: '~/plugins/event-bus', ssr: false},
+        {src: '~/plugins/vue-notification', ssr: false},
     ],
     /*
      ** Build configuration
@@ -44,6 +45,7 @@ module.exports = {
         vendor: [
             'jquery',
             'bootstrap',
+            'vue-notification',
         ],
         plugins: [
             new webpack.ProvidePlugin({

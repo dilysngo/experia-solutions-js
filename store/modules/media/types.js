@@ -1,0 +1,7 @@
+const NS_MEDIA = 'MEDIA';
+
+export default {
+    MEDIA_LIST: NS_MEDIA + '/LIST',
+    MEDIA_DETAIL: NS_MEDIA + '/DETAIL',
+    MEDIA_PAGINATION: NS_MEDIA + '/PAGINATION'
+};

@@ -37,13 +37,19 @@
                 >
                     {{ errorMessage }}
                 </p>
+                <p
+                    v-if="messSuccess"
+                    class="text-success"
+                >
+                    {{ messSuccess }}
+                </p>
             </div>
             <div class="box-submit">
                 <button
                     class="btn-submit"
                     @click="recover"
                 >
-                    Continute
+                    Continue
                 </button>
                 <nuxt-link
                     to="/login"
@@ -63,12 +69,16 @@ export default {
     data: () => ({
         errorMessage: '',
         errorPass: '',
+        messSuccess: '',
         data: {
             password: '',
             cfPassword: '',
         },
     }),
     methods: {
+        ...mapActions('user', [
+            'resetPassword'
+        ]),
         async recover() {
             if (!this.validatePassword())
                 return;
@@ -78,8 +88,18 @@ export default {
                 return;
             }
 
-            this.$router.push('/');
-
+            let data = {id: this.$route.params.id , password: this.data.password, keyRandom: this.$route.query.key};
+            console.log('this.$route', this.$route);
+            let result = await this.resetPassword(data).catch(err => {
+                console.log(err);
+                this.errorMessage = err.message;
+                this.errorPass = true;
+                this.messSuccess = '';
+                return false;
+            });
+            if (result)
+                this.messSuccess = "Reset password success! Please login again.";
+            console.log('result', result);
         },
         validatePassword() {
             if (!this.data.password || !this.data.cfPassword) {
