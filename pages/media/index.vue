@@ -1,7 +1,7 @@
 <template>
     <section class="page-container page-media">
         <div class="page-header d-flex">
-            <h4>Gallery ({{ totalPlaylists }})</h4>
+            <h4>Gallery ({{ total }})</h4>
             <div class="header-right d-flex">
                 <filter-select
                     @input="handlerType" 
@@ -220,8 +220,8 @@ export default {
             total: 0,
             timeOut: null,
             mediaShow: null,
-            // urlFake: process.env.CDN_BASE + '/experia-solutions-dev/',
-            urlFake: '',
+            urlFake: process.env.CDN_BASE + '/experia-solutions-dev/',
+            // urlFake: '',
         };
     },
     computed: {
