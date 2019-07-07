@@ -85,7 +85,7 @@
                         @dragover="dragover_handler($event)"
                     >
                         <element-container
-                            ref="elementContainer"
+                            :ref="'elementContainer'"
                             :root="root"
                             :design-mode="designMode"
                             :device-preview="devicePreview"
@@ -93,9 +93,17 @@
                             :source="template"
                             :is-setting="isSetting"
                         />
+                        <div
+                            class="box-properties"
+                            :class="{open: isSetting}"
+                        >
+                            <element-setting
+                                :root="root"
+                                ref="elementSetting"
+                            />
+                        </div>
                     </div>
                 </div>
-                <div class="box-properties" />
             </div>
         </div>
     </section>
@@ -194,7 +202,10 @@ export default {
                 console.log('err', err);
                 return false;
             });
-            this.$router.push('/templates/design?template=' + result.id);            
+            if (result.id)
+                this.$router.push('/templates/design?template=' + result.id);
+            else
+                this.$router.push('/templates');
         }
     },
     computed: {
@@ -250,12 +261,13 @@ export default {
         //     }
         // },
         async saveTemplate() {
+            console.log('this.templateData', this.templateData);
             if (this.templateData) {
                 this.saving = true;
                 this.showSavingStatus = true;
-
                 let result;
                 this.templateData.template = this.template;
+                console.log('save nao', this.templateData);
 
                 if (this.$route.query.template) // Update template
                     result = await this.updateTemplate({id: this.$route.query.template, data: this.templateData}).catch(error => {
@@ -389,6 +401,8 @@ export default {
             return element;
         },
         addElement(parentInstance, parentPath, elementName, options) { // Be called from section or section cell elements.
+            console.log('parentPath', parentPath);
+            
             let parentElement = this.getElementByPath(parentPath);
             if (!parentElement)
                 return null;
@@ -397,8 +411,8 @@ export default {
                 parentElement.components = [];
 
             // Only able to add 1 item into cell. Remove old item when add another item.
-            if (parentElement.components.length && !['element-section'].includes(elementName))
-                parentElement.components = [];
+            // if (parentElement.components.length && !['element-section'].includes(elementName))
+            //     parentElement.components = [];
 
             let element = this.createElement(parentPath, elementName, options);
             parentElement.components.push(element);
@@ -421,6 +435,7 @@ export default {
             return element;
         },
         updateElement({instance, path, style, setting}) {
+            // console.log('style, setting', style, setting);
             let element = this.getElementByPath(path);
             if (element) {
                 element.style = style;
@@ -434,27 +449,41 @@ export default {
         },
         dragover_handler(ev) {
             ev.preventDefault();
-            ev.dataTransfer.dropEffect = "move"; 
+            ev.dataTransfer.dropEffect = "move";
         },
         drop_handler(ev) {
             ev.preventDefault();
+            console.log('design end', ev);
+
             // Get the id of the target and add the moved element to the target's DOM
-            let name = ev.dataTransfer.getData("text/html");
-            // ev.target.appendChild(document.getElementById(data));
+            let data = ev.dataTransfer.getData('application/json');
+
             let options = {};
 
             options.setting = {
-                position: 'absolute',
-                top: ev.clientY - 16 + 'px',
-                left: ev.clientX - 16 + 'px'
+                stylesBox: {
+                    position: 'absolute',
+                    top: ev.layerY,
+                    left: ev.layerX,
+                    width: 120,
+                    height: 60,
+                    x: ev.x,
+                    y: ev.y
+
+                }
             };
-            this.$refs.elementContainer.addElement(name, options);
-  
-            console.log('drop_handler', ev);
-            console.log('name', name);
 
-            console.log('drop_handler', ev.clientX, ev.clientY);
-
+            if (!data.includes('{'))
+                this.$refs.elementContainer.addElement(data, options);
+            else {
+                data = JSON.parse(data);
+                options.setting.stylesBox.top = data.setting.stylesBox.top + (ev.y - data.setting.stylesBox.y);
+                options.setting.stylesBox.left = data.setting.stylesBox.left + (ev.x - data.setting.stylesBox.x);
+                document.getElementById(data.key).classList.remove('is-drag');
+                let instance = this.$refs.elementContainer.$refs[data.key][0];
+                let setting = {...data.setting, ...options.setting};
+                this.updateElement({instance: instance, path: data.path, style: data.style, setting: setting});
+            }
         }
     }
 };

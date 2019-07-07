@@ -45,25 +45,23 @@ export default {
         style: {}
     }),
     mounted() {
-        $('body').bind('dragover', function(e) {
-            let dragY = e.pageY;
-            let positionBody = $('.box-landing-head').offset().top + $('.box-landing-head').height();
-            let elScroll = $('#col-right').scrollTop();
+        // $('body').bind('dragover', function(e) {
+        //     let dragY = e.pageY;
+        //     let positionBody = $('.box-landing-head').offset().top + $('.box-landing-head').height();
+        //     let elScroll = $('#col-right').scrollTop();
 
-            // console.log('window height', dragY, $(window).height());
+        //     //// console.log('window height', dragY, $(window).height());
 
-            // console.log('dragY, positionBody, elScroll', dragY, positionBody, elScroll);
+        //     //// console.log('dragY, positionBody, elScroll', dragY, positionBody, elScroll);
 
-            if (dragY < positionBody && elScroll && elScroll > 3) {
-                $('#col-right').scrollTop(+elScroll - 1);
-                // console.log('true');
-            }
+        //     if (dragY < positionBody && elScroll && elScroll > 3) {
+        //         $('#col-right').scrollTop(+elScroll - 1);
+        //     }
 
-            if (dragY > $(window).height() - 100) {
-                $('#col-right').scrollTop(+elScroll + 1);
-                // console.log('bottom');
-            }
-        });
+        //     if (dragY > $(window).height() - 100) {
+        //         $('#col-right').scrollTop(+elScroll + 1);
+        //     }
+        // });
     },
     methods: {
         openSetting() {

@@ -42,7 +42,7 @@ export default {
     methods: {
         dragstart_handler(ev) {
             // Add the target element's id to the data transfer object
-            ev.dataTransfer.setData("text/html", ev.target.id);
+            ev.dataTransfer.setData("application/json", ev.target.id);
             ev.dataTransfer.dropEffect = "move";
         }
     }

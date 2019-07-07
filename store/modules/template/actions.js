@@ -26,6 +26,11 @@ export default {
     },
 
     async updateTemplate({commit}, {id, data}) {
+        delete data.id;
+        delete data.code;
+        delete data.createdAt;
+        delete data.updatedAt;
+
         const result = await this.$axios.$put(`api/template/${id}`, data);
         return result;
     },

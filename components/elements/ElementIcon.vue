@@ -5,13 +5,13 @@
     > 
         <div class="image-out">
             <img
-                v-if="iconClass"
+                v-if="!iconClass"
                 :src="image"
                 class="element-image"
             >
             <i
                 class="icon-site"
-                :class="iconClass? iconClass : ''"
+                :class="iconClass"
                 v-else 
             />
         </div>

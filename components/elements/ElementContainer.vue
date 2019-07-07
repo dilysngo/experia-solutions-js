@@ -14,6 +14,7 @@
             :device-preview="devicePreview"
             :template-id="templateId"
             :source="component"
+            :ref="component.key"
         />
     </div>
 </template>
@@ -83,7 +84,7 @@ export default {
     },
     methods: {
         reset() {
-            // console.log('Reset container');
+            console.log('Reset container');
             this.style = {};
             this.setting = {};
             this.components = [];

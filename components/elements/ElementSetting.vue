@@ -2,20 +2,17 @@
     <div
         id="element-setting"
         class="setting-box-element"
-        v-show="key"
     >
         <div
-            class="setting-head"
-            @mousedown="mouseDown($event)"
+            class="setting-toggle"
+            @click="toggleOpen"
         >
-            <i
-                class="fa fa-cog"
-                aria-hidden="true" 
-            />Settings<i
-                @click="close"
-                class="fa fa-times-circle"
-                aria-hidden="true"
-            />
+            <div class="setting-toggle-box">
+                <i
+                    class="fa fa-angle-left" 
+                    aria-hidden="true"
+                />
+            </div>
         </div>
         <div class="setting-content">
             <no-ssr>
@@ -728,30 +725,30 @@ export default {
         }
     }),
     created() {
-        this.reset();
+        // this.reset();
         // console.log('font', fonts);
     },
     mounted() {
-        this.move.elMove = document.getElementById('element-setting');
+        
     },
     watch: {
-        'style.backgroundSize': function(newData) {
-            this.save();
-        },
-        'config.width': function(newData) {
-            if (newData > 1095)
-                this.config.width = 1095;
-        },
-        'config.fullBox': function(newData) {
-            if (newData) this.setting.fullBox = 'yes';
-            else this.setting.fullBox = 'no';
-            this.save();
-        },
-        'config.trackChecked': function(newData) {
-            if (newData) this.setting.trackClick = 'yes';
-            else this.setting.trackClick = 'no';
-            this.save();
-        },
+        // 'style.backgroundSize': function(newData) {
+        //     this.save();
+        // },
+        // 'config.width': function(newData) {
+        //     if (newData > 1095)
+        //         this.config.width = 1095;
+        // },
+        // 'config.fullBox': function(newData) {
+        //     if (newData) this.setting.fullBox = 'yes';
+        //     else this.setting.fullBox = 'no';
+        //     this.save();
+        // },
+        // 'config.trackChecked': function(newData) {
+        //     if (newData) this.setting.trackClick = 'yes';
+        //     else this.setting.trackClick = 'no';
+        //     this.save();
+        // },
     },
     methods: {
         reset() {
@@ -944,14 +941,6 @@ export default {
                         jQuery(head).append(css);
                     }, 500);
                 }
-
-                if ($('#' + key).length) {
-                    // let rect = $('#' + key)[0].getBoundingClientRect();
-                    // $('#element-setting').css({top: rect.y, left: rect.x});
-                    $('#element-setting').css({top: '92px', left: '43%'});
-                }
-
-                // console.log('this', this.setting);
             });
         },
         openGallery(typeMedia) {
@@ -1077,6 +1066,10 @@ export default {
                 this.removeItem(exist);
 
             // console.log('setting', this.setting);
+        },
+        toggleOpen() {
+            if (this.key)
+                this.root.isSetting = !this.root.isSetting;
         }
 
     }

@@ -1,7 +1,11 @@
 <template>
     <div
         class="element-box" 
-        :style="{position: setting.position, top: setting.top, left: setting.left}"
+        :class="designMode ? 'boder-work' : ''"
+        :style="{top: setting.stylesBox.top + 'px', left: setting.stylesBox.left + 'px', width: setting.stylesBox.width + 'px', height: setting.stylesBox.height + 'px', position: setting.stylesBox.position}"
+        draggable="true"
+        @dragstart="dragstart_handler($event)"
+        @click="openSetting"
     >
         <div class="element-form-default">
             <element-control-box
@@ -17,6 +21,7 @@
             >
                 <element-icon
                     v-if="designMode"
+                    icon-class="icon-text"
                     title="Text"
                 />
             </div>
@@ -114,7 +119,7 @@ export default {
     },
     methods: {
         reset() {
-            // console.log('Reset phone');
+            console.log('Reset phone');
             this.style = {};
             this.setting = {};
 
@@ -133,6 +138,16 @@ export default {
                     this.setting = {...this.setting, ...this.source.setting};
             }
         },
+        dragstart_handler(ev) {
+            // Add the target element's id to the data transfer object
+            ev.dataTransfer.setData('application/json', JSON.stringify(this.source));
+            ev.dataTransfer.dropEffect = "move";
+            document.getElementById(this.key).classList.add('is-drag');
+        },
+        openSetting() {
+            this.root.$refs.elementSetting.open({instance: this, key: this.source.key, path: this.source.path, style: this.source.style, setting: this.source.setting, controls: this.controls});
+            this.root.isSetting = true;
+        }
     }
 };
 </script>

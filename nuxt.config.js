@@ -15,7 +15,11 @@ module.exports = {
         ],
         link: [
             {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
-        ]
+        ],
+        script: [
+            // {src: '//cdn.ckeditor.com/4.6.2/full/ckeditor.js'}
+            {src: '/js/ckeditor/ckeditor.js'} /* eslint-disable */
+        ],
     },
     css: [
         'bootstrap/dist/css/bootstrap.min.css',
@@ -37,6 +41,8 @@ module.exports = {
         {src: '~/plugins/socket.io', ssr: false},
         {src: '~/plugins/event-bus', ssr: false},
         {src: '~/plugins/vue-notification', ssr: false},
+        {src: '~/plugins/vue-ckeditor2', ssr: false},
+        {src: '~/plugins/vue-color', ssr: false},
     ],
     /*
      ** Build configuration
@@ -46,6 +52,8 @@ module.exports = {
             'jquery',
             'bootstrap',
             'vue-notification',
+            'vue-ckeditor2',
+            'vue-color',
         ],
         plugins: [
             new webpack.ProvidePlugin({
