@@ -18,7 +18,7 @@
             <no-ssr>
                 <div class="row">
                     <div
-                        class="col-md-6 pdr-5"
+                        class="col-md-6 p-r-5"
                         v-if="controls.border && controls.border.enable"
                     >
                         <label class="setting-box-label">Border</label>
@@ -31,7 +31,7 @@
                         <span class="unit-setting">px</span>
                     </div>
                     <div
-                        class="col-md-6 pdl-5"
+                        class="col-md-6 p-l-5"
                         v-if="controls.radius && controls.radius.enable"
                     >
                         <label class="setting-box-label">Radius</label>
@@ -57,7 +57,7 @@
                         > 
                     </div>
                     <div
-                        :class="controls.fontSize && controls.fontSize.enable ? 'col-md-6 pdr-5' : 'col-md-12'"
+                        :class="controls.fontSize && controls.fontSize.enable ? 'col-md-6 p-r-5' : 'col-md-12'"
                         v-if="controls.font && controls.font.enable"
                     >
                         <label class="setting-box-label">Font family:</label>
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                     <div
-                        class="col-md-6 pdl-5"
+                        class="col-md-6 p-l-5"
                         v-if="controls.fontSize && controls.fontSize.enable"
                     >
                         <label class="setting-box-label">Font Size:</label>
@@ -164,7 +164,7 @@
                     <div class="col-md-12">
                         <label class="setting-box-label">Margin</label>
                     </div>
-                    <div class="col-md-3 pdr-0">
+                    <div class="col-md-3 p-r-0">
                         <label class="setting-box-label">Top</label>
                         <input
                             class="ip-setting fix-height"
@@ -173,7 +173,7 @@
                             @input="save"
                         >  
                     </div>
-                    <div class="col-md-3 pdl-10 pdr-5">
+                    <div class="col-md-3 p-l-10 p-r-5">
                         <label class="setting-box-label">Right</label>
                         <input
                             class="ip-setting fix-height"
@@ -182,7 +182,7 @@
                             @input="save"
                         > 
                     </div>
-                    <div class="col-md-3 pdr-10 pdl-5">
+                    <div class="col-md-3 p-r-10 p-l-5">
                         <label class="setting-box-label">Bottom</label>
                         <input
                             class="ip-setting fix-height"
@@ -191,7 +191,7 @@
                             @input="save"
                         >
                     </div>
-                    <div class="col-md-3 pdl-0">
+                    <div class="col-md-3 p-l-0">
                         <label class="setting-box-label">Left</label>
                         <input
                             class="ip-setting fix-height"
@@ -202,7 +202,7 @@
                     <div class="col-md-12">
                         <label class="setting-box-label">Padding</label>
                     </div>
-                    <div class="col-md-3 pdr-0">
+                    <div class="col-md-3 p-r-0">
                         <label class="setting-box-label">Top</label>
                         <input
                             class="ip-setting fix-height"
@@ -211,7 +211,7 @@
                             @input="save"
                         >
                     </div>
-                    <div class="col-md-3 pdl-10 pdr-5">
+                    <div class="col-md-3 p-l-10 p-r-5">
                         <label class="setting-box-label">Right</label>
                         <input
                             class="ip-setting fix-height"
@@ -220,7 +220,7 @@
                             @input="save"
                         >  
                     </div>
-                    <div class="col-md-3 pdr-10 pdl-5">
+                    <div class="col-md-3 p-r-10 p-l-5">
                         <label class="setting-box-label">Bottom</label>
                         <input
                             class="ip-setting fix-height"
@@ -229,7 +229,7 @@
                             @input="save"
                         >
                     </div>
-                    <div class="col-md-3 pdl-0">
+                    <div class="col-md-3 p-l-0">
                         <label class="setting-box-label">Left</label>
                         <input
                             class="ip-setting fix-height"
@@ -261,7 +261,7 @@
                                     @click="removeSocial(item)"
                                 ><img
                                     class="rm-image"
-                                    src="/images/icon-close-white.svg"
+                                    src="/images/icon02-close-white.svg"
                                 ></span>
                             </div>
                         </div>
@@ -285,21 +285,21 @@
                                 class="alignment-item"
                                 @click="setting.verticalAlign = 'top-box'; save()"
                             >
-                                <i class="i-con icon-align-top" /> Top
+                                <i class="i-con icon02-align-top" /> Top
                             </li>
                             <li
                                 :class="{active: setting.verticalAlign === 'center-box'}"
                                 class="alignment-item text-center"
                                 @click="setting.verticalAlign = 'center-box'; save()"
                             >
-                                <i class="i-con icon-align-middle" /> Middle
+                                <i class="i-con icon02-align-middle" /> Middle
                             </li>
                             <li
                                 :class="{active: setting.verticalAlign === 'bottom-box'}"
                                 class="alignment-item text-right"
                                 @click="setting.verticalAlign = 'bottom-box'; save()"
                             >
-                                <i class="i-con icon-align-bottom" /> Bottom
+                                <i class="i-con icon02-align-bottom" /> Bottom
                             </li>
                         </ul>
                         <!-- <div class="checkbox-setting">
@@ -317,33 +317,33 @@
                                 class="align-item"
                                 @click="style['text-align'] = 'left'; save()"
                             >
-                                <i class="i-con icon-align-left" />
+                                <i class="i-con icon02-align-left" />
                             </li>
                             <li
                                 :class="{active: style['text-align'] === 'center'}"
                                 class="align-item"
                                 @click="style['text-align'] = 'center'; save()"
                             >
-                                <i class="i-con icon-align-center" />
+                                <i class="i-con icon02-align-center" />
                             </li>
                             <li
                                 :class="{active: style['text-align'] === 'right'}"
                                 class="align-item"
                                 @click="style['text-align'] = 'right'; save()"
                             >
-                                <i class="i-con icon-align-right" />
+                                <i class="i-con icon02-align-right" />
                             </li>
                             <li
                                 :class="{active: style['text-align'] === 'justify'}"
                                 class="align-item"
                                 @click="style['text-align'] = 'justify'; save()"
                             >
-                                <i class="i-con icon-align-justify" />
+                                <i class="i-con icon02-align-justify" />
                             </li>
                         </ul>
                     </div>
                     <div
-                        class="col-md-6 pdr-5" 
+                        class="col-md-6 p-r-5" 
                         v-if="controls.width && controls.width.enable"
                     >
                         <label class="setting-box-label">Width</label>
@@ -357,7 +357,7 @@
                         <!-- <span class="unit-setting">px</span> -->
                     </div>
                     <div
-                        class="col-md-6 pdl-5"
+                        class="col-md-6 p-l-5"
                         v-if="controls.height && controls.height.enable"
                     >
                         <label class="setting-box-label">Height</label>
@@ -410,28 +410,28 @@
                                 class="align-item"
                                 @click="style['text-align'] = 'left'; save()"
                             >
-                                <i class="i-con icon-align-left" />
+                                <i class="i-con icon02-align-left" />
                             </li>
                             <li
                                 :class="{active: style['text-align'] === 'center'}"
                                 class="align-item"
                                 @click="style['text-align'] = 'center'; save()"
                             >
-                                <i class="i-con icon-align-center" />
+                                <i class="i-con icon02-align-center" />
                             </li>
                             <li
                                 :class="{active: style['text-align'] === 'right'}"
                                 class="align-item"
                                 @click="style['text-align'] = 'right'; save()"
                             >
-                                <i class="i-con icon-align-right" />
+                                <i class="i-con icon02-align-right" />
                             </li>
                             <li
                                 :class="{active: style['text-align'] === 'justify'}"
                                 class="align-item"
                                 @click="style['text-align'] = 'justify'; save()"
                             >
-                                <i class="i-con icon-align-justify" />
+                                <i class="i-con icon02-align-justify" />
                             </li>
                         </ul>
                     </div>
@@ -564,27 +564,6 @@
                     </div>
                     <div
                         class="col-12"
-                        v-if="controls.track && controls.track.enable"
-                    >
-                        <input
-                            type="checkbox"
-                            id="track-click"
-                            v-model="config.trackChecked"
-                        > <label
-                            style="display: inline-block; margin-top: 10px"
-                            class="setting-box-label"
-                            for="track-click"
-                        >Track</label>
-                        <input
-                            placeholder="Track name"
-                            class="ip-setting"
-                            type="text"
-                            v-model="setting.trackName"
-                            @input="save"
-                        > 
-                    </div>
-                    <div
-                        class="col-12"
                         v-if="controls.addList && controls.addList.enable"
                     >
                         <label class="setting-box-label">Items</label>
@@ -706,12 +685,12 @@ export default {
             paddingRight: 0,
             fontSize: '',
             listSocial: [
-                {social: 'facebook', image: '/images/elements/icon-fb.svg', title: 'Facebook', value: ''},
-                {social: 'instagram', image: '/images/elements/icon-instagram.svg', title: 'Instagram', value: ''},
-                {social: 'google-plus', image: '/images/elements/icon-gg+.svg', title: 'Google+', value: ''},
-                {social: 'youtube', image: '/images/elements/icon-youtube.svg', title: 'Youtube', value: ''},
-                {social: 'twitter', image: '/images/elements/icon-tw.svg', title: 'Twitter', value: ''},
-                {social: 'linkedin', image: '/images/elements/icon-linkin.svg', title: 'Linkedin', value: ''},
+                {social: 'facebook', image: '/images/elements/icon02-fb.svg', title: 'Facebook', value: ''},
+                {social: 'instagram', image: '/images/elements/icon02-instagram.svg', title: 'Instagram', value: ''},
+                {social: 'google-plus', image: '/images/elements/icon02-gg+.svg', title: 'Google+', value: ''},
+                {social: 'youtube', image: '/images/elements/icon02-youtube.svg', title: 'Youtube', value: ''},
+                {social: 'twitter', image: '/images/elements/icon02-tw.svg', title: 'Twitter', value: ''},
+                {social: 'linkedin', image: '/images/elements/icon02-linkin.svg', title: 'Linkedin', value: ''},
             ],
             fullBox: false,
             trackChecked: false

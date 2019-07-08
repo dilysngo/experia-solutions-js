@@ -114,6 +114,7 @@ import {mapGetters, mapActions} from 'vuex';
 import FilterSelect from '~/components/FilterSelect';
 import ElementList from '~/components/elements/ElementList';
 import ElementSetting from '~/components/elements/ElementSetting';
+import ElementResize from '~/components/elements/ElementResize';
 import ElementClose from '~/components/elements/ElementClose';
 import ElementIcon from '~/components/elements/ElementIcon';
 import ElementControlBox from '~/components/elements/ElementControlBox';
@@ -121,6 +122,7 @@ import ElementContainer from '~/components/elements/ElementContainer';
 import {convertToString} from '~/helpers/dateHelper';
 
 Vue.component('element-setting', ElementSetting);
+Vue.component('element-resize', ElementResize);
 Vue.component('element-close', ElementClose);
 Vue.component('element-icon', ElementIcon);
 Vue.component('element-control-box', ElementControlBox);
@@ -140,7 +142,7 @@ export default {
             showSavingStatus: false,
             saving: false,
             timeoutSaving: null,
-            timeoutSavingMS: 3000,
+            timeoutSavingMS: 500,
             timeoutTemporaryQueue: null,
             designMode: true,
             devicePreview: 'design',
@@ -435,7 +437,7 @@ export default {
             return element;
         },
         updateElement({instance, path, style, setting}) {
-            // console.log('style, setting', style, setting);
+            console.log('style, setting', style, setting);
             let element = this.getElementByPath(path);
             if (element) {
                 element.style = style;
@@ -457,6 +459,10 @@ export default {
 
             // Get the id of the target and add the moved element to the target's DOM
             let data = ev.dataTransfer.getData('application/json');
+            if (!data)
+                return;
+
+            console.log('design data', data);
 
             let options = {};
 
@@ -469,7 +475,6 @@ export default {
                     height: 60,
                     x: ev.x,
                     y: ev.y
-
                 }
             };
 
@@ -479,6 +484,8 @@ export default {
                 data = JSON.parse(data);
                 options.setting.stylesBox.top = data.setting.stylesBox.top + (ev.y - data.setting.stylesBox.y);
                 options.setting.stylesBox.left = data.setting.stylesBox.left + (ev.x - data.setting.stylesBox.x);
+                options.setting.stylesBox.width = data.setting.stylesBox.width;
+                options.setting.stylesBox.height = data.setting.stylesBox.height;
                 document.getElementById(data.key).classList.remove('is-drag');
                 let instance = this.$refs.elementContainer.$refs[data.key][0];
                 let setting = {...data.setting, ...options.setting};

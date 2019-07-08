@@ -1,5 +1,8 @@
 <template>
-    <div class="control-box">
+    <div
+        class="control-box"
+        @click.stop
+    >
         <span
             class="icon-move"
             @mousedown="enableDragElement"
