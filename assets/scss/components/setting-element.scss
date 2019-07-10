@@ -60,6 +60,7 @@
 }
 .element-media-Video {
     max-width: 100%;
+    width: 100%;
     height: auto;
     display: inline-block;
     position: relative;
@@ -662,7 +663,7 @@
             border: 1px solid #bfbfbf;
             .align-item{
                 display: inline-block;
-                width: calc(100% / 4);
+                width: calc(100% / 4.2);
                 border-right: 1px solid #bfbfbf;
                 padding: 5px;
                 text-align: center;

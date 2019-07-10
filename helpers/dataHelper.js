@@ -16,6 +16,10 @@ export function convertToSize(size) {
     return (size / 1000000).toFixed(2) + 'MB';
 }
 
+export function convertToUrl(url) {
+    return process.env.CDN_BASE + '/experia-solutions-dev/' + url;
+}
+
 export function setCookie(cname, cvalue, exdays) {
     let d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));

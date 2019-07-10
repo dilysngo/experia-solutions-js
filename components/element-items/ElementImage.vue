@@ -13,7 +13,7 @@
             :ref="'resize-'+key"
         />
         <div
-            class="element-form-default" 
+            class="element-form-default"
             draggable="true"
             @dragstart="dragstart_handler($event)"
         >
@@ -26,32 +26,38 @@
             />
             <div
                 class="element-not-data"
-                v-if="!setting.content"
+                v-if="!setting.url"
             >
                 <element-icon
                     v-if="designMode"
-                    icon-class="icon-text"
-                    title="Text"
+                    icon-class="icon-picture"
+                    title="Image"
                 />
             </div>
             <div
-                class="element-have-data"  
+                class="element-have-data"
+                :class="setting.verticalAlign"
+                style="margin: 0px -15px"
                 :style="{margin: setting.marginTop + 'em ' + setting.marginRight + 'em ' + setting.marginBottom + 'em ' + setting.marginLeft + 'em', padding: setting.paddingTop + 'em ' + setting.paddingRight + 'em ' + setting.paddingBottom + 'em '+ setting.paddingLeft + 'em' }"
-                :class="[setting.verticalAlign]"
-                v-else
+                v-else 
             >
                 <div
-                    class="full-width" 
-                    :style="style"
-                    v-html="setting.content" 
-                />
+                    class="box-elimage"
+                    :style="{'text-align': style['text-align']}"  
+                >
+                    <a
+                        :style="`background-image:url(${convertToUrl(setting.url)}); background-size: ${style.backgroundSize}; width: ${style.width}; height: ${style.height}`"
+                        class="img-element auto-height fix-mobile"
+                    />
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-var WebFont;
+import {convertToUrl} from '~/helpers/dataHelper';
+
 export default {
     props: {
         root: {
@@ -62,7 +68,7 @@ export default {
             type: Boolean,
             default: false
         },
-        templateId: {
+        landingId: {
             type: String,
             default: ''
         },
@@ -72,23 +78,31 @@ export default {
         }
     },
     data: () => ({
-        title: 'Text',
+        title: 'Image',
         key: '',
         path: '',
         style: {},
-        setting: {
-            url: null,
-            placeholder: null,
-            content: null,
-        },
+        setting: {},
         controls: {
-            font: {
+            width: {
                 enable: true
             },
-            textEditor: {
+            height: {
+                enable: true
+            },
+            link: {
+                enable: true
+            },
+            btnUpload: {
                 enable: true
             },
             btnSubmit: {
+                enable: true
+            },
+            backgroundSize: {
+                enable: true
+            },
+            elementAlign: {
                 enable: true
             },
             verticalAlign: {
@@ -97,39 +111,19 @@ export default {
             track: {
                 enable: true
             },
+
         },
-        mode: true
+        convertToUrl: convertToUrl
     }),
     created() {
         this.reset();
-        this.mode = this.designMode;
-    },
-    mounted() {
-        WebFont = require('webfontloader');
     },
     watch: {
-        mode: function(newVal) {
-            // console.log('newVal', newVal);
-        },
-        style: {
-            handler(value) {
-                let font = [];
-                if (value['font-family']) {
-                    font.push(value['font-family']);
-                    if (WebFont)
-                        WebFont.load({
-                            google: {
-                                families: font
-                            }
-                        });
-                }
-            },
-            deep: true
-        }
+       
     },
     methods: {
         reset() {
-            console.log('Reset phone', this.source);
+            console.log('Reset media', this.source);
             this.style = {};
             this.setting = {};
 
@@ -150,6 +144,11 @@ export default {
                 if (this.$refs['resize-' + this.key])
                     this.$refs['resize-' + this.key].reset();
             }
+
+            // if (!this.style.height)
+            //     this.source.style.height = 150 / 13 + 'em';
+            // if (!this.style.width)
+            //     this.source.style.width = 200 / 13 + 'em';
         },
         dragstart_handler(ev) {
             // Add the target element's id to the data transfer object

@@ -90,6 +90,11 @@ export default {
         this.style = this.source.style;
     },
     methods: {
+        reset() {
+            console.log('Reset resize', this.source);
+            this.setting = this.source.setting;
+            this.style = this.source.style;
+        },
         resize(position, e) {
             console.log('resize');
             let valueX = this.x - e.x;

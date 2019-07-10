@@ -99,10 +99,16 @@
                         >
                             <element-setting
                                 :root="root"
+                                @openGallery="openGallery($event)"
                                 ref="elementSetting"
                             />
                         </div>
                     </div>
+                    <gallery
+                        ref="gallery" 
+                        id="gallery"
+                        @galleryImage="handleGallery"
+                    /> 
                 </div>
             </div>
         </div>
@@ -119,6 +125,7 @@ import ElementClose from '~/components/elements/ElementClose';
 import ElementIcon from '~/components/elements/ElementIcon';
 import ElementControlBox from '~/components/elements/ElementControlBox';
 import ElementContainer from '~/components/elements/ElementContainer';
+import Gallery from '~/components/Gallery';
 import {convertToString} from '~/helpers/dateHelper';
 
 Vue.component('element-setting', ElementSetting);
@@ -127,6 +134,8 @@ Vue.component('element-close', ElementClose);
 Vue.component('element-icon', ElementIcon);
 Vue.component('element-control-box', ElementControlBox);
 Vue.component('element-container', ElementContainer);
+Vue.component('gallery', Gallery);
+
 export default {
     components: {
         FilterSelect,
@@ -148,6 +157,7 @@ export default {
             devicePreview: 'design',
             isSetting: false,
             template: null,
+            dataGallery: null,
             templateData: null,
             pickersBackground: false,
             backgroundDefault: {
@@ -157,7 +167,6 @@ export default {
                 rgba: {r: 25, g: 77, b: 51, a: 1},
                 a: 1
             },
-            dataGallery: null,
             backgroundImage: null,
             dataCategory: [
                 {name: 'Category 1', value: 1}, 
@@ -491,7 +500,28 @@ export default {
                 let setting = {...data.setting, ...options.setting};
                 this.updateElement({instance: instance, path: data.path, style: data.style, setting: setting});
             }
-        }
+        },
+        openGallery(value) {
+            if (value === 1) {
+                this.$refs.gallery.open(1);
+            }
+            else {
+                this.$refs.gallery.open(value.type);
+                this.dataGallery = value.data;
+            }
+        },
+        handleGallery(data) {
+            if (!this.dataGallery) {
+                this.backgroundImage = data.urlImage;
+                this.changeBackground('image');
+            }
+            else {
+                this.dataGallery.setting.url = data.imageInfo ? data.imageInfo.url : data.videoInfo.url;
+                this.dataGallery.setting.mediaId = data.id;
+                this.updateElement(this.dataGallery);
+                this.pushToTemporaryQueue();
+            }
+        },
     }
 };
 </script>

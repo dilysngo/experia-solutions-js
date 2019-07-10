@@ -123,7 +123,7 @@
                                 aria-hidden="true"
                             />From Gallery
                         </button>
-                        <div class="text-right">
+                        <!-- <div class="text-right">
                             <input
                                 type="checkbox"
                                 id="full-box"
@@ -133,7 +133,7 @@
                                 class="setting-box-label"
                                 for="full-box"
                             >No padding container</label>
-                        </div>
+                        </div> -->
                     </div>
                     <div
                         class="col-12"
@@ -746,7 +746,7 @@ export default {
                 'font-weight': null,
                 'font-style': null,
                 'text-decoration': null,
-                'text-align': 'center',
+                'text-align': '',
                 'background-color': null,
                 backgroundSize: 'contain',
                 'border-color': null,

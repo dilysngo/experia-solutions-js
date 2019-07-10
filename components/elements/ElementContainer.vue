@@ -30,8 +30,8 @@ import ElementText from '~/components/element-items/ElementText';
 // import ElementDropdown from '~/components/element-items/ElementDropdown';
 // import ElementCheckbox from '~/components/element-items/ElementCheckbox';
 // import ElementRadio from '~/components/element-items/ElementRadio';
-// import ElementVideo from '~/components/element-items/ElementVideo';
-// import ElementImage from '~/components/element-items/ElementImage';
+import ElementVideo from '~/components/element-items/ElementVideo';
+import ElementImage from '~/components/element-items/ElementImage';
 
 Vue.component('element-section', ElementSection);
 Vue.component('element-text', ElementText);
@@ -42,8 +42,8 @@ Vue.component('element-text', ElementText);
 // Vue.component('element-dropdown', ElementDropdown);
 // Vue.component('element-checkbox', ElementCheckbox);
 // Vue.component('element-radio', ElementRadio);
-// Vue.component('element-image', ElementImage);
-// Vue.component('element-video', ElementVideo);
+Vue.component('element-image', ElementImage);
+Vue.component('element-video', ElementVideo);
 
 export default {
     props: {
@@ -70,7 +70,7 @@ export default {
         isSetting: {
             type: Boolean,
             default: false
-        }
+        },
     },
     data: () => ({
         key: '',

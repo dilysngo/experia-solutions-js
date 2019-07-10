@@ -52,7 +52,7 @@ export default {
         isSetting: {
             type: Boolean,
             default: false
-        }
+        },
     },
     data: () => ({
         key: '',
