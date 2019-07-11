@@ -1,6 +1,7 @@
 import Vuex from 'vuex';
 import user from './modules/user';
 import media from './modules/media';
+import template from './modules/template';
 import socket from './modules/socket';
 import {getCookie} from '../helpers/dataHelper';
 
@@ -24,6 +25,7 @@ export default function() {
         modules: {
             user,
             media,
+            template,
             socket
         }
     });

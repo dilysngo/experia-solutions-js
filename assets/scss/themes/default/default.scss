@@ -1,3 +1,6 @@
+body {
+    overflow: hidden;
+}
 .theme-default{
     //----Color
     $color-primary: $black-main;
@@ -27,6 +30,8 @@
     @import './components/site-header.scss';
     @import './components/block-template.scss';
     @import './components/success-notify.scss';
+    @import './components/setting-element.scss';
+    @import './components/gallery.scss';
     @import './pages/login.scss';
     @import './pages/forgot-password.scss';
     @import './pages/recover-password.scss';

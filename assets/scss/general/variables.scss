@@ -82,7 +82,7 @@
 }
 
 @font-face {
-    font-family: "icomoon";
+    font-family: "icomoon-01";
     src: url("/fonts/icomoon.eot?15zyaq");
     src: url("/fonts/icomoon.eot?15zyaq#iefix") format("embedded-opentype"),
         url("/fonts/icomoon.ttf?15zyaq") format("truetype"),
@@ -91,11 +91,34 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'icomoon-02';
+    src:  url('/fonts/Icomoon/icomoon.eot?39l367');
+    src:  url('/fonts/Icomoon/icomoon.eot?39l367#iefix') format('embedded-opentype'), url('/fonts/Icomoon/icomoon.ttf?39l367') format('truetype'), url('/fonts/Icomoon/icomoon.woff?39l367') format('woff'), url('/fonts/Icomoon/icomoon.svg?39l367#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
 [class^="icon-"],
 [class*=" icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
-    font-family: "icomoon" !important;
+    font-family: "icomoon-01" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon02-"],
+[class*=" icon02-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: "icomoon-02" !important;
     speak: none;
     font-style: normal;
     font-weight: normal;
@@ -207,6 +230,114 @@
 .icon-sizes:before {
     content: "\e90a";
 }
+.icon02-align-left:before {
+    content: "\e900";
+}
+.icon02-align-center:before {
+    content: "\e901";
+}
+.icon02-align-right:before {
+    content: "\e902";
+}
+.icon02-align-justify:before {
+    content: "\e903";
+}
+.icon02-align-middle:before {
+    content: "\e904";
+}
+.icon02-device-design:before {
+    content: "\e905";
+}
+.icon02-align-top:before {
+    content: "\e906";
+}
+.icon02-align-bottom:before {
+    content: "\e907";
+}
+.icon02-back:before {
+    content: "\e908";
+}
+.icon02-arr-topbot:before {
+    content: "\e909";
+}
+.icon02-upgrade:before {
+    content: "\e90a";
+    color: #000;
+}
+.icon02-arrow-2:before {
+    content: "\e90b";
+}
+.icon02-arrow-1:before {
+    content: "\e90c";
+}
+.icon02-device-mobix:before {
+    content: "\e90d";
+}
+.icon02-device-mobiy:before {
+    content: "\e90e";
+}
+.icon02-device-tablet:before {
+    content: "\e90f";
+}
+.icon02-device-laptop:before {
+    content: "\e910";
+}
+.icon02-mobile-rotate:before {
+    content: "\e911";
+    color: #4a4a4a;
+}
+.icon02-mobile:before {
+    content: "\e912";
+}
+.icon02-tablet:before {
+    content: "\e913";
+    color: #4a4a4a;
+}
+.icon02-global:before {
+    content: "\e914";
+}
+.icon02-remove:before {
+  content: "\e915";
+}
+.icon02-edit:before {
+    content: "\e916";
+}
+.icon02-view:before {
+    content: "\e917";
+}
+.icon02-contact-list:before {
+    content: "\e918";
+}
+.icon02-dashboard:before {
+    content: "\e919";
+}
+.icon02-search:before {
+    content: "\e91a";
+}
+.icon02-settings:before {
+    content: "\e91b";
+}
+.icon02-campaign:before {
+    content: "\e91c";
+}
+.icon02-client:before {
+    content: "\e91d";
+}
+.icon02-date:before {
+    content: "\e91e";
+}
+.icon02-logout:before {
+    content: "\e91f";
+}
+.icon02-media:before {
+    content: "\e920";
+}
+.icon02-landing:before {
+    content: "\e921";
+}
+.icon02-client-management:before {
+    content: "\e922";
+}
 
 // Color
 $black: #000000;
@@ -284,9 +415,12 @@ h6 {
     display: inline-block;
     flex: initial;
 }
+.full-width {
+    width: 100%;
+}
 
-$size-list: (5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70);
-$size-num: (5px, 10px, 15px, 20px, 25px, 30px, 35px, 40px, 45px, 50px, 55px, 60px, 65px, 70px);
+$size-list: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70);
+$size-num: (0px, 5px, 10px, 15px, 20px, 25px, 30px, 35px, 40px, 45px, 50px, 55px, 60px, 65px, 70px);
 
 @for $i from 1 through length($size-list) {
   .p-#{nth($size-list, $i)} {
