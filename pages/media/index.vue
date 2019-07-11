@@ -1,7 +1,7 @@
 <template>
     <section class="page-container page-media">
         <div class="page-header d-flex">
-            <h4>Gallery ({{ totalPlaylists }})</h4>
+            <h4>Gallery ({{ total }})</h4>
             <div class="header-right d-flex">
                 <filter-select
                     @input="handlerType" 
@@ -53,7 +53,7 @@
                         >
                             <div
                                 class="g-thumbnail"
-                                :style="{ 'background-image': gItem.type !== mediaType.Video ? 'url(' + urlFake + gItem.imageInfo.url + ')' : '' }"
+                                :style="{ 'background-image': gItem.type !== mediaType.Video ? 'url(' + convertToUrl(gItem.imageInfo.url) + ')' : '' }"
                             >
                                 <div
                                     class="g-view"
@@ -72,7 +72,7 @@
                                         preload="auto"
                                         crossOrigin="anonymous"
                                     >
-                                        <source :src="urlFake + gItem.videoInfo.url ">
+                                        <source :src="convertToUrl(gItem.videoInfo.url)">
                                     </video>
                                     <!-- <img 
                                         v-else
@@ -170,7 +170,7 @@
                     </video>
                     <img
                         v-show="mediaShow && mediaShow.type === mediaType.Image"
-                        :src="urlFake + (mediaShow && mediaShow.imageInfo && mediaShow.imageInfo.url)"
+                        :src="(mediaShow && mediaShow.imageInfo && convertToUrl(mediaShow.imageInfo.url))"
                         class="img-preview"
                     >
                 </div>
@@ -188,7 +188,7 @@ import FilterSelect from '~/components/FilterSelect';
 import {mapGetters, mapActions} from 'vuex';
 import {MediaType} from '~/common/commonType';
 import {convertToDateString} from '~/helpers/dateHelper';
-import {convertToSize, pagination} from '~/helpers/dataHelper';
+import {convertToSize, convertToUrl, pagination} from '~/helpers/dataHelper';
 import Pagination from '~/components/Pagination';
 import PopupConfirm from '~/components/PopupConfirm';
 
@@ -220,8 +220,7 @@ export default {
             total: 0,
             timeOut: null,
             mediaShow: null,
-            // urlFake: process.env.CDN_BASE + '/experia-solutions-dev/',
-            urlFake: '',
+            convertToUrl: convertToUrl,
         };
     },
     computed: {
@@ -295,7 +294,7 @@ export default {
             if (item.type === this.mediaType.Video) {
                 let frameVideo = document.getElementById('videoDisplay');
                 console.log('asdsadsasad', $('#modalVideo'));
-                frameVideo.src = this.urlFake + item.videoInfo.url;
+                frameVideo.src = convertToUrl(item.videoInfo.url);
                 frameVideo.load();
                 frameVideo.play();
             }
