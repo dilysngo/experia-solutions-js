@@ -17,7 +17,7 @@ export function convertToSize(size) {
 }
 
 export function convertToUrl(url) {
-    return process.env.CDN_BASE + '/experia-solutions-dev/' + url;
+    return process.env.CDN_BASE + url;
 }
 
 export function setCookie(cname, cvalue, exdays) {
