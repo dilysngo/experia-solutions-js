@@ -71,6 +71,10 @@ export default {
             type: Boolean,
             default: false
         },
+        elementSelected: {
+            type: Object,
+            default: () => {}
+        }
     },
     data: () => ({
         key: '',

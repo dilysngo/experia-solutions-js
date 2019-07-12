@@ -29,11 +29,8 @@
                 <div class="box-widget">
                     <div class="toolbar d-flex justify-content-between align-items-center">
                         <div class="toolbar-left d-flex">
-                            <p>
-                                <i class="icon-loading icon-site" />
-                                Saving
-                            </p>
                             <button
+                                @click="removeItemSelected"
                                 class="btn-tool"
                             >
                                 <i class="icon-trash-fill icon-site" />
@@ -49,15 +46,23 @@
                                 <i class="icon-layout-down icon-site" />
                             </button>
                             <button
+                                :disabled="!enableUndo" 
+                                @click="undo"
                                 class="btn-tool"
                             >
                                 <i class="icon-undo icon-site" />
                             </button>
                             <button
+                                :disabled="!enableRedo"
+                                @click="redo"
                                 class="btn-tool"
                             >
                                 <i class="icon-next icon-site" />
                             </button>
+                            <p v-if="saving">
+                                <i class="icon-loading icon-site" />
+                                Saving
+                            </p>
                         </div>
                         <div class="toolbar-right">
                             <button
@@ -92,6 +97,7 @@
                             v-if="template"
                             :source="template"
                             :is-setting="isSetting"
+                            :element-selected="elementSelected"
                         />
                         <div
                             class="box-properties"
@@ -151,11 +157,12 @@ export default {
             showSavingStatus: false,
             saving: false,
             timeoutSaving: null,
-            timeoutSavingMS: 500,
+            timeoutSavingMS: 1000,
             timeoutTemporaryQueue: null,
             designMode: true,
             devicePreview: 'design',
             isSetting: false,
+            elementSelected: null,
             template: null,
             dataGallery: null,
             templateData: null,
@@ -223,6 +230,13 @@ export default {
         ...mapGetters('user', [
             'userAuth'
         ])
+    },
+    watch: {
+        elementSelected: function(newData) {
+            console.log('newData', newData);
+            $('.element-box').removeClass('selected');
+            document.querySelector('#' + newData.key).classList.add('selected');
+        }
     },
     methods: {
         ...mapActions('template', [
@@ -436,6 +450,7 @@ export default {
             return element;
         },
         removeElement(parentPath, key) { // Be called from elements.
+            console.log('parentPath', parentPath);
             let element;
             let parentElement = this.getElementByPath(parentPath);
             let index = parentElement && parentElement.components ? parentElement.components.findIndex(component => component.key === key) : -1;
@@ -457,6 +472,10 @@ export default {
 
                 this.pushToTemporaryQueue();
             }
+        },
+        removeItemSelected() {
+            if (this.elementSelected && this.elementSelected.key)
+                this.removeElement(this.template.path, this.elementSelected.key);
         },
         dragover_handler(ev) {
             ev.preventDefault();

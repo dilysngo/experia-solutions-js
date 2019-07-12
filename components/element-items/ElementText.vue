@@ -160,6 +160,7 @@ export default {
         openSetting() {
             this.root.$refs.elementSetting.open({instance: this, key: this.source.key, path: this.source.path, style: this.source.style, setting: this.source.setting, controls: this.controls});
             this.root.isSetting = true;
+            this.root.elementSelected = this.source;
         },
     }
 };

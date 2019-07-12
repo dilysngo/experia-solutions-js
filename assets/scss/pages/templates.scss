@@ -184,7 +184,7 @@
     }
 }
 .element-box {
-    &:hover{
+    &.selected{
         .control-box{
             opacity: 1;
         }
@@ -192,6 +192,14 @@
             opacity: 1 !important;
         }
     }
+    // &:hover{
+    //     .control-box{
+    //         opacity: 1;
+    //     }
+    //     .resizer {
+    //         opacity: 1 !important;
+    //     }
+    // }
 }
 .ip-setting{
     &.fix-height{
