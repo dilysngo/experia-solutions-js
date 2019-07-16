@@ -37,11 +37,13 @@
                             </button>
                             <button
                                 class="btn-tool"
+                                @click="bringForward"
                             >
                                 <i class="icon-layout-up icon-site" />
                             </button>
                             <button
                                 class="btn-tool"
+                                @click="sendBackward"
                             >
                                 <i class="icon-layout-down icon-site" />
                             </button>
@@ -59,10 +61,37 @@
                             >
                                 <i class="icon-next icon-site" />
                             </button>
+                            <button
+                                class="btn-tool"
+                                @click="openGallery(mediaType.Image)"
+                            >
+                                <i class="icon-site icon-picture" />
+                            </button>
+                            <button
+                                class="btn-tool"
+                                @click="pickersBackground = !pickersBackground"
+                            >
+                                <i class="icon-site icon-picture" />
+                            </button>
                             <p v-if="saving">
                                 <i class="icon-loading icon-site" />
                                 Saving
                             </p>
+                            <div
+                                class="box-pts"
+                                v-show="pickersBackground"
+                            >
+                                <no-ssr>
+                                    <pts-picker
+                                        v-model="backgroundDefault"
+                                        @input="changeBackground"
+                                    />
+                                </no-ssr>
+                                <span
+                                    @click="pickersBackground = false"
+                                    class="pts-close"
+                                >Close</span>
+                            </div>
                         </div>
                         <div class="toolbar-right">
                             <button
@@ -132,7 +161,9 @@ import ElementIcon from '~/components/elements/ElementIcon';
 import ElementControlBox from '~/components/elements/ElementControlBox';
 import ElementContainer from '~/components/elements/ElementContainer';
 import Gallery from '~/components/Gallery';
+import {MediaType} from '~/common/commonType'; // eslint-disable-line
 import {convertToString} from '~/helpers/dateHelper';
+import {convertToUrl} from '~/helpers/dataHelper';
 
 Vue.component('element-setting', ElementSetting);
 Vue.component('element-resize', ElementResize);
@@ -175,6 +206,7 @@ export default {
                 a: 1
             },
             backgroundImage: null,
+            mediaType: MediaType,
             dataCategory: [
                 {name: 'Category 1', value: 1}, 
                 {name: 'Category 2', value: 2},
@@ -473,6 +505,27 @@ export default {
                 this.pushToTemporaryQueue();
             }
         },
+        sendBackward() {
+            if (this.elementSelected && this.elementSelected.key) {
+                if (this.elementSelected.setting.stylesBox.zIndex >= 1) {
+                    let setting = this.elementSelected.setting;
+                    let style = this.elementSelected.style;
+                    setting.stylesBox.zIndex -= 1;
+                    let instance = this.$refs.elementContainer.$refs[this.elementSelected.key][0];
+                    this.updateElement({instance: instance, path: this.elementSelected.path, style: style, setting: setting});
+                }
+
+            }
+        },
+        bringForward() {
+            if (this.elementSelected && this.elementSelected.key) {
+                let setting = this.elementSelected.setting;
+                let style = this.elementSelected.style;
+                setting.stylesBox.zIndex += 1;
+                let instance = this.$refs.elementContainer.$refs[this.elementSelected.key][0];
+                this.updateElement({instance: instance, path: this.elementSelected.path, style: style, setting: setting});
+            }
+        },
         removeItemSelected() {
             if (this.elementSelected && this.elementSelected.key)
                 this.removeElement(this.template.path, this.elementSelected.key);
@@ -502,7 +555,8 @@ export default {
                     width: 120,
                     height: 60,
                     x: ev.x,
-                    y: ev.y
+                    y: ev.y,
+                    zIndex: 1,
                 }
             };
 
@@ -518,6 +572,9 @@ export default {
                 let instance = this.$refs.elementContainer.$refs[data.key][0];
                 let setting = {...data.setting, ...options.setting};
                 this.updateElement({instance: instance, path: data.path, style: data.style, setting: setting});
+                if (this.elementSelected && this.elementSelected.key) {
+                    this.$refs.elementContainer.$refs[this.elementSelected.key][0].openSetting();
+                }
             }
         },
         openGallery(value) {
@@ -531,7 +588,7 @@ export default {
         },
         handleGallery(data) {
             if (!this.dataGallery) {
-                this.backgroundImage = data.urlImage;
+                this.backgroundImage = convertToUrl(data.imageInfo.url);
                 this.changeBackground('image');
             }
             else {

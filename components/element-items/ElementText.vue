@@ -2,7 +2,7 @@
     <div
         class="element-box" 
         :class="designMode ? 'boder-work' : ''"
-        :style="{top: setting.stylesBox.top + 'px', left: setting.stylesBox.left + 'px', width: setting.stylesBox.width + 'px', height: setting.stylesBox.height + 'px', position: setting.stylesBox.position}"
+        :style="{top: setting.stylesBox.top + 'px', left: setting.stylesBox.left + 'px', width: setting.stylesBox.width + 'px', height: setting.stylesBox.height + 'px', position: setting.stylesBox.position, zIndex:setting.stylesBox.zIndex}"
         @click="openSetting"
     >
         <element-resize
@@ -88,13 +88,7 @@ export default {
             textEditor: {
                 enable: true
             },
-            btnSubmit: {
-                enable: true
-            },
             verticalAlign: {
-                enable: true
-            },
-            track: {
                 enable: true
             },
         },
