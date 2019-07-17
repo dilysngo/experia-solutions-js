@@ -121,8 +121,8 @@ export default {
         SiteHeader
     },
     created() {
-        if (process.browser && this.$auth.isAuthenticated())
-            this.connectMessageSocket();
+        // if (process.browser && this.$auth.isAuthenticated())
+        //     this.connectMessageSocket();
     },
     methods: {
         ...mapActions('socket', [

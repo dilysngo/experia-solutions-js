@@ -1,7 +1,10 @@
 <template>
     <section class="page-container page-create">
         <div class="page-header d-flex">
-            <h4>Design space</h4>
+            <!-- <h4>Design space</h4> -->
+            <input
+                v-model="titlePage" 
+            >
             <div class="d-flex">
                 <filter-select
                     placeholder="Ratio 16:9"
@@ -181,6 +184,7 @@ export default {
     data() {
         return {
             root: null,
+            titlePage: '',
             enableUndo: false,
             enableRedo: false,
             maxQueues: 100,
@@ -240,22 +244,9 @@ export default {
         if (this.$route.query.template)
             await this.getTemplateById(this.$route.query.template); // Update template
         else if (this.$route.query.screen) // Update template of screen
-            this.getTemplateByScreen(this.$route.query.screen);
+            this.getTemplateScreen(this.$route.query.screen);
         else {
-            let dataCreate = {
-                userId: this.userAuth.id,
-                code: this.userAuth.id,
-                name: 'Template-' + convertToString(new Date()),
-                isDrag: true
-            };
-            let result = await this.createTemplate(dataCreate).catch(err => {
-                console.log('err', err);
-                return false;
-            });
-            if (result.id)
-                this.$router.push('/templates/design?template=' + result.id);
-            else
-                this.$router.push('/templates');
+            this.$router.push('/templates');
         }
     },
     computed: {
@@ -273,8 +264,10 @@ export default {
     methods: {
         ...mapActions('template', [
             'getTemplate',
+            'getTemplateByScreen',
             'createTemplate',
-            'updateTemplate'
+            'updateTemplate',
+            'updateTemplateScreen'
         ]),
         async getTemplateById(templateId) {
             let result = await this.getTemplate(templateId).catch(error => {
@@ -288,6 +281,8 @@ export default {
 
             if (result) {
                 this.templateData = result;
+                this.titlePage = this.templateData.name;
+
                 if (result.template) {
                     this.template = null;
 
@@ -297,26 +292,30 @@ export default {
                 }
             }
         },
-        // async getTemplateByScreen(sceenId) {
-        //     let {data, error} = await this.$services.landingService.get(sceenId);
-        //     if (error) {
-        //         this.$notify({
-        //             group: 'error',
-        //             title: 'Get data failed!',
-        //             text: error.message
-        //         });
-        //     }
-        //     if (data) {
-        //         this.templateData = data;
-        //         if (data.template) {
-        //             this.template = null;
+        async getTemplateScreen(sceenId) {
+            let result = await this.getTemplateByScreen(sceenId).catch(error => {
+                this.$notify({
+                    group: 'error',
+                    title: 'Get data failed!',
+                    text: error.message
+                });
+                return false;
+            });
 
-        //             this.$nextTick(() => {
-        //                 this.template = data.template;
-        //             });
-        //         }
-        //     }
-        // },
+            if (result) {
+                console.log('result', result);
+                this.templateData = result.template;
+                this.titlePage = result.name;
+
+                if (result.template) {
+                    this.template = null;
+
+                    this.$nextTick(() => {
+                        this.template = result.template;
+                    });
+                }
+            }
+        },
         async saveTemplate() {
             console.log('this.templateData', this.templateData);
             if (this.templateData) {
@@ -334,14 +333,15 @@ export default {
                             text: error.message
                         });
                     });
-                else if (this.$route.query.screen) // Update template of landing
-                    result = await this.updateTemplateByScreen(this.$route.query.screen, this.template).catch(error => {
+                else if (this.$route.query.screen) { // Update template of landing
+                    result = await this.updateTemplateScreen({id: this.$route.query.screen, data: this.templateData.template}).catch(error => {
                         this.$notify({
                             group: 'error',
                             title: 'Save data failed!',
                             text: error.message
                         });
                     });
+                }
 
                 clearTimeout(this.timeoutSaving);
                 this.timeoutSaving = setTimeout(() => {

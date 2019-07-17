@@ -411,7 +411,7 @@ ul{
     .item-create-menu{
         border-radius: 4px;
         background-color: #cc322f;
-        padding: 10px 18px;
+        padding: 10px;
         a,i:before{
             color: $color-second;
         }
@@ -423,6 +423,13 @@ ul{
         .nuxt-link-exact-active{
             color: $color-second;
         }
+        .menu-link {
+            font-size: 15px;
+        }
+        .icon-site {
+            font-size: 16px;
+            margin-right: 0px;
+        }
     }
     .menu-link{
         color: $color-primary;
@@ -431,7 +438,7 @@ ul{
     }
     .icon-site{
         font-size: 19px;
-        margin-right: 8px;
+        margin-right: 6px;
     }
 }
 .page-container{

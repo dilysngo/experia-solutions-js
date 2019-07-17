@@ -10,11 +10,19 @@ export default {
         commit(types.TEMPLATE_PAGINATION, data.pagination);
         return data;
     },
+
     async getTemplate({commit}, id) {
         if (!id)
             return;
         const template = await this.$axios.$get(`api/template/${id}`);
         commit(types.TEMPLATE_DETAIL, template);
+        return template;
+    },
+
+    async getTemplateByScreen({commit}, id) {
+        if (!id)
+            return;
+        const template = await this.$axios.$get(`api/template/template-by-screen?screenId=${id}`);
         return template;
     },
 
@@ -32,6 +40,11 @@ export default {
         delete data.updatedAt;
 
         const result = await this.$axios.$put(`api/template/${id}`, data);
+        return result;
+    },
+
+    async updateTemplateScreen({commit}, {id, data}) {
+        const result = await this.$axios.$put(`api/template/screen?screenId=${id}`, data);
         return result;
     },
 

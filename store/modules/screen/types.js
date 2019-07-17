@@ -1,0 +1,7 @@
+const NS_SCREEN = 'SCREEN';
+
+export default {
+    SCREEN_LIST: NS_SCREEN + '/LIST',
+    SCREEN_DETAIL: NS_SCREEN + '/DETAIL',
+    SCREEN_PAGINATION: NS_SCREEN + '/PAGINATION'
+};

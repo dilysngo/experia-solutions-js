@@ -2,6 +2,7 @@ import Vuex from 'vuex';
 import user from './modules/user';
 import media from './modules/media';
 import template from './modules/template';
+import screen from './modules/screen';
 import socket from './modules/socket';
 import {getCookie} from '../helpers/dataHelper';
 
@@ -26,6 +27,7 @@ export default function() {
             user,
             media,
             template,
+            screen,
             socket
         }
     });

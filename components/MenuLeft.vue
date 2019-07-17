@@ -44,14 +44,29 @@
                     Media Library
                 </nuxt-link>
             </li>
-            <li class="item-menu item-create-menu">
-                <nuxt-link
-                    to="templates/design"
+            <li
+                class="item-menu item-create-menu"
+                v-if="$route.path.startsWith('/screens')"
+            >
+                <a
+                    @click="createNew('screen')"
                     class="menu-link "
                 >
                     <i class="icon-creative icon-site" />
-                    Create New
-                </nuxt-link>
+                    Create Screen
+                </a>
+            </li>
+            <li
+                class="item-menu item-create-menu"
+                v-if="$route.path.startsWith('/templates')"
+            >
+                <a
+                    @click="createNew('template')"
+                    class="menu-link "
+                >
+                    <i class="icon-creative icon-site" />
+                    Create Template
+                </a>
             </li>
         </ul>
     </div>
@@ -59,11 +74,15 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex';
+import {convertToString} from '~/helpers/dateHelper';
 
 export default {
     computed: {
         ...mapGetters('socket', [
             'hasMenuNewMessage'
+        ]),
+        ...mapGetters('user', [
+            'userAuth'
         ])
     },
     methods: {
@@ -73,9 +92,58 @@ export default {
         ...mapActions('socket', [
             'disconnectMessageSocket'
         ]),
+        ...mapActions('template', [
+            'createTemplate',
+        ]),
+        ...mapActions('screen', [
+            'createScreen',
+        ]),
+        async createNew(type) {
+            if (type === 'screen') {
+                let dataCreate = {
+                    userId: this.userAuth.id,
+                    name: 'Screen-' + convertToString(new Date()),
+                    template: {
+                        id: 0,
+                        code: 0,
+                        name: '',
+                        slug: '',
+                        isDrag: true,
+                        template: null,
+                        ratio: '',
+                        category: '',
+                        createAt: ''
+                    }
+                };
+                let result = await this.createScreen(dataCreate).catch(err => {
+                    console.log('err', err); 
+                    return false;
+                });
+                if (result.id)
+                    this.$router.push('/templates/design?screen=' + result.id);
+                else
+                    this.$router.push('/screens');
+            }
+            else {
+                let dataCreate = {
+                    userId: this.userAuth.id,
+                    code: this.userAuth.id,
+                    name: 'Template-' + convertToString(new Date()),
+                    isDrag: true
+                };
+                let result = await this.createTemplate(dataCreate).catch(err => {
+                    console.log('err', err);
+                    return false;
+                });
+                if (result.id)
+                    this.$router.push('/templates/design?template=' + result.id);
+                else
+                    this.$router.push('/templates');
+            }
+        },
         logout() {
             this.signout();
-            this.disconnectMessageSocket();
+            // this.disconnectMessageSocket();
             this.$router.push('/');
         }
     }
