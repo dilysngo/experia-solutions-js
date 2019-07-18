@@ -6,36 +6,36 @@
         <div class="template-thumbnail">
             <img
                 class="img-fluid img-thumb"
-                :src="template.thumb"
+                :src="template.thumb || '/images/template-thumbnail.png'"
                 alt="Thumbnail Template"
             >
             <div class="template-action">
-                <nuxt-link 
+                <a 
                     to="/"
                     class="btn-link"
                 >
                     <i class="icon-play icon-site" />
-                </nuxt-link>
-                <nuxt-link 
-                    to="/"
+                </a>
+                <a
+                    @click="editTemplate" 
                     class="btn-link"
                 >
                     <i class="icon-creative icon-site" />
-                </nuxt-link>
-                <nuxt-link 
-                    to="/"
+                </a>
+                <a 
                     class="btn-link"
+                    @click="deleteItem"
                 >
                     <i class="icon-trash icon-site" />
-                </nuxt-link>
+                </a>
             </div>
             <div class="template-using">
-                <nuxt-link 
-                    to="/"
+                <a 
+                    @click="usingTemplate"
                     class="btn-link"
                 >
                     Using this template
-                </nuxt-link>
+                </a>
             </div>
         </div>
         <div class="template-info">
@@ -47,11 +47,11 @@
             <div class="temp-infor-more d-flex">
                 <div class="temp-sizes">
                     <i class="icon-sizes icon-site" />
-                    <span>{{ template.size }}</span>
+                    <span>{{ template.size || '16:9' }}</span>
                 </div>
                 <div class="temp-date-create">
                     <i class="icon-celandar icon-site" />
-                    <span>{{ template.dateCreate }}</span>
+                    <span>{{ template.createdAt | convertToDateString }}</span>
                 </div>
             </div>
         </div>
@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import {convertToDateString} from '~/helpers/dateHelper';
+
 export default {
     props: {
         template: {
@@ -71,6 +73,22 @@ export default {
                 dateCreate: '10/10'
             }),
         }
+    },
+    methods: {
+        deleteItem() {
+            this.$emit('delete', this.template);
+        },
+        editTemplate() {
+            this.$emit('edit', this.template);
+        },
+        usingTemplate() {
+            this.$emit('usingTemplate', this.template);
+        }
+    },
+    filters: {
+        convertToDateString(date) {
+            return convertToDateString(date);
+        },
     }
 };
 </script>

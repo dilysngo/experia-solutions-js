@@ -46,7 +46,7 @@
             </li>
             <li
                 class="item-menu item-create-menu"
-                v-if="$route.path.startsWith('/screens')"
+                v-if="$route.path.toString() === '/screens'"
             >
                 <a
                     @click="createNew('screen')"
@@ -58,7 +58,7 @@
             </li>
             <li
                 class="item-menu item-create-menu"
-                v-if="$route.path.startsWith('/templates')"
+                v-if="$route.path.toString() === '/templates'"
             >
                 <a
                     @click="createNew('template')"
@@ -116,7 +116,7 @@ export default {
                     }
                 };
                 let result = await this.createScreen(dataCreate).catch(err => {
-                    console.log('err', err); 
+                    console.log('err', err);
                     return false;
                 });
                 if (result.id)
@@ -133,6 +133,11 @@ export default {
                 };
                 let result = await this.createTemplate(dataCreate).catch(err => {
                     console.log('err', err);
+                    this.$notify({
+                        group: 'error',
+                        title: 'Create failed',
+                        text: err.message
+                    });
                     return false;
                 });
                 if (result.id)

@@ -3,6 +3,7 @@
         <div class="page-header d-flex">
             <!-- <h4>Design space</h4> -->
             <input
+                class="input-title" 
                 v-model="titlePage" 
             >
             <div class="d-flex">
@@ -74,12 +75,11 @@
                                 class="btn-tool"
                                 @click="pickersBackground = !pickersBackground"
                             >
-                                <i class="icon-site icon-picture" />
+                                <i
+                                    class="fa fa-th-large" 
+                                    style="font-size: 21px"
+                                /> 
                             </button>
-                            <p v-if="saving">
-                                <i class="icon-loading icon-site" />
-                                Saving
-                            </p>
                             <div
                                 class="box-pts"
                                 v-show="pickersBackground"
@@ -95,6 +95,10 @@
                                     class="pts-close"
                                 >Close</span>
                             </div>
+                            <p v-if="saving">
+                                <i class="icon-loading icon-site" />
+                                Saving
+                            </p>
                         </div>
                         <div class="toolbar-right">
                             <button
@@ -104,7 +108,7 @@
                             </button>
                             <button
                                 class="btn-tool"
-                                disabled
+                                @click="saveAll"
                             >
                                 Save
                             </button>
@@ -164,7 +168,7 @@ import ElementIcon from '~/components/elements/ElementIcon';
 import ElementControlBox from '~/components/elements/ElementControlBox';
 import ElementContainer from '~/components/elements/ElementContainer';
 import Gallery from '~/components/Gallery';
-import {MediaType} from '~/common/commonType'; // eslint-disable-line
+import {MediaType,PageType} from '~/common/commonType'; // eslint-disable-line
 import {convertToString} from '~/helpers/dateHelper';
 import {convertToUrl} from '~/helpers/dataHelper';
 
@@ -227,6 +231,7 @@ export default {
                 {name: 'Normal screen', value: '3:4', supTitle: '768 x 1024'},
                 {name: 'Wide screen', value: '10:16', supTitle: '1200 x 1920, 720 x 1152'},
             ],
+            pageType: null
         };
     },
     async created() {
@@ -241,10 +246,15 @@ export default {
             components: []
         };
 
-        if (this.$route.query.template)
+        if (this.$route.query.template) {
+            this.pageType = PageType.Template;
             await this.getTemplateById(this.$route.query.template); // Update template
-        else if (this.$route.query.screen) // Update template of screen
-            this.getTemplateScreen(this.$route.query.screen);
+
+        }
+        else if (this.$route.query.screen) {
+            this.pageType = PageType.Screen;
+            this.getTemplateScreen(this.$route.query.screen); // Update template of screen
+        }
         else {
             this.$router.push('/templates');
         }
@@ -307,11 +317,11 @@ export default {
                 this.templateData = result.template;
                 this.titlePage = result.name;
 
-                if (result.template) {
+                if (result.template && result.template.template) {
                     this.template = null;
 
                     this.$nextTick(() => {
-                        this.template = result.template;
+                        this.template = result.template.template;
                     });
                 }
             }
@@ -323,9 +333,16 @@ export default {
                 this.showSavingStatus = true;
                 let result;
                 this.templateData.template = this.template;
-                console.log('save nao', this.templateData);
 
-                if (this.$route.query.template) // Update template
+                // if (this.pageType === PageType.Template) {
+                //     this.templateData.template = this.template;
+                // }
+                // else {
+                //     this.templateData.template = this.template;
+                // }
+                // console.log('save nao', this.templateData);
+
+                if (this.pageType === PageType.Template) // Update template
                     result = await this.updateTemplate({id: this.$route.query.template, data: this.templateData}).catch(error => {
                         this.$notify({
                             group: 'error',
@@ -333,8 +350,9 @@ export default {
                             text: error.message
                         });
                     });
-                else if (this.$route.query.screen) { // Update template of landing
-                    result = await this.updateTemplateScreen({id: this.$route.query.screen, data: this.templateData.template}).catch(error => {
+                else if (this.pageType === PageType.Screen) { // Update template of landing
+                    let dataUpdate = {name: this.titlePage, template: this.templateData};
+                    result = await this.updateTemplateScreen({id: this.$route.query.screen, data: dataUpdate}).catch(error => {
                         this.$notify({
                             group: 'error',
                             title: 'Save data failed!',
@@ -598,6 +616,14 @@ export default {
                 this.pushToTemporaryQueue();
             }
         },
+        saveAll() {
+            this.templateData.name = this.titlePage;
+            this.templateData.isDrag = false;
+            this.saveTemplate();
+            if (this.pageType === PageType.Template)
+                this.$router.push('/templates');
+            else this.$router.push('/screens');
+        }
     }
 };
 </script>

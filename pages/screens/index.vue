@@ -1,7 +1,7 @@
 <template>
     <section class="page-container page-screens">
         <div class="page-header d-flex">
-            <h4>My Screens ({{ totalTemplate }})</h4>
+            <h4>My Screens ({{ total }})</h4>
             <div class="form-search">
                 <input
                     type="text"
@@ -9,6 +9,7 @@
                     class="search-input"
                     name="search"
                     maxlength="50"
+                    v-model="keyword"
                 >
                 <i class="icon-search icon-site" />
             </div>
@@ -18,24 +19,48 @@
                 <div class="row">
                     <div
                         class="col-md-3"
-                        v-for="template in templates"
-                        :key="template.id"
+                        v-for="(template, index) in screenList"
+                        :key="index"
                     >
                         <block-template
                             :template="template"
+                            @delete="handleDeleteScreen"
+                            @edit="handleEdit"
                         />
                     </div>
                 </div>
+                <div class="paginate">
+                    <no-ssr>
+                        <pagination
+                            id="pagination"
+                            :skip="skip"
+                            :limit="limit"
+                            :total="total" 
+                            @change="changePage"
+                        />
+                    </no-ssr>
+                </div>
             </div>
         </div>
+        <popup-confirm
+            ref="popupConfirm"
+            id="deleteScreen"
+            @success="handleDelete"
+        />
     </section>
 </template>
 <script>
 import BlockTemplate from '~/components/BlockTemplate';
+import {mapGetters, mapActions} from 'vuex';
+import {pagination} from '~/helpers/dataHelper';
+import Pagination from '~/components/Pagination';
+import PopupConfirm from '~/components/PopupConfirm';
 
 export default {
     components: {
         BlockTemplate,
+        Pagination,
+        PopupConfirm
     },
     data() {
         return {
@@ -46,8 +71,59 @@ export default {
                 {id: 3, thumb: '/images/template-thumbnail.png', name: 'Moon Fever', size: '16:9', dateCreate: '01/10'},
                 {id: 4, thumb: '/images/template-thumbnail.png', name: 'The Glossary Of Telescopes', size: '16:9', dateCreate: '26/10'},
                 {id: 5, thumb: '/images/template-thumbnail.png', name: 'Dentists Are Smiling Over Pain', size: '16:9', dateCreate: '30/10'}
-            ]
+            ],
+            skip: 0,
+            limit: 12,
+            total: 0,
+            keyword: '',
         };
-    }
+    },
+    async created() {
+        await this.getSreens();
+    },
+    computed: {
+        ...mapGetters('screen', [
+            'screenList',
+            'screenPagination'
+        ])
+    },
+    watch: {
+        keyword: function(newData) {
+            clearTimeout(this.timeOut);
+            this.timeOut = setTimeout(() => {
+                this.getSreens();
+            }, 500);
+        }
+    },
+    methods: {
+        ...mapActions('screen', [
+            'findScreens',
+            'deleteScreen'
+        ]),
+        async changePage(page){
+            let data = pagination(page, this.limit);
+            this.skip = data;
+            await this.getSreens();
+        },
+        async getSreens() {
+            let data = await this.findScreens({keyword: this.keyword, limit: this.limit, skip: this.skip}).catch(err => {
+                if (err)
+                    console.log(err.message);
+            });
+            this.total = data && data.pagination && data.pagination.total;
+        },
+        handleDeleteScreen(item) {
+            console.log('temeee', item);
+            this.$refs.popupConfirm.open(item);
+        },
+        async handleDelete(item) {
+            await this.deleteScreen(item.id);
+            await this.getSreens();
+        },
+        handleEdit(item) {
+            if (item.id)
+                this.$router.push(`/templates/design?screen=${item.id}`);
+        }
+    },
 };
 </script>

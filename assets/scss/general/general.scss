@@ -549,13 +549,19 @@ ul{
         align-items: center;
         justify-content: space-between;
         margin-bottom: 22px;
-        h4{
+        h4, .input-title{
             color: #000000;
             font-family: $font-sixth;
             font-size: 25px;
             font-weight: 300;
             display: inline-block;
             position: relative;
+            background-color: transparent;
+            outline: none;
+            border: 0;
+        }
+        .input-title {
+            font-size: 20px;
         }
     }
 }
