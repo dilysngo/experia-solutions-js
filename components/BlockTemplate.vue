@@ -4,11 +4,22 @@
         class="block-template"
     >
         <div class="template-thumbnail">
-            <img
+            <!-- <img
                 class="img-fluid img-thumb"
                 :src="template.thumb || '/images/template-thumbnail.png'"
                 alt="Thumbnail Template"
+            > -->
+            <div
+                class="preview-img"
             >
+                <element-container
+                    :ref="'elementContainer'"
+                    :root="this"
+                    :design-mode="false"
+                    v-if="templateData"
+                    :source="templateData"
+                />
+            </div>
             <div class="template-action">
                 <a 
                     to="/"
@@ -60,8 +71,12 @@
 
 <script>
 import {convertToDateString} from '~/helpers/dateHelper';
+import ElementContainer from '~/components/elements/ElementContainer';
 
 export default {
+    components: {
+        ElementContainer
+    },
     props: {
         template: {
             type: Object,
@@ -73,6 +88,14 @@ export default {
                 dateCreate: '10/10'
             }),
         }
+    },
+    data: () => ({
+        templateData: null
+    }),
+    created() {
+        if (this.$route.path.toString() === '/screens')
+            this.templateData = this.template.template.template;
+        else this.templateData = this.template.template;
     },
     methods: {
         deleteItem() {

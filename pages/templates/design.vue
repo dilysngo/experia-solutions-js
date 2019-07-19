@@ -114,6 +114,7 @@
                             </button>
                             <button
                                 class="btn-tool btn-preview"
+                                @click="preview"
                             >
                                 <i class="icon-play icon-site" />
                                 Preview
@@ -138,6 +139,7 @@
                         <div
                             class="box-properties"
                             :class="{open: isSetting}"
+                            v-if="designMode"
                         >
                             <element-setting
                                 :root="root"
@@ -549,10 +551,16 @@ export default {
                 this.removeElement(this.template.path, this.elementSelected.key);
         },
         dragover_handler(ev) {
+            if (!this.designMode)
+                return;
             ev.preventDefault();
             ev.dataTransfer.dropEffect = "move";
         },
         drop_handler(ev) {
+            console.log('this.designMode', this.designMode);
+            if (!this.designMode)
+                return;
+
             ev.preventDefault();
             console.log('design end', ev);
 
@@ -591,7 +599,8 @@ export default {
                 let setting = {...data.setting, ...options.setting};
                 this.updateElement({instance: instance, path: data.path, style: data.style, setting: setting});
                 if (this.elementSelected && this.elementSelected.key) {
-                    this.$refs.elementContainer.$refs[this.elementSelected.key][0].openSetting();
+                    if (this.designMode)
+                        this.$refs.elementContainer.$refs[this.elementSelected.key][0].openSetting();
                 }
             }
         },
@@ -623,6 +632,9 @@ export default {
             if (this.pageType === PageType.Template)
                 this.$router.push('/templates');
             else this.$router.push('/screens');
+        },
+        preview() {
+            this.designMode = !this.designMode;
         }
     }
 };

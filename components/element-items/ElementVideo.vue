@@ -213,12 +213,17 @@ export default {
             this.isPlay = true;
         },
         dragstart_handler(ev) {
+            if (!this.designMode)
+                return;
             // Add the target element's id to the data transfer object
             ev.dataTransfer.setData('application/json', JSON.stringify(this.source));
             ev.dataTransfer.dropEffect = "move";
             document.getElementById(this.key).classList.add('is-drag');
         },
         openSetting() {
+            if (!this.designMode)
+                return;
+
             console.log('this.source', this.source);
             this.source.setting.typeMedia = MediaType.Video;
             this.root.$refs.elementSetting.open({instance: this, key: this.source.key, path: this.source.path, style: this.source.style, setting: this.source.setting, controls: this.controls});

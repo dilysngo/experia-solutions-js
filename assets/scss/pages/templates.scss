@@ -152,6 +152,12 @@
 .element-form-default {
     border: 1px dashed #929eaa;
 }
+.preview {
+    .element-form-default {
+        border: 1px dashed transparent;
+    }
+}
+
 .boder-work {
     // .resizers{
     //     width: 100%;

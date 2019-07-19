@@ -68,6 +68,9 @@ export default {
     },
     methods: {
         openSetting() {
+            if (!this.designMode)
+                return;
+                
             if (this.title === 'Image')
                 this.source.setting.typeMedia = 1;
             if (this.title === 'Video')

@@ -100,6 +100,7 @@ export default {
             let valueX = this.x - e.x;
             let valueY = this.y - e.y;
             let direction;
+            let directionTwo;
             switch (position) {
             case 'top':
                 console.log('top');
@@ -113,10 +114,68 @@ export default {
                     this.setting.stylesBox.top += 1;
                 }
                 break;
+            case 'top-right':
+                console.log('top-right');
+                direction = valueY < 0 ? 'bottom' : 'top'; 
+                if (direction === 'top') {
+                    this.setting.stylesBox.height += 1;
+                    this.setting.stylesBox.top += -1;
+                }
+                else { 
+                    this.setting.stylesBox.height += -1;
+                    this.setting.stylesBox.top += 1;
+                }
+
+                directionTwo = valueX < 0 ? 'right' : 'left'; 
+                this.setting.stylesBox.width += directionTwo === 'left' ? -1 : 1;
+                break;
+            case 'top-left':
+                console.log('top-left');
+                direction = valueY < 0 ? 'bottom' : 'top'; 
+                if (direction === 'top') {
+                    this.setting.stylesBox.height += 1;
+                    this.setting.stylesBox.top += -1;
+                }
+                else { 
+                    this.setting.stylesBox.height += -1;
+                    this.setting.stylesBox.top += 1;
+                }
+
+                directionTwo = valueX < 0 ? 'right' : 'left'; 
+                if (directionTwo === 'left') {
+                    this.setting.stylesBox.width += 1;
+                    this.setting.stylesBox.left += -1;
+                }
+                else { 
+                    this.setting.stylesBox.width += -1;
+                    this.setting.stylesBox.left += 1;
+                }
+                break;
             case 'bottom':
                 console.log('bottom');
                 direction = valueY < 0 ? 'bottom' : 'top'; 
                 this.setting.stylesBox.height += direction === 'top' ? -1 : 1;
+                break;
+            case 'bottom-right':
+                console.log('bottom-right');
+                direction = valueY < 0 ? 'bottom' : 'top'; 
+                this.setting.stylesBox.height += direction === 'top' ? -1 : 1;
+                directionTwo = valueX < 0 ? 'right' : 'left'; 
+                this.setting.stylesBox.width += directionTwo === 'left' ? -1 : 1;
+                break;
+            case 'bottom-left':
+                console.log('bottom-left');
+                direction = valueY < 0 ? 'bottom' : 'top'; 
+                this.setting.stylesBox.height += direction === 'top' ? -1 : 1;
+                directionTwo = valueX < 0 ? 'right' : 'left'; 
+                if (directionTwo === 'left') {
+                    this.setting.stylesBox.width += 1;
+                    this.setting.stylesBox.left += -1;
+                }
+                else { 
+                    this.setting.stylesBox.width += -1;
+                    this.setting.stylesBox.left += 1;
+                }
                 break;
             case 'left':
                 console.log('left');
