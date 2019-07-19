@@ -97,6 +97,9 @@ export default {
             this.templateData = this.template.template.template;
         else this.templateData = this.template.template;
     },
+    mounted() {
+        this.$refs.elementContainer.reset();
+    },
     methods: {
         deleteItem() {
             this.$emit('delete', this.template);

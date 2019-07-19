@@ -971,15 +971,15 @@ export default {
             let dy = e.clientY - this.move.initialMouseY;
             let positionTop = this.move.startY + dy;
             let positionLeft = this.move.startX + dx;
-            this.move.elMove.style.top = positionTop + 'px';
-            this.move.elMove.style.left = positionLeft + 'px';
+            this.move.elMove.style.top = positionTop / 13 + 'em';
+            this.move.elMove.style.left = positionLeft / 13 + 'em';
 
             if (positionTop < 0) {
-                this.move.elMove.style.top = 0 + 'px';
+                this.move.elMove.style.top = 0 + 'em';
             }
 
             if (positionLeft < 0) {
-                this.move.elMove.style.left = 0 + 'px';
+                this.move.elMove.style.left = 0 + 'em';
             }
 
             return false;

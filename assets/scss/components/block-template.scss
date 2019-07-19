@@ -2,12 +2,15 @@
     margin-bottom: 30px;
     .template-thumbnail{
         position: relative;
+        border: 1px dashed #ddd;
+        border-radius: 7px 7px 0 0;
         .img-thumb{
             border-radius: 7px 7px 0 0;
             width: 100%;
         }
         .template-action,
         .template-using{
+            z-index: 2;
             border-radius: 7px 7px 0 0;
             position: absolute;
             top: 0;

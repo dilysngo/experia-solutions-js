@@ -2,7 +2,7 @@
     <div
         class="element-box" 
         :class="designMode ? 'boder-work' : ''"
-        :style="{top: setting.stylesBox.top + 'px', left: setting.stylesBox.left + 'px', width: setting.stylesBox.width + 'px', height: setting.stylesBox.height + 'px', position: setting.stylesBox.position, zIndex:setting.stylesBox.zIndex}"
+        :style="{top: setting.stylesBox.top/13 + 'em', left: setting.stylesBox.left/13 + 'em', width: setting.stylesBox.width/13 + 'em', height: setting.stylesBox.height/13 + 'em', position: setting.stylesBox.position, zIndex:setting.stylesBox.zIndex}"
         @click="openSetting"
     >
         <element-resize

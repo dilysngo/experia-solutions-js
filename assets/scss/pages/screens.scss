@@ -4,11 +4,17 @@
             visibility: visible;
         }
     }
+    
+}
+.container-screens {
     .preview-img {
         width: 100%; 
         height: 150px;
+        z-index: 1;
         .template-body {
             height: 100%;
+            position: relative;
+            font-size: 3px;
         }
     }
 }

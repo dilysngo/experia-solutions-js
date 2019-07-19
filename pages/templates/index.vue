@@ -128,6 +128,7 @@ export default {
                     console.log(err.message);
             });
             this.total = data && data.pagination && data.pagination.total;
+            // this.$forceUpdate();
         },
         async createScreenByTemplate(item) {
             let dataCreate = {
