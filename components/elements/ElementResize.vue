@@ -108,10 +108,12 @@ export default {
                 if (direction === 'top') {
                     this.setting.stylesBox.height += 1;
                     this.setting.stylesBox.top += -1;
+                    this.setting.stylesBox.y += -1;
                 }
                 else { 
                     this.setting.stylesBox.height += -1;
                     this.setting.stylesBox.top += 1;
+                    this.setting.stylesBox.y += 1;
                 }
                 break;
             case 'top-right':
@@ -120,10 +122,12 @@ export default {
                 if (direction === 'top') {
                     this.setting.stylesBox.height += 1;
                     this.setting.stylesBox.top += -1;
+                    this.setting.stylesBox.y += -1;
                 }
                 else { 
                     this.setting.stylesBox.height += -1;
                     this.setting.stylesBox.top += 1;
+                    this.setting.stylesBox.y += 1;
                 }
 
                 directionTwo = valueX < 0 ? 'right' : 'left'; 
@@ -135,20 +139,24 @@ export default {
                 if (direction === 'top') {
                     this.setting.stylesBox.height += 1;
                     this.setting.stylesBox.top += -1;
+                    this.setting.stylesBox.y += -1;
                 }
                 else { 
                     this.setting.stylesBox.height += -1;
                     this.setting.stylesBox.top += 1;
+                    this.setting.stylesBox.y += 1;
                 }
 
                 directionTwo = valueX < 0 ? 'right' : 'left'; 
                 if (directionTwo === 'left') {
                     this.setting.stylesBox.width += 1;
                     this.setting.stylesBox.left += -1;
+                    this.setting.stylesBox.x += -1;
                 }
                 else { 
                     this.setting.stylesBox.width += -1;
                     this.setting.stylesBox.left += 1;
+                    this.setting.stylesBox.x += 1;
                 }
                 break;
             case 'bottom':
@@ -171,10 +179,12 @@ export default {
                 if (directionTwo === 'left') {
                     this.setting.stylesBox.width += 1;
                     this.setting.stylesBox.left += -1;
+                    this.setting.stylesBox.x += -1;
                 }
                 else { 
                     this.setting.stylesBox.width += -1;
                     this.setting.stylesBox.left += 1;
+                    this.setting.stylesBox.x += 1;
                 }
                 break;
             case 'left':
@@ -183,10 +193,12 @@ export default {
                 if (direction === 'left') {
                     this.setting.stylesBox.width += 1;
                     this.setting.stylesBox.left += -1;
+                    this.setting.stylesBox.x += -1;
                 }
                 else { 
                     this.setting.stylesBox.width += -1;
                     this.setting.stylesBox.left += 1;
+                    this.setting.stylesBox.x += 1;
                 }
                 break;
             case 'right':

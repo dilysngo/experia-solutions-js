@@ -170,7 +170,7 @@ import ElementIcon from '~/components/elements/ElementIcon';
 import ElementControlBox from '~/components/elements/ElementControlBox';
 import ElementContainer from '~/components/elements/ElementContainer';
 import Gallery from '~/components/Gallery';
-import {MediaType,PageType} from '~/common/commonType'; // eslint-disable-line
+import {MediaType, PageType, Roles} from '~/common/commonType'; // eslint-disable-line
 import {convertToString} from '~/helpers/dateHelper';
 import {convertToUrl} from '~/helpers/dataHelper';
 
@@ -249,6 +249,9 @@ export default {
         };
 
         if (this.$route.query.template) {
+            if (this.userAuth.role.code !== Roles.Admin)
+                this.$router.push('/templates');
+
             this.pageType = PageType.Template;
             await this.getTemplateById(this.$route.query.template); // Update template
 
@@ -577,7 +580,7 @@ export default {
                 stylesBox: {
                     position: 'absolute',
                     top: ev.layerY,
-                    left: ev.layerX,
+                    left: ev.layerX ,
                     width: 120,
                     height: 60,
                     x: ev.x,

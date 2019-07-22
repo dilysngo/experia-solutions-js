@@ -34,7 +34,9 @@
                     >
                         <block-template
                             :template="template"
+                            :is-admin="isAdmin"
                             @usingTemplate="createScreenByTemplate"
+                            @edit="handleEdit"
                         />
                     </div>
                 </div>
@@ -60,6 +62,7 @@ import {mapGetters, mapActions} from 'vuex';
 import {pagination} from '~/helpers/dataHelper';
 import Pagination from '~/components/Pagination';
 import {convertToString} from '~/helpers/dateHelper';
+import {Roles} from '~/common/commonType';
 
 export default {
     components: {
@@ -89,10 +92,12 @@ export default {
             limit: 12,
             total: 0,
             keyword: '',
+            isAdmin: false
         };
     },
     async created() {
         await this.getTemplates();
+        this.isAdmin = this.userAuth.role.code === Roles.Admin;
     },
     computed: {
         ...mapGetters('template', [
@@ -153,6 +158,10 @@ export default {
             if (result.id)
                 this.$router.push('/templates/design?screen=' + result.id);
         },
+        handleEdit(item) {
+            if (item.id)
+                this.$router.push(`/templates/design?template=${item.id}`);
+        }
     },
 };
 </script>

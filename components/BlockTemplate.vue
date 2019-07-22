@@ -45,7 +45,14 @@
                     @click="usingTemplate"
                     class="btn-link"
                 >
-                    Using this template
+                    Using template
+                </a>
+                <a 
+                    @click="editTemplate"
+                    class="btn-link m-l-20"
+                    v-if="isAdmin"
+                >
+                    Edit template
                 </a>
             </div>
         </div>
@@ -87,18 +94,24 @@ export default {
                 size: '16:9',
                 dateCreate: '10/10'
             }),
+        },
+        isAdmin: {
+            type: Boolean,
+            default: false
         }
     },
     data: () => ({
         templateData: null
     }),
     created() {
-        if (this.$route.path.toString() === '/screens')
-            this.templateData = this.template.template.template;
-        else this.templateData = this.template.template;
+        setTimeout(() => {
+            if (this.$route.path.toString() === '/screens')
+                this.templateData = this.template.template.template;
+            else this.templateData = this.template.template;
+        }, 100);
     },
     mounted() {
-        this.$refs.elementContainer.reset();
+
     },
     methods: {
         deleteItem() {
