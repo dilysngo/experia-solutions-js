@@ -90,6 +90,10 @@ export default {
             type: Boolean,
             default: false
         },
+        sizeScale: {
+            type: Number,
+            default: null
+        },
         templateId: {
             type: String,
             default: ''

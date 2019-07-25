@@ -26,6 +26,7 @@
                             :template="template"
                             @delete="handleDeleteScreen"
                             @edit="handleEdit"
+                            @preview="handlePreview"
                         />
                     </div>
                 </div>
@@ -42,6 +43,10 @@
                 </div>
             </div>
         </div>
+        <popup-review
+            ref="popupReview"
+            id="popupReview"
+        />
         <popup-confirm
             ref="popupConfirm"
             id="deleteScreen"
@@ -55,12 +60,14 @@ import {mapGetters, mapActions} from 'vuex';
 import {pagination} from '~/helpers/dataHelper';
 import Pagination from '~/components/Pagination';
 import PopupConfirm from '~/components/PopupConfirm';
+import PopupReview from '~/components/PopupReview';
 
 export default {
     components: {
         BlockTemplate,
         Pagination,
-        PopupConfirm
+        PopupConfirm,
+        PopupReview
     },
     data() {
         return {
@@ -124,6 +131,10 @@ export default {
         handleEdit(item) {
             if (item.id)
                 this.$router.push(`/templates/design?screen=${item.id}`);
+        },
+        handlePreview(item) {
+            if (item)
+                this.$refs.popupReview.open(item);
         }
     },
 };

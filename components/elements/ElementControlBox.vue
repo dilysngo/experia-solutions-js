@@ -34,6 +34,10 @@ export default {
             type: Boolean,
             default: false
         },
+        sizeScale: {
+            type: Number,
+            default: null
+        },
         source: {
             type: Object,
             default: () => {}

@@ -640,7 +640,11 @@ export default {
         root: {
             type: Object,
             default: () => {}
-        }
+        },
+        sizeScale: {
+            type: Number,
+            default: null
+        },
     },
     data: () => ({
         instance: null,

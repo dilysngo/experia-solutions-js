@@ -11,6 +11,7 @@
             :id="component.key"
             :root="root"
             :design-mode="designMode"
+            :size-scale="sizeScale"
             :device-preview="devicePreview"
             :template-id="templateId"
             :source="component"
@@ -58,6 +59,10 @@ export default {
         templateId: {
             type: String,
             default: ''
+        },
+        sizeScale: {
+            type: Number,
+            default: null
         },
         source: {
             type: Object,

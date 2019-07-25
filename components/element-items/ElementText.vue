@@ -62,6 +62,10 @@ export default {
             type: Boolean,
             default: false
         },
+        sizeScale: {
+            type: Number,
+            default: null
+        },
         templateId: {
             type: String,
             default: ''
@@ -124,6 +128,8 @@ export default {
     methods: {
         reset() {
             console.log('Reset phone', this.source);
+            console.log('sizeScale', this.sizeScale);
+
             this.style = {};
             this.setting = {};
 

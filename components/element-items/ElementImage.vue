@@ -68,6 +68,10 @@ export default {
             type: Boolean,
             default: false
         },
+        sizeScale: {
+            type: Number,
+            default: null
+        },
         landingId: {
             type: String,
             default: ''
@@ -124,6 +128,7 @@ export default {
     methods: {
         reset() {
             console.log('Reset media', this.source);
+            console.log('sizeScale', this.sizeScale);
             this.style = {};
             this.setting = {};
 

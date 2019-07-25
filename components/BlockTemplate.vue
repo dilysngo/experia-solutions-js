@@ -22,7 +22,7 @@
             </div>
             <div class="template-action">
                 <a 
-                    to="/"
+                    @click="previewTemplate" 
                     class="btn-link"
                 >
                     <i class="icon-play icon-site" />
@@ -122,6 +122,9 @@ export default {
         },
         usingTemplate() {
             this.$emit('usingTemplate', this.template);
+        },
+        previewTemplate() {
+            this.$emit('preview', this.templateData);
         }
     },
     filters: {

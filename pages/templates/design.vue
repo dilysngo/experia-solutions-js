@@ -125,11 +125,13 @@
                         class="container-drag d-flex justify-content-center"
                         @drop="drop_handler($event)"
                         @dragover="dragover_handler($event)"
+                        :style="{fontSize: sizeScale + 'px' }"
                     >
                         <element-container
                             :ref="'elementContainer'"
                             :root="root"
                             :design-mode="designMode"
+                            :size-scale="sizeScale"
                             :device-preview="devicePreview"
                             v-if="template"
                             :source="template"
@@ -143,6 +145,7 @@
                         >
                             <element-setting
                                 :root="root"
+                                :size-scale="sizeScale"
                                 @openGallery="openGallery($event)"
                                 ref="elementSetting"
                             />
@@ -233,7 +236,9 @@ export default {
                 {name: 'Normal screen', value: '3:4', supTitle: '768 x 1024'},
                 {name: 'Wide screen', value: '10:16', supTitle: '1200 x 1920, 720 x 1152'},
             ],
-            pageType: null
+            pageType: null,
+            sizeScale: null,
+            unitScale: 13 / 928 // fontSize/containerWidth
         };
     },
     async created() {
@@ -263,6 +268,17 @@ export default {
         else {
             this.$router.push('/templates');
         }
+    },
+    mounted() {
+        let containerWidth;
+        containerWidth = $('.container-drag').width();
+        console.log('containerWidth', containerWidth);
+        this.sizeScale = containerWidth * this.unitScale;
+
+        window.onresize = () => {
+            console.log('winresize');
+            this.sizeScale = containerWidth * this.unitScale;
+        };
     },
     computed: {
         ...mapGetters('user', [
@@ -579,12 +595,12 @@ export default {
             options.setting = {
                 stylesBox: {
                     position: 'absolute',
-                    top: ev.layerY,
-                    left: ev.layerX ,
-                    width: 120,
+                    top: ev.layerY * (13 / this.sizeScale),
+                    left: ev.layerX * (13 / this.sizeScale),
+                    width: 120 ,
                     height: 60,
-                    x: ev.x,
-                    y: ev.y,
+                    x: ev.x * (13 / this.sizeScale),
+                    y: ev.y * (13 / this.sizeScale),
                     zIndex: 1,
                 }
             };
@@ -593,8 +609,8 @@ export default {
                 this.$refs.elementContainer.addElement(data, options);
             else {
                 data = JSON.parse(data);
-                options.setting.stylesBox.top = data.setting.stylesBox.top + (ev.y - data.setting.stylesBox.y);
-                options.setting.stylesBox.left = data.setting.stylesBox.left + (ev.x - data.setting.stylesBox.x);
+                options.setting.stylesBox.top = data.setting.stylesBox.top + (ev.y * (13 / this.sizeScale) - (data.setting.stylesBox.y));
+                options.setting.stylesBox.left = data.setting.stylesBox.left + (ev.x * (13 / this.sizeScale) - (data.setting.stylesBox.x));
                 options.setting.stylesBox.width = data.setting.stylesBox.width;
                 options.setting.stylesBox.height = data.setting.stylesBox.height;
                 document.getElementById(data.key).classList.remove('is-drag');

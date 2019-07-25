@@ -37,6 +37,10 @@ export default {
             type: Boolean,
             default: false
         },
+        sizeScale: {
+            type: Number,
+            default: null
+        },
         devicePreview: {
             type: String,
             default: ''
