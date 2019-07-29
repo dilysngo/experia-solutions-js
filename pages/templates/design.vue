@@ -103,6 +103,7 @@
                         <div class="toolbar-right">
                             <button
                                 class="btn-tool"
+                                @click="$router.go(-1)"
                             >
                                 Back
                             </button>
@@ -155,7 +156,11 @@
                         ref="gallery" 
                         id="gallery"
                         @galleryImage="handleGallery"
-                    /> 
+                    />
+                    <popup-review
+                        ref="popupReview"
+                        id="popupReview"
+                    />
                 </div>
             </div>
         </div>
@@ -173,6 +178,7 @@ import ElementIcon from '~/components/elements/ElementIcon';
 import ElementControlBox from '~/components/elements/ElementControlBox';
 import ElementContainer from '~/components/elements/ElementContainer';
 import Gallery from '~/components/Gallery';
+import PopupReview from '~/components/PopupReview';
 import {MediaType, PageType, Roles} from '~/common/commonType'; // eslint-disable-line
 import {convertToString} from '~/helpers/dateHelper';
 import {convertToUrl} from '~/helpers/dataHelper';
@@ -188,7 +194,8 @@ Vue.component('gallery', Gallery);
 export default {
     components: {
         FilterSelect,
-        ElementList
+        ElementList,
+        PopupReview
     },
     data() {
         return {
@@ -277,6 +284,7 @@ export default {
 
         window.onresize = () => {
             console.log('winresize');
+            containerWidth = $('.container-drag').width();
             this.sizeScale = containerWidth * this.unitScale;
         };
     },
@@ -570,6 +578,7 @@ export default {
                 this.removeElement(this.template.path, this.elementSelected.key);
         },
         dragover_handler(ev) {
+            console.log('over', ev);
             if (!this.designMode)
                 return;
             ev.preventDefault();
@@ -597,7 +606,7 @@ export default {
                     position: 'absolute',
                     top: ev.layerY * (13 / this.sizeScale),
                     left: ev.layerX * (13 / this.sizeScale),
-                    width: 120 ,
+                    width: 120,
                     height: 60,
                     x: ev.x * (13 / this.sizeScale),
                     y: ev.y * (13 / this.sizeScale),
@@ -609,8 +618,8 @@ export default {
                 this.$refs.elementContainer.addElement(data, options);
             else {
                 data = JSON.parse(data);
-                options.setting.stylesBox.top = data.setting.stylesBox.top + (ev.y * (13 / this.sizeScale) - (data.setting.stylesBox.y));
-                options.setting.stylesBox.left = data.setting.stylesBox.left + (ev.x * (13 / this.sizeScale) - (data.setting.stylesBox.x));
+                options.setting.stylesBox.top = data.setting.stylesBox.top + (ev.y * (13 / this.sizeScale) - data.setting.stylesBox.y);
+                options.setting.stylesBox.left = data.setting.stylesBox.left + (ev.x * (13 / this.sizeScale) - data.setting.stylesBox.x);
                 options.setting.stylesBox.width = data.setting.stylesBox.width;
                 options.setting.stylesBox.height = data.setting.stylesBox.height;
                 document.getElementById(data.key).classList.remove('is-drag');
@@ -653,7 +662,8 @@ export default {
             else this.$router.push('/screens');
         },
         preview() {
-            this.designMode = !this.designMode;
+            if (this.template)
+                this.$refs.popupReview.open(this.template);
         }
     }
 };

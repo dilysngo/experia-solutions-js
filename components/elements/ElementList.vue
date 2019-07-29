@@ -34,7 +34,7 @@ export default {
                 // {id: 'btn11', name: 'icon-cloudy'},
                 // {id: 'btn12', name: 'icon-twitter'},
                 // {id: 'btn13', name: 'icon-rss'},
-                {icon: 'icon-youtube', name: 'element-youtube'},
+                // {icon: 'icon-youtube', name: 'element-youtube'},
                 // {id: 'btn15', name: 'icon-facebook'},
             ]
         };

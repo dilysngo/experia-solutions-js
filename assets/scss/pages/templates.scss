@@ -34,7 +34,7 @@
     }
 }
 .container-drag {
-    min-height: 80vh;
+    min-height: calc(100vh - 210px);
     border: 1px dashed #ddd;
     position: relative;
     overflow: hidden;
@@ -50,6 +50,11 @@
 .is-drag {
     z-index: 1111;
     border-color:  rgb(148, 48, 48) !important; 
+}
+
+.container-preview{
+    position: relative;
+    overflow: hidden;
 }
 
 .element-not-data {

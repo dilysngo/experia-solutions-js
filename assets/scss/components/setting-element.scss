@@ -607,11 +607,11 @@
         .list-alignment{
             .alignment-item{
                 display: inline-block;
-                width: 32.3333%;
+                width: 31%;
                 color: #727272;
-                // font-size: 12px;
+                font-size: 12px;
                 // font-size: 15px;
-                font-size: 0.9em;
+                // font-size: 0.9em;
                 cursor: pointer;
                 .i-con{
                     color: #4a4a4a;
@@ -663,6 +663,7 @@
         .list-align{
             @include border-radius(3px);
             border: 1px solid #bfbfbf;
+            font-size: 12px;
             .align-item{
                 display: inline-block;
                 width: calc(100% / 4.2);

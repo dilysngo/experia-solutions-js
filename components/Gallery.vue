@@ -13,7 +13,7 @@
                 </button>
                 <div class="pd-20">
                     <h1 class="title-component">
-                        {{ mediaType === 1 ? 'Image' : 'Video' }} Gallery
+                        {{ mediaType !== 1 ? 'Image' : 'Video' }} Gallery
                     </h1>
                     <input
                         class="form-input"
@@ -65,7 +65,7 @@
                         @click="getMediaClicked()"
                         class="form-btn"
                     >
-                        Choose {{ mediaType === 1 ? 'Image' : 'Video' }}
+                        Choose {{ mediaType !== 1 ? 'Image' : 'Video' }}
                     </button>
                 </div>
             </div>

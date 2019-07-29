@@ -444,7 +444,7 @@ ul{
 .page-container{
     height: 100%;
     min-height: calc(100vh - 61px);
-    padding: 35px 40px;
+    padding: 20px 40px 25px;
     .chart-box{
         height: 100%;
         padding-bottom: 30px;
@@ -544,11 +544,39 @@ ul{
         line-height: 25px;
     }
 }
+input[type="radio"]{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    position: relative;
+    width: 14px;
+    height: 14px;
+    background-color: #fff;
+    border: 1px solid $color-third;
+    background-size: 20px;
+    @include border-radius(50%);
+    outline:none;
+    &:checked:before{
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: $color-third;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    &:focus{
+      outline: none;
+    }
+}
 .page-container{
     .page-header{
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 22px;
+        margin-bottom: 20px;
         h4, .input-title{
             color: #000000;
             font-family: $font-sixth;

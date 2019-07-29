@@ -11,6 +11,7 @@
             > -->
             <div
                 class="preview-img"
+                :style="{fontSize: sizeScale + 'px'}"
             >
                 <element-container
                     :ref="'elementContainer'"
@@ -18,6 +19,7 @@
                     :design-mode="false"
                     v-if="templateData"
                     :source="templateData"
+                    :size-scale="sizeScale"
                 />
             </div>
             <div class="template-action">
@@ -101,7 +103,9 @@ export default {
         }
     },
     data: () => ({
-        templateData: null
+        templateData: null,
+        sizeScale: null,
+        unitScale: 13 / 928 // fontSize/containerWidth
     }),
     created() {
         setTimeout(() => {
@@ -111,7 +115,12 @@ export default {
         }, 100);
     },
     mounted() {
-
+        setTimeout(() => {
+            let containerWidth = $('.preview-img').width();
+            this.sizeScale = containerWidth * this.unitScale;
+            console.log('sizescale', this.sizeScale);
+            console.log('containerWidth', containerWidth);
+        }, 200);
     },
     methods: {
         deleteItem() {

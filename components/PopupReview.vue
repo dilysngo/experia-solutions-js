@@ -8,14 +8,26 @@
     >
         <div class="modal-dialog modal-dialog-centered text-center">
             <div class="modal-content">
-                <div class="modal-body">
-                    <div class="container-preview">
+                <button
+                    @click="cancel()"
+                    class="btn-close border-black"
+                >
+                    <img src="~/assets/images/close.svg">
+                </button>
+                <div
+                    class="modal-body"
+                >
+                    <div
+                        class="container-preview"  
+                        :style="{fontSize: sizeScale + 'px'}"
+                    >
                         <element-container
                             :ref="'elementContainer'"
                             :root="this"
                             :design-mode="false"
                             v-if="data"
                             :source="data"
+                            :size-scale="sizeScale"
                         />
                     </div>
                 </div>
@@ -30,7 +42,9 @@ import ElementContainer from '~/components/elements/ElementContainer';
 export default {
     data() {
         return {
-            data: null
+            data: null,
+            sizeScale: null,
+            unitScale: 13 / 928 // fontSize/containerWidth
         };
     },
     props: {
@@ -45,15 +59,20 @@ export default {
     methods: {
         open(data) {
             this.data = data;
+            $('#' + this.id).modal('show');
+
             setTimeout(() => {
-                console.log('this.data', this.data);
-                $('#' + this.id).modal('show');
-            }, 10000);
+                let containerWidth = $('.container-preview').width();
+                this.sizeScale = containerWidth * this.unitScale;
+            }, 300);
         },
         cancel() {
             $('#' + this.id).modal('hide');
+            setTimeout(() => {
+                this.data = null;
+            }, 200);
             // this.$emit('cancel');
-        }
+        },
     }
 };
 </script>

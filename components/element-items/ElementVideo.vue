@@ -94,10 +94,6 @@ export default {
             type: Number,
             default: null
         },
-        templateId: {
-            type: String,
-            default: ''
-        },
         source: {
             type: Object,
             default: () => {}            
