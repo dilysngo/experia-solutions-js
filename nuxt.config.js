@@ -17,14 +17,16 @@ module.exports = {
             {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
         ],
         script: [
-            // {src: '//cdn.ckeditor.com/4.6.2/full/ckeditor.js'}
-            {src: '/js/ckeditor/ckeditor.js'} /* eslint-disable */
+            {src: '/js/ckeditor/ckeditor.js'}, /* eslint-disable */
+            {src: 'https://apis.google.com/js/api.js', async: true, defer: true},
+            {src: '//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'}
+
         ],
     },
     css: [
         'bootstrap/dist/css/bootstrap.min.css',
         'font-awesome/css/font-awesome.min.css',
-        '~/assets/scss/main.scss'
+        '~/assets/scss/main.scss'   
     ],
     /*
      ** Customize the progress bar color
