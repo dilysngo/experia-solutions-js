@@ -232,9 +232,12 @@ ul{
         opacity: 0.5;
     }
     &.btn-red{
+        background-color: $color-third;
+        border-color: $color-third;
+        color: #ffffff;
         &:hover{
-            background-color: #f65c5c;
-            border-color: #f65c5c;
+            background-color: #ffffff;
+            color: $color-third;
         }
     }
     &.btn-green{

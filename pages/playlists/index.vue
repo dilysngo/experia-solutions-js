@@ -13,96 +13,40 @@
                     >
                     <i class="icon-search icon-site" />
                 </div>
-                <nuxt-link 
+                <a
                     class="btn-new-plist"
-                    to="/"
+                    @click="handleEdit"
                 >
                     <i class="icon-play-lists icon-site" />
                     <span>New Playlist</span>
-                </nuxt-link>
+                </a>
             </div>
         </div>
         <div class="page-body">
             <div class="container-playlists">
-                <div class="row">
-                    <div
-                        class="col-md-6"
-                        v-for="playItem in listPlays"
-                        :key="playItem.id"
-                    >
-                        <div
-                            :id="'playlist' + playItem.id"
-                            class="block-playlist"
-                        >
-                            <div class="playlist-thumbnail">
-                                <div class="playlist-img d-flex">
-                                    <div
-                                        class="box-img"
-                                        v-for="imgItem in playItem.listThumb"
-                                        :key="imgItem"
-                                    >
-                                        <img
-                                            class="img-fluid"
-                                            :src="imgItem"
-                                            alt=""
-                                        >
-                                    </div>
-                                </div>
-                                <div
-                                    class="thumbnail-more d-flex"
-                                    v-if="playItem.totalThumb > 3"
-                                >
-                                    <span>+{{ playItem.totalThumb - 3 }}</span>
-                                </div>
-                                <div class="playlist-action d-flex">
-                                    <nuxt-link 
-                                        to="/"
-                                        class="btn-link"
-                                    >
-                                        <i class="icon-creative icon-site" />
-                                    </nuxt-link>
-                                    <nuxt-link 
-                                        to="/"
-                                        class="btn-link"
-                                    >
-                                        <i class="icon-trash icon-site" />
-                                    </nuxt-link>
-                                </div>
-                            </div>
-                            <div class="playlist-info">
-                                <h3 class="playlist-name">
-                                    {{ playItem.playName }}
-                                </h3>
-                                <div class="playlist-infor-more d-flex">
-                                    <div class="pcol-left d-flex">
-                                        <div class="play-time">
-                                            <i class="icon-play icon-site" />
-                                            <span>{{ playItem.playTime }}</span>
-                                        </div>
-                                        <div class="total">
-                                            <span>{{ playItem.totalThumb }}</span> Creavites
-                                        </div>
-                                    </div>
-                                    <div class="pcol-right">
-                                        <div class="date-create">
-                                            <i class="icon-clock icon-site" />
-                                            <span>{{ playItem.dateCreate }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="row" />
             </div>
         </div>
+        <playlist-detail
+            id="playlistDetail"
+            ref="playlistDetail"
+        />
     </section>
 </template>
 <script>
+import {mapGetters, mapActions} from 'vuex';
+import {pagination} from '~/helpers/dataHelper';
+import PlaylistDetail from '~/components/PlaylistDetail';
+import Pagination from '~/components/Pagination';
+import PopupConfirm from '~/components/PopupConfirm';
 
 export default {
     data() {
         return {
+            skip: 0,
+            limit: 12,
+            total: 0,
+            keyword: '',
             totalPlaylists: 5,
             listPlays: [
                 {
@@ -131,6 +75,61 @@ export default {
                 },
             ]
         };
+    },
+    components: {
+        PlaylistDetail,
+        // Pagination,
+        // PopupConfirm,
+    },
+    async created() {
+        await this.getPlaylists();
+    },
+    computed: {
+        ...mapGetters('playlist', [
+            'playlistList',
+            'playlistPagination'
+        ])
+    },
+    watch: {
+        keyword: function(newData) {
+            clearTimeout(this.timeOut);
+            this.timeOut = setTimeout(() => {
+                this.getPlaylists();
+            }, 500);
+        }
+    },
+    methods: {
+        ...mapActions('playlist', [
+            'findPlaylists',
+            'deletePlaylist'
+        ]),
+        async changePage(page){
+            let data = pagination(page, this.limit);
+            this.skip = data;
+            await this.getPlaylists();
+        },
+        async getPlaylists() {
+            let data = await this.findPlaylists({keyword: this.keyword, limit: this.limit, skip: this.skip}).catch(err => {
+                if (err)
+                    console.log(err.message);
+            });
+            this.total = data && data.pagination && data.pagination.total;
+            this.$forceUpdate();
+        },
+        handleDeletePlaylist(item) {
+            this.$refs.popupConfirm.open(item);
+        },
+        async handleDelete(item) {
+            await this.deletePlaylist(item.id);
+            await this.getPlaylists();
+        },
+        handleEdit(item) {
+            this.$refs.playlistDetail.open(item.id || null);
+        },
+        handlePreview(item) {
+            if (item)
+                this.$refs.popupReview.open(item);
+        }
     }
 };
 </script>

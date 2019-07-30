@@ -3,6 +3,7 @@ import user from './modules/user';
 import media from './modules/media';
 import template from './modules/template';
 import screen from './modules/screen';
+import playlist from './modules/playlist';
 import socket from './modules/socket';
 import {getCookie} from '../helpers/dataHelper';
 
@@ -28,6 +29,7 @@ export default function() {
             media,
             template,
             screen,
+            playlist,
             socket
         }
     });

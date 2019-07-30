@@ -16,6 +16,15 @@
             color: $color-third;
         }
     }
+    .form-input {
+        height: 40px;
+    }
+    textarea {       
+        &.form-input {
+            height: 70px;
+        }
+    }
+    
 }
 .block-playlist{
     background-color: $color-second;
@@ -109,6 +118,78 @@
             .total span{
                 font-family: $font-second;
             }
+        }
+    }
+}
+
+.screen-list {
+    height: 300px;
+    overflow-x: hidden;
+    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 3px;
+    &::-webkit-scrollbar-track
+    {
+        box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+        -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+        background-color: #ffffff;
+    }
+    &::-webkit-scrollbar
+    {
+        width: 2px;
+        background-color: #ffffff;
+    }
+
+    &::-webkit-scrollbar-thumb
+    {
+        background-color: #9999997a;
+        border-radius: 10px;
+        border: 1px solid #9999997a;
+    }
+    .screen-item {
+        width: 100%;
+        border: 1px solid #eee;
+        margin-bottom: 10px;
+        border-radius: 3px;
+        padding: 10px;
+        cursor: pointer;
+        .icon-site {
+            font-size: 10px;
+        }
+        .preview-img {
+            height: 80px;
+        }
+        .template-name {
+            font-size: 12px;
+        }
+        .temp-infor-more span {
+            font-size: 12px;
+        }
+        .template-info {
+            padding: 0;
+        }
+        .block-template {
+            margin: 0;
+        }
+        .template-thumbnail {
+            margin-bottom: 10px;
+        }
+        .input-time {
+            width: 60px;
+            height: 22px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+            font-size: 12px;
+            padding: 8px;
+            text-align: center;
+            border-radius: 3px;
+        }
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button {  
+        opacity: 1;
+        }
+        &:last-child {
+            margin-bottom: 0;
         }
     }
 }

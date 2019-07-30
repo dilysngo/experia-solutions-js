@@ -109,9 +109,9 @@ export default {
     }),
     created() {
         setTimeout(() => {
-            if (this.$route.path.toString() === '/screens')
+            if (this.$route.path.toString() === '/templates') this.templateData = this.template.template;
+            else    
                 this.templateData = this.template.template.template;
-            else this.templateData = this.template.template;
         }, 100);
     },
     mounted() {
@@ -119,7 +119,7 @@ export default {
             let containerWidth = $('.preview-img').width();
             this.sizeScale = containerWidth * this.unitScale;
             console.log('sizescale', this.sizeScale);
-            console.log('containerWidth', containerWidth);
+            console.log('containerWidth1', containerWidth);
         }, 200);
     },
     methods: {
@@ -134,6 +134,14 @@ export default {
         },
         previewTemplate() {
             this.$emit('preview', this.templateData);
+        },
+        reRender() {
+            setTimeout(() => {
+                let containerWidth = $('.preview-img').width();
+                this.sizeScale = containerWidth * this.unitScale;
+                console.log('sizescale', this.sizeScale);
+                console.log('containerWidth', containerWidth);
+            }, 200);
         }
     },
     filters: {
