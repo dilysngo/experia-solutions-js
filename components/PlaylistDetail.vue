@@ -88,15 +88,16 @@
 <script>
 import {mapGetters, mapActions} from 'vuex';
 import BlockTemplate from '~/components/BlockTemplate';
+import {convertToString} from '~/helpers/dateHelper';
 
 export default {
     data() {
         return {
-            idPlaylist: null,
+            playlist: null,
             sizeScale: null,
             playlistScreen: [],
-            name: null,
-            description: null,
+            name: 'Playlist-' + convertToString(new Date()),
+            description: '',
             unitScale: 13 / 928 // fontSize/containerWidth
         };
     },
@@ -131,32 +132,53 @@ export default {
             'createPlaylist',
             'updatePlaylist',
         ]),
-        async open(idPlaylist) {
-            this.idPlaylist = idPlaylist;
+        async open(playlist) {
+            this.playlist = playlist;
+            this.playlistScreen = playlist ? playlist.screens : [];
+            if (playlist) {
+                this.name = playlist.name;
+                this.description = playlist.description;
+            }
+            console.log('this.playlistScreen', playlist);
+            // this.screenList = [];
             await this.findScreens();
             $('#' + this.id).modal('show');
 
             setTimeout(() => {
                 let containerWidth = $('.screen-item').width();
                 this.sizeScale = containerWidth * this.unitScale;
-            }, 300);
+            }, 500);
         },
-        cancel() {
+        cancel(id) {
             $('#' + this.id).modal('hide');
             setTimeout(() => {
                 this.playlistScreen = [];
             }, 200);
-            this.$emit('cancel');
+            this.$emit('cancel', id);
         },
         save() {
-            if (this.idPlaylist) {
+            let screens = [];
+            this.playlistScreen.forEach(item => {
+                screens.push({id: item.data.id, time: +item.time});
+            });
+            console.log('this.playlist', this.playlist);
 
+            if (this.playlist) {
+                let data = {
+                    name: this.name,
+                    slug: '',
+                    userId: this.userAuth.id,
+                    description: this.description,
+                    screens: screens,
+                };
+                this.updatePlaylist({
+                    id: this.playlist.id,
+                    data: data
+                });
             }
             else {
-                let screens = [];
-                this.playlistScreen.forEach(item => {
-                    screens.push({id: item.data.id, time: item.time});
-                });
+                // if (!this.playlistScreen.length)
+                //     return;
                 this.createPlaylist({
                     name: this.name,
                     slug: '',
@@ -165,6 +187,8 @@ export default {
                     screens: screens,
                 });
             }
+            this.cancel(this.playlist ? this.playlist.id : '');
+            this.playlist = null;
         },
         addItemPlaylist(item) {
             let itemPush = {

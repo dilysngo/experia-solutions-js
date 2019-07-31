@@ -39,12 +39,9 @@
             -ms-flex: 0 0 33.3333%;
             flex: 0 0 33.3333%;
             max-width: 33.3333%;
-            img{
-                border-radius: 7px 7px 0 0;
-                margin: 0 auto;
-                display: block;
-                width: 100%;
-            }
+            border-radius: 7px 7px 0 0;
+            height: 100px;
+            overflow: hidden;
         }
     }
     .playlist-thumbnail:hover{
@@ -71,6 +68,7 @@
         left: 0;
         right: 0;
         bottom: 0;
+        z-index: 1;
         border-radius: 7px 7px 0 0;
         background-color: rgba(54, 55, 64, 0.84);
         justify-content: center;

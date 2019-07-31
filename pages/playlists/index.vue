@@ -1,7 +1,7 @@
 <template>
     <section class="page-container page-playlists">
         <div class="page-header d-flex">
-            <h4>Playlists ({{ totalPlaylists }})</h4>
+            <h4>Playlists ({{ playlistPagination && playlistPagination.total }})</h4>
             <div class="header-right d-flex">
                 <div class="form-search">
                     <input
@@ -10,12 +10,13 @@
                         class="search-input"
                         name="search"
                         maxlength="50"
+                        v-model="keyword"
                     >
                     <i class="icon-search icon-site" />
                 </div>
                 <a
                     class="btn-new-plist"
-                    @click="handleEdit"
+                    @click="handleEdit()"
                 >
                     <i class="icon-play-lists icon-site" />
                     <span>New Playlist</span>
@@ -24,12 +25,41 @@
         </div>
         <div class="page-body">
             <div class="container-playlists">
-                <div class="row" />
+                <div
+                    class="row"
+                    v-if="renderComponent"
+                >
+                    <block-playlist
+                        v-for="(item, index) in playlistList"  
+                        :key="index"
+                        :data="item"
+                        :ref="'playlist-'+item.id"
+                        @delete="handleDeletePlaylist"
+                        @edit="handleEdit"
+                    />
+                </div>
+                <div class="paginate">
+                    <no-ssr>
+                        <pagination
+                            id="pagination"
+                            :skip="skip"
+                            :limit="limit"
+                            :total="total" 
+                            @change="changePage"
+                        />
+                    </no-ssr>
+                </div>
             </div>
         </div>
+        <popup-confirm
+            ref="popupConfirm"
+            id="deletePlaylist"
+            @success="handleDelete"
+        />
         <playlist-detail
             id="playlistDetail"
             ref="playlistDetail"
+            @cancel="handleCancel"
         />
     </section>
 </template>
@@ -37,6 +67,7 @@
 import {mapGetters, mapActions} from 'vuex';
 import {pagination} from '~/helpers/dataHelper';
 import PlaylistDetail from '~/components/PlaylistDetail';
+import BlockPlaylist from '~/components/BlockPlaylist';
 import Pagination from '~/components/Pagination';
 import PopupConfirm from '~/components/PopupConfirm';
 
@@ -47,39 +78,15 @@ export default {
             limit: 12,
             total: 0,
             keyword: '',
-            totalPlaylists: 5,
-            listPlays: [
-                {
-                    id: 1,
-                    playName: 'Lotteria Promotions',
-                    listThumb: ['/images/img-thumbnail-4.png','/images/img-thumbnail-2.png','/images/img-thumbnail-1.png'], 
-                    totalThumb: 3,
-                    playTime: '5:23',
-                    dateCreate: '25/02'
-                },
-                {
-                    id: 1,
-                    playName: 'Lotteria Promotions',
-                    listThumb: ['/images/img-thumbnail-1.png','/images/img-thumbnail-3.png','/images/img-thumbnail-2.png'], 
-                    totalThumb: 7,
-                    playTime: '5:23',
-                    dateCreate: '25/02'
-                },
-                {
-                    id: 1,
-                    playName: 'Lotteria Promotions',
-                    listThumb: ['/images/img-thumbnail-2.png','/images/img-thumbnail-2.png','/images/img-thumbnail-1.png'], 
-                    totalThumb: 3,
-                    playTime: '5:23',
-                    dateCreate: '25/02'
-                },
-            ]
+            list: [],
+            renderComponent: true
         };
     },
     components: {
         PlaylistDetail,
-        // Pagination,
-        // PopupConfirm,
+        BlockPlaylist,
+        Pagination,
+        PopupConfirm,
     },
     async created() {
         await this.getPlaylists();
@@ -114,21 +121,38 @@ export default {
                     console.log(err.message);
             });
             this.total = data && data.pagination && data.pagination.total;
-            this.$forceUpdate();
         },
-        handleDeletePlaylist(item) {
-            this.$refs.popupConfirm.open(item);
+        handleDeletePlaylist(id) {
+            this.$refs.popupConfirm.open(id);
         },
-        async handleDelete(item) {
-            await this.deletePlaylist(item.id);
+        async handleDelete(id) {
+            await this.deletePlaylist(id);
             await this.getPlaylists();
         },
         handleEdit(item) {
-            this.$refs.playlistDetail.open(item.id || null);
+            if (item)
+                this.$refs.playlistDetail.open(item);
+            else 
+                this.$refs.playlistDetail.open();
         },
         handlePreview(item) {
             if (item)
                 this.$refs.popupReview.open(item);
+        },
+        async handleCancel(id) {
+            await this.getPlaylists();
+            if (id)
+                this.$refs['playlist-' + id][0].reset();
+            this.forceRerender();
+        },
+        forceRerender() {
+        // Remove my-component from the DOM
+            this.renderComponent = false;
+            
+            this.$nextTick(() => {
+            // Add the component back in
+                this.renderComponent = true;
+            });
         }
     }
 };

@@ -16,6 +16,10 @@ export function convertToSize(size) {
     return (size / 1000000).toFixed(2) + 'MB';
 }
 
+export function convertToTime(time) {
+    return Math.floor(time / 60) + ':' + (time % 60);
+}
+
 export function convertToUrl(url) {
     return process.env.CDN_BASE + url;
 }
