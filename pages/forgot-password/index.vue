@@ -5,7 +5,10 @@
             <h2>Recover password</h2>
             <p>Enter your email address we'll send you link to reset your password</p>
         </div>
-        <div class="container-form">
+        <form 
+            class="container-form" 
+            @submit.prevent="forgot"
+        >
             <div class="box-input">
                 <label for="email">Email</label>
                 <input
@@ -35,7 +38,7 @@
             <div class="box-submit">
                 <button
                     class="btn-submit"
-                    @click="forgot"
+                    type="submit"
                 >
                     Continute
                 </button>
@@ -46,7 +49,7 @@
                     Comeback
                 </nuxt-link>
             </div>
-        </div>
+        </form>
     </div>
 </template>
 <script>

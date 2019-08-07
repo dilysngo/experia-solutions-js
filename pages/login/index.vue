@@ -4,7 +4,10 @@
             <h3>Sign In</h3>
             <h2>Welcome to Eperia Group</h2>
         </div>
-        <div class="container-form d-flex flex-wrap">
+        <form 
+            class="container-form d-flex flex-wrap"
+            @submit.prevent="login"
+        >
             <div class="box-input">
                 <label for="email">Email</label>
                 <input
@@ -38,7 +41,7 @@
             <div class="box-submit">
                 <button
                     class="btn-submit"
-                    @click="login"
+                    type="submit"
                 >
                     Sign in
                 </button>
@@ -55,7 +58,7 @@
                     Sign up
                 </nuxt-link>
             </div>
-        </div>
+        </form>
     </div>
 </template>
 

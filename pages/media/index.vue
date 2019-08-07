@@ -53,7 +53,11 @@
                         >
                             <div
                                 class="g-thumbnail"
-                                :style="{ 'background-image': gItem.type !== mediaType.Video ? 'url(' + convertToUrl(gItem.imageInfo.url) + ')' : '' }"
+                                :style="{ 
+                                    'background-image': gItem.type !== mediaType.Video ? 'url(' + convertToUrl(gItem.imageInfo.url) + ')' : '',
+                                    'background-size': 'cover',
+                                    'background-repeat': 'no-repeat'
+                                }"
                             >
                                 <div
                                     class="g-view"
@@ -96,8 +100,14 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="g-info">
-                                <h3 class="g-name">
+                            <div 
+                                class="g-info"
+                                @click="showMedia(gItem)"
+                            >
+                                <h3 
+                                    class="g-name"
+                                    :title="gItem.name"
+                                >
                                     {{ gItem.name }}
                                 </h3>
                                 <div class="g-detail d-flex">

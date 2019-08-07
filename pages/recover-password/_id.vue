@@ -5,7 +5,10 @@
             <h2>Recover password</h2>
             <p>Enter your new password</p>
         </div>
-        <div class="container-form">
+        <form 
+            class="container-form"
+            @submit.prevent="recover"
+        >
             <div class="box-input input-pass">
                 <label for="pass">Password</label>
                 <input
@@ -47,7 +50,7 @@
             <div class="box-submit">
                 <button
                     class="btn-submit"
-                    @click="recover"
+                    type="submit"
                 >
                     Continue
                 </button>
@@ -58,7 +61,7 @@
                     Comeback
                 </nuxt-link>
             </div>
-        </div>
+        </form>
     </div>
 </template>
 <script>
