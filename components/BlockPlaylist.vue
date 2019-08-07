@@ -11,7 +11,7 @@
                     <div
                         class="box-img"
                         :style="{fontSize: sizeScale + 'px'}"
-                        v-for="(imgItem, index) in data.screens.slice(0,4)"
+                        v-for="(imgItem, index) in data.screens.slice(0,3)"
                         :key="index"
                     >
                         <!-- <img
@@ -36,6 +36,12 @@
                     <span>+{{ data.screens.length - 3 }}</span>
                 </div>
                 <div class="playlist-action d-flex">
+                    <a 
+                        @click="previewItem" 
+                        class="btn-link"
+                    >
+                        <i class="icon-play icon-site" />
+                    </a>
                     <a 
                         @click="editItem"
                         class="btn-link"
@@ -119,6 +125,9 @@ export default {
         },
         editItem() {
             this.$emit('edit', this.data);
+        },
+        previewItem() {
+            this.$emit('preview', this.data);
         },
         reset() {
             this.$forceUpdate();

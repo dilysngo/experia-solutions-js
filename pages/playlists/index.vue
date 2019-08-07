@@ -36,6 +36,7 @@
                         :ref="'playlist-'+item.id"
                         @delete="handleDeletePlaylist"
                         @edit="handleEdit"
+                        @preview="handlePreview"
                     />
                 </div>
                 <div class="paginate">
@@ -56,6 +57,10 @@
             id="deletePlaylist"
             @success="handleDelete"
         />
+        <popup-review
+            ref="popupReview"
+            id="popupReview"
+        />
         <playlist-detail
             id="playlistDetail"
             ref="playlistDetail"
@@ -70,6 +75,7 @@ import PlaylistDetail from '~/components/PlaylistDetail';
 import BlockPlaylist from '~/components/BlockPlaylist';
 import Pagination from '~/components/Pagination';
 import PopupConfirm from '~/components/PopupConfirm';
+import PopupReview from '~/components/PopupReview';
 
 export default {
     data() {
@@ -87,6 +93,7 @@ export default {
         BlockPlaylist,
         Pagination,
         PopupConfirm,
+        PopupReview
     },
     async created() {
         await this.getPlaylists();

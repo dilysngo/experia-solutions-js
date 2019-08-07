@@ -1,6 +1,6 @@
 <template>
     <div
-        class="modal fade box-popup"
+        class="modal fade box-popup show"
         :id="id"
         role="dialog"
         data-backdrop="static" 
@@ -44,7 +44,10 @@ export default {
         return {
             data: null,
             sizeScale: null,
-            unitScale: 13 / 928 // fontSize/containerWidth
+            unitScale: 13 / 928, // fontSize/containerWidth,
+            interval: null,
+            time: 0,
+            counter: 0
         };
     },
     props: {
@@ -58,13 +61,39 @@ export default {
     },
     methods: {
         open(data) {
-            this.data = data;
+            if (!data.screens)
+                this.data = data;
+            else {
+                let i = 0;
+
+                this.getScreen(data.screens[i]);
+                this.interval = setInterval(() => {
+
+                    this.counter = this.counter + 1;
+                    if (this.counter > this.time) {
+                        i = i + 1;
+                        if (i >= data.screens.length) {
+                            clearInterval(this.interval);
+                            return;
+                        }
+                        this.getScreen(data.screens[i]);
+                    }
+                }, 1000);
+            }
             $('#' + this.id).modal('show');
 
             setTimeout(() => {
                 let containerWidth = $('.container-preview').width();
                 this.sizeScale = containerWidth * this.unitScale;
             }, 300);
+        },
+        getScreen(data) {
+            this.counter = 0;
+            this.time = data.time;
+            this.data = null;
+            this.$nextTick(() => {
+                this.data = data.data.template.template;
+            });
         },
         cancel() {
             $('#' + this.id).modal('hide');
