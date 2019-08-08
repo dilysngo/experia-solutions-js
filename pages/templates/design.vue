@@ -579,6 +579,8 @@ export default {
         },
         dragover_handler(ev) {
             console.log('over', ev);
+            console.log('element-text-489606982', $('#element-text-489606982').position());
+
             if (!this.designMode)
                 return;
             ev.preventDefault();
@@ -604,7 +606,7 @@ export default {
             options.setting = {
                 stylesBox: {
                     position: 'absolute',
-                    top: ev.layerY * (13 / this.sizeScale),
+                    top: ev.layerY * (13 / this.sizeScale), // sizeScale => 1em , 13px => ? 
                     left: ev.layerX * (13 / this.sizeScale),
                     width: 120,
                     height: 60,

@@ -16,14 +16,15 @@
             class="element-form-default"
             draggable="true"
             @dragstart="dragstart_handler($event)"
+            @mousedown="mouseDown($event)"
         >
-            <element-control-box
+            <!-- <element-control-box
                 :root="root"
                 v-if="designMode"
                 :source="source"
                 :title="title"
                 :controls="controls"
-            />
+            /> -->
             <div
                 class="element-not-data"
                 v-show="!setting.url"
@@ -230,6 +231,10 @@ export default {
             this.root.isSetting = true;
             this.root.elementSelected = this.source;
         },
+        mouseDown(ev) {
+            this.source.setting.stylesBox.x = ev.x * (13 / this.sizeScale);
+            this.source.setting.stylesBox.y = ev.y * (13 / this.sizeScale);
+        }
     }
 };
 </script>
