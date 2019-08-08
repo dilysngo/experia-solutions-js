@@ -59,7 +59,7 @@
         padding: 0px 8px 0px 20px;
     }
     .list-gallery {
-        height: calc(100vh - 230px);
+        height: calc(100vh - 135px);
         overflow-y: auto;
         &::-webkit-scrollbar-track {
             -webkit-box-shadow: inset 0 0 6px #fff;
@@ -81,7 +81,6 @@
             background-color: #f2f2f2;
             margin-bottom: 10px;
             overflow: hidden;
-            cursor: pointer;
             &:hover{
                 .name-item{
                     transform: translateY(0);
@@ -92,6 +91,7 @@
                 height: 100%;
                 min-width: 220px;
                 object-fit: cover;
+                cursor: pointer;
             }
             .label-gallery{
                 @include border-radius(3px);

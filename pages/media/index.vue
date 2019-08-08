@@ -1,7 +1,7 @@
 <template>
     <section class="page-container page-media">
         <div class="page-header d-flex">
-            <h4>Gallery ({{ total }})</h4>
+            <h4>Gallery ({{ total ? total : 0 }})</h4>
             <div class="header-right d-flex">
                 <filter-select
                     @input="handlerType" 
@@ -152,13 +152,16 @@
                 </div>
             </div>
         </div>
-        <div
-            id="modalVideo"    
+        <div 
+            id="modalVideo"   
             class="modal fade modal-media frame-image"
-            data-backdrop="static"
-            data-keyboard="false"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="myLargeModalLabel" 
+            aria-hidden="true"
+            @click="closeMedia"
         >
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <button
                         @click="closeMedia"

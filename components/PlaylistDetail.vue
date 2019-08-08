@@ -130,7 +130,7 @@ export default {
         ...mapActions('playlist', [
             'findPlaylists',
             'createPlaylist',
-            'updatePlaylist',
+            'updatePlaylist'
         ]),
         async open(playlist) {
             this.playlist = playlist;
@@ -138,6 +138,9 @@ export default {
             if (playlist) {
                 this.name = playlist.name;
                 this.description = playlist.description;
+            }
+            else {
+                this.name = 'Playlist-' + convertToString(new Date());
             }
             console.log('this.playlistScreen', playlist);
             // this.screenList = [];
@@ -161,6 +164,7 @@ export default {
             this.playlistScreen.forEach(item => {
                 screens.push({id: item.data.id, time: +item.time});
             });
+            this.$emit('save');
             console.log('this.playlist', this.playlist);
 
             if (this.playlist) {
