@@ -42,3 +42,51 @@ export function pagination(page , limit) {
     let skip = (page - 1) * limit;
     return skip;
 };
+
+export function getRatioSize(ratio) {
+    let size = {};
+    switch (ratio) {
+    case '16:9':
+        size = {
+            width: 712,
+            height: 400
+        };
+        break; 
+    case '4:3':
+        size = {
+            width: 512,
+            height: 384
+        };
+        break;
+    case '16:10':
+        size = {
+            width: 576,
+            height: 360
+        };
+        break; 
+    case '9:16':
+        size = {
+            width: 200,
+            height: 356
+        };
+        break;
+    case '3:4':
+        size = {
+            width: 240,
+            height: 320
+        };  
+        break;
+    case '10:16':
+        size = {
+            width: 225,
+            height: 360
+        };
+        break;
+    default: 
+        size = {
+            width: 712,
+            height: 400
+        };
+    }
+    return size;
+}

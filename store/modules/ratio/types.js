@@ -1,0 +1,7 @@
+const NS_RATIO = 'RATIO';
+
+export default {
+    RATIO_LIST: NS_RATIO + '/LIST',
+    RATIO_DETAIL: NS_RATIO + '/DETAIL',
+    RATIO_PAGINATION: NS_RATIO + '/PAGINATION'
+};

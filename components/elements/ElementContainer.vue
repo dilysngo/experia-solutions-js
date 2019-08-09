@@ -1,7 +1,7 @@
 <template>
     <div
         class="template-body"  
-        :style="style"
+        :style="[style, {height: ratioSize && ratioSize.height/13 + 'em', width: ratioSize && ratioSize.width/13 + 'em'}]"
         :class="{'preview': !designMode}"
     >
         <component
@@ -63,6 +63,10 @@ export default {
         sizeScale: {
             type: Number,
             default: null
+        },
+        ratioSize: {
+            type: Object,
+            default: () => {}
         },
         source: {
             type: Object,

@@ -4,6 +4,7 @@ import media from './modules/media';
 import template from './modules/template';
 import screen from './modules/screen';
 import playlist from './modules/playlist';
+import ratio from './modules/ratio';
 import socket from './modules/socket';
 import {getCookie} from '../helpers/dataHelper';
 
@@ -30,6 +31,7 @@ export default function() {
             template,
             screen,
             playlist,
+            ratio,
             socket
         }
     });

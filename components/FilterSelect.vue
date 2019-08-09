@@ -37,7 +37,7 @@
                 >
                     <a
                         class="dropdown-link"
-                        v-if="item.isTitle"
+                        v-if="!item.value"
                     >
                         <span
                             class="dropdown-link-title"
@@ -48,14 +48,15 @@
                     </a>
                     <a
                         class="dropdown-link"
-                        v-else-if="item.supTitle"
+                        v-else-if="item.value"
+                        @click="changeItem(item)"
                     >
                         <span class="dropdown-link-title d-flex justify-content-between">
                             <span>{{ item.name }}</span>
                             <span>{{ item.value }}</span>
                         </span>
                         <span class="sup-title">
-                            {{ item.supTitle }}
+                            {{ item.description }}
                         </span>
                     </a>
                     <a
@@ -110,18 +111,19 @@ export default {
             default: ''
         },
         select: {
-            type: Number,
-            default: 0
+            type: String,
+            default: ''
         },
     },
     async created() {
         // await this.getlookup();
         this.reset();
-        if (this.select > 0)
+        if (this.select)
             this.selected = this.list.find(item => item.value === this.select);
-        else this.selected = this.list[0];
+        else this.selected = this.list && this.list[0];
     },
     mounted() {
+        this.changeItem(this.selected);
     },
     methods: {
         reset() {

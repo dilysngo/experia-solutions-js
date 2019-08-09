@@ -8,8 +8,9 @@
             >
             <div class="d-flex">
                 <filter-select
-                    placeholder="Ratio 16:9"
                     :data="dataSize"
+                    @input="handlerRatio"
+                    :select="'16:9'"
                 />
                 <filter-select
                     placeholder="Category"
@@ -133,6 +134,7 @@
                             :root="root"
                             :design-mode="designMode"
                             :size-scale="sizeScale"
+                            :ratio-size="ratioSize"
                             :device-preview="devicePreview"
                             v-if="template"
                             :source="template"
@@ -181,7 +183,7 @@ import Gallery from '~/components/Gallery';
 import PopupReview from '~/components/PopupReview';
 import {MediaType, PageType, Roles} from '~/common/commonType'; // eslint-disable-line
 import {convertToString} from '~/helpers/dateHelper';
-import {convertToUrl} from '~/helpers/dataHelper';
+import {convertToUrl, getRatioSize} from '~/helpers/dataHelper';
 
 Vue.component('element-setting', ElementSetting);
 Vue.component('element-resize', ElementResize);
@@ -245,7 +247,10 @@ export default {
             ],
             pageType: null,
             sizeScale: null,
-            unitScale: 13 / 928 // fontSize/containerWidth
+            sizeContainer: null,
+            unitScale: 13 / 928, // fontSize/containerWidth
+            ratioSelected: null,
+            ratioSize: null
         };
     },
     async created() {
@@ -276,21 +281,22 @@ export default {
             this.$router.push('/templates');
         }
     },
-    mounted() {
-        let containerWidth;
-        containerWidth = $('.container-drag').width();
-        console.log('containerWidth', containerWidth);
-        this.sizeScale = containerWidth * this.unitScale;
+    async mounted() {
+        // this.getSizeScale();
 
         window.onresize = () => {
-            console.log('winresize');
-            containerWidth = $('.container-drag').width();
-            this.sizeScale = containerWidth * this.unitScale;
+            this.getSizeScale();
         };
+
+        await this.findRatios();
+        this.dataSize = this.ratioList;
     },
     computed: {
         ...mapGetters('user', [
             'userAuth'
+        ]),
+        ...mapGetters('ratio', [
+            'ratioList'
         ])
     },
     watch: {
@@ -308,6 +314,15 @@ export default {
             'updateTemplate',
             'updateTemplateScreen'
         ]),
+        ...mapActions('ratio', [
+            'findRatios',
+        ]),
+        getSizeScale() {
+            console.log('winresize');
+            let containerWidth;
+            containerWidth = $('.container-drag').width();
+            this.sizeScale = containerWidth * this.unitScale;
+        },
         async getTemplateById(templateId) {
             let result = await this.getTemplate(templateId).catch(error => {
                 this.$notify({
@@ -666,6 +681,13 @@ export default {
         preview() {
             if (this.template)
                 this.$refs.popupReview.open(this.template);
+        },
+        handlerRatio(item) {
+            this.ratioSelected = item;
+            this.ratioSize = getRatioSize(item.value);
+            this.$nextTick(() => {
+                this.getSizeScale();
+            });
         }
     }
 };
