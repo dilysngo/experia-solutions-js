@@ -1,4 +1,5 @@
 <template>
+    <!-- <a>//13px => setting.stylesBox.top , 1px => ?</a> -->
     <div
         class="element-box" 
         :class="designMode ? 'boder-work' : ''"
@@ -16,14 +17,15 @@
             class="element-form-default" 
             draggable="true"
             @dragstart="dragstart_handler($event)"
+            @mousedown="mouseDown($event)"
         >
-            <element-control-box
+            <!-- <element-control-box
                 :root="root"
                 v-if="designMode"
                 :source="source"
                 :title="title"
                 :controls="controls"
-            />
+            /> -->
             <div
                 class="element-not-data"
                 v-if="!setting.content"
@@ -155,6 +157,8 @@ export default {
             if (!this.designMode)
                 return;
             // Add the target element's id to the data transfer object
+
+            console.log('this.source', this.source);
             ev.dataTransfer.setData('application/json', JSON.stringify(this.source));
             ev.dataTransfer.dropEffect = "move";
             document.getElementById(this.key).classList.add('is-drag');
@@ -167,6 +171,10 @@ export default {
             this.root.isSetting = true;
             this.root.elementSelected = this.source;
         },
+        mouseDown(ev) {
+            this.source.setting.stylesBox.x = ev.x * (13 / this.sizeScale);
+            this.source.setting.stylesBox.y = ev.y * (13 / this.sizeScale);
+        }
     }
 };
 </script>
