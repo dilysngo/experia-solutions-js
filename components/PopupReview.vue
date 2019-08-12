@@ -28,6 +28,7 @@
                             v-if="data"
                             :source="data"
                             :size-scale="sizeScale"
+                            :ratio-size="ratioSize"
                         />
                     </div>
                 </div>
@@ -54,6 +55,10 @@ export default {
         id: {
             type: String,
             default: ''
+        },
+        ratioSize: {
+            type: Object,
+            default: () => {}
         },
     },
     components: {

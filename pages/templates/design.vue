@@ -10,7 +10,7 @@
                 <filter-select
                     :data="dataSize"
                     @input="handlerRatio"
-                    :select="'16:9'"
+                    :select="ratioDefault"
                 />
                 <filter-select
                     placeholder="Category"
@@ -162,6 +162,7 @@
                     <popup-review
                         ref="popupReview"
                         id="popupReview"
+                        :ratio-size="ratioSize"
                     />
                 </div>
             </div>
@@ -234,26 +235,20 @@ export default {
                 {name: 'Category 2', value: 2},
                 {name: 'Category 3', value: 3},
             ],
-            dataSize: [
-                {name: 'All Sreens', value: '', isTitle: true},
-                {name: 'Landscape', value: '', isTitle: true},
-                {name: 'Wide screen', value: '16:9', supTitle: '1920 x 1080, 1280 x 720'},
-                {name: 'Normal screen', value: '4:3', supTitle: '1024 x 768'},
-                {name: 'Wide screen', value: '16:10', supTitle: '1920 x 1200, 1152 x 720'},
-                {name: 'Portrait', value: '', isTitle: true},
-                {name: 'Wide screen', value: '9:16', supTitle: '1080 x 1920, 720 x 1280'},
-                {name: 'Normal screen', value: '3:4', supTitle: '768 x 1024'},
-                {name: 'Wide screen', value: '10:16', supTitle: '1200 x 1920, 720 x 1152'},
-            ],
+            dataSize: [],
             pageType: null,
             sizeScale: null,
             sizeContainer: null,
             unitScale: 13 / 928, // fontSize/containerWidth
             ratioSelected: null,
-            ratioSize: null
+            ratioSize: null,
+            ratioDefault: '16:9' 
         };
     },
     async created() {
+        await this.findRatios();
+        this.dataSize = this.ratioList;
+
         this.root = this;
         this.temporaryQueues = [];
         this.template = {
@@ -271,15 +266,17 @@ export default {
 
             this.pageType = PageType.Template;
             await this.getTemplateById(this.$route.query.template); // Update template
-
         }
         else if (this.$route.query.screen) {
             this.pageType = PageType.Screen;
-            this.getTemplateScreen(this.$route.query.screen); // Update template of screen
+            await this.getTemplateScreen(this.$route.query.screen); // Update template of screen
         }
         else {
             this.$router.push('/templates');
         }
+
+        if (this.templateData.ratio)
+            this.ratioDefault = this.templateData.ratio.value;
     },
     async mounted() {
         // this.getSizeScale();
@@ -287,9 +284,6 @@ export default {
         window.onresize = () => {
             this.getSizeScale();
         };
-
-        await this.findRatios();
-        this.dataSize = this.ratioList;
     },
     computed: {
         ...mapGetters('user', [
@@ -357,8 +351,8 @@ export default {
             });
 
             if (result) {
-                console.log('result', result);
                 this.templateData = result.template;
+                this.templateData.ratio = result.ratio;
                 this.titlePage = result.name;
 
                 if (result.template && result.template.template) {
@@ -395,7 +389,7 @@ export default {
                         });
                     });
                 else if (this.pageType === PageType.Screen) { // Update template of landing
-                    let dataUpdate = {name: this.titlePage, template: this.templateData};
+                    let dataUpdate = {name: this.titlePage, template: this.templateData, ratioId: this.ratioSelected.id};
                     result = await this.updateTemplateScreen({id: this.$route.query.screen, data: dataUpdate}).catch(error => {
                         this.$notify({
                             group: 'error',
@@ -685,6 +679,11 @@ export default {
         handlerRatio(item) {
             this.ratioSelected = item;
             this.ratioSize = getRatioSize(item.value);
+            if (this.templateData) {
+                if (this.pageType === PageType.Template)
+                    this.templateData.ratioId = item.id;
+            }
+            
             this.$nextTick(() => {
                 this.getSizeScale();
             });

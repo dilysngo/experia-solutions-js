@@ -11,7 +11,7 @@
                 <span
                     v-if="!isKeyword"
                     class="filter-value form-control"
-                >{{ selected ? selected.name : placeholder }}</span>
+                >{{ selected ? selected.name : placeholder }} {{ selected.description ? selected.value : '' }}</span>
                 <input
                     v-else
                     type="text"
@@ -19,7 +19,6 @@
                     :placeholder="placeholder" 
                     v-model="keyword"
                 >
-                <!-- <span class="icon-angle-down" /> -->
                 <i class="fa fa-angle-down" />
                 <i class="fa fa-angle-up" />
             </div>
@@ -53,7 +52,7 @@
                     >
                         <span class="dropdown-link-title d-flex justify-content-between">
                             <span>{{ item.name }}</span>
-                            <span>{{ item.value }}</span>
+                            <span v-if="item.description">{{ item.value }}</span>
                         </span>
                         <span class="sup-title">
                             {{ item.description }}
@@ -79,7 +78,7 @@ import {mapActions} from 'vuex';
 export default {
     data() {
         return {
-            list: this.data,
+            list: null,
             selected: null,
             keyword: '',
             isReset: false
@@ -118,12 +117,18 @@ export default {
     async created() {
         // await this.getlookup();
         this.reset();
-        if (this.select)
-            this.selected = this.list.find(item => item.value === this.select);
-        else this.selected = this.list && this.list[0];
     },
     mounted() {
-        this.changeItem(this.selected);
+        setTimeout(() => {
+            this.list = this.data;
+
+            if (this.select)
+                this.selected = this.list.find(item => item.value === this.select);
+            else this.selected = this.list && this.list[0];
+
+            if (this.selected)
+                this.changeItem(this.selected);
+        }, 300);
     },
     methods: {
         reset() {

@@ -36,6 +36,7 @@ export default {
     async updateTemplate({commit}, {id, data}) {
         delete data.id;
         delete data.code;
+        delete data.ratio;
         delete data.createdAt;
         delete data.updatedAt;
 
