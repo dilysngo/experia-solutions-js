@@ -5,7 +5,10 @@
             <h2>Welcome to Experia Group</h2>
             <p>Sign up for your 14 days free trial!</p>
         </div>
-        <div class="container-form d-flex flex-wrap">
+        <form 
+            class="container-form d-flex flex-wrap"
+            @submit.prevent="register"
+        >
             <div class="box-input">
                 <label for="firstName">Firs Name</label>
                 <input
@@ -89,7 +92,7 @@
             <div class="box-submit">
                 <button
                     class="btn-submit"
-                    @click="register"
+                    type="submit"
                 >
                     Sign up
                 </button>
@@ -103,7 +106,7 @@
                     </nuxt-link>
                 </p>
             </div>
-        </div>
+        </form>
     </div>
 </template>
 <script>

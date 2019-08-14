@@ -1,7 +1,7 @@
 <template>
     <section class="page-container page-media">
         <div class="page-header d-flex">
-            <h4>Gallery ({{ total }})</h4>
+            <h4>Gallery ({{ total ? total : 0 }})</h4>
             <div class="header-right d-flex">
                 <filter-select
                     @input="handlerType" 
@@ -53,7 +53,11 @@
                         >
                             <div
                                 class="g-thumbnail"
-                                :style="{ 'background-image': gItem.type !== mediaType.Video ? 'url(' + convertToUrl(gItem.imageInfo.url) + ')' : '' }"
+                                :style="{ 
+                                    'background-image': gItem.type !== mediaType.Video ? 'url(' + convertToUrl(gItem.imageInfo.url) + ')' : '',
+                                    'background-size': 'cover',
+                                    'background-repeat': 'no-repeat'
+                                }"
                             >
                                 <div
                                     class="g-view"
@@ -96,8 +100,14 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="g-info">
-                                <h3 class="g-name">
+                            <div 
+                                class="g-info"
+                                @click="showMedia(gItem)"
+                            >
+                                <h3 
+                                    class="g-name"
+                                    :title="gItem.name"
+                                >
                                     {{ gItem.name }}
                                 </h3>
                                 <div class="g-detail d-flex">
@@ -142,13 +152,16 @@
                 </div>
             </div>
         </div>
-        <div
-            id="modalVideo"    
+        <div 
+            id="modalVideo"   
             class="modal fade modal-media frame-image"
-            data-backdrop="static"
-            data-keyboard="false"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="myLargeModalLabel" 
+            aria-hidden="true"
+            @click="closeMedia"
         >
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <button
                         @click="closeMedia"

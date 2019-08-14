@@ -1,7 +1,7 @@
 <template>
     <section class="page-container page-templates">
         <div class="page-header d-flex">
-            <h4>Templates ({{ total }})</h4>
+            <h4>Templates ({{ total ? total : 0 }})</h4>
             <div class="d-flex">
                 <filter-select
                     @input="handlerRatio"

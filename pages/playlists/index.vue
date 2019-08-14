@@ -1,7 +1,7 @@
 <template>
     <section class="page-container page-playlists">
         <div class="page-header d-flex">
-            <h4>Playlists ({{ playlistPagination && playlistPagination.total }})</h4>
+            <h4>Playlists ({{ playlistPagination && playlistPagination.total ? playlistPagination.total : 0 }})</h4>
             <div class="header-right d-flex">
                 <div class="form-search">
                     <input
@@ -30,7 +30,7 @@
                     v-if="renderComponent"
                 >
                     <block-playlist
-                        v-for="(item, index) in playlistList"  
+                        v-for="(item, index) in list"  
                         :key="index"
                         :data="item"
                         :ref="'playlist-'+item.id"
@@ -65,6 +65,7 @@
             id="playlistDetail"
             ref="playlistDetail"
             @cancel="handleCancel"
+            @save="updateListPlaylist"
         />
     </section>
 </template>
@@ -123,10 +124,16 @@ export default {
             await this.getPlaylists();
         },
         async getPlaylists() {
-            let data = await this.findPlaylists({keyword: this.keyword, limit: this.limit, skip: this.skip}).catch(err => {
+            let options = {
+                keyword: this.keyword, 
+                limit: this.limit, 
+                skip: this.skip
+            };
+            let data = await this.findPlaylists(options).catch(err => {
                 if (err)
                     console.log(err.message);
             });
+            this.list = data.results;
             this.total = data && data.pagination && data.pagination.total;
         },
         handleDeletePlaylist(id) {
@@ -145,6 +152,9 @@ export default {
         handlePreview(item) {
             if (item)
                 this.$refs.popupReview.open(item);
+        },
+        async updateListPlaylist() {
+            await this.getPlaylists();
         },
         async handleCancel(id) {
             await this.getPlaylists();

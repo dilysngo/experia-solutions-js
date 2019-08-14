@@ -1,7 +1,11 @@
 <template>
-    <div
+    <div 
         :id="id"
         class="modal fade modal-gallery"
+        tabindex="-1"
+        role="dialog"
+        :aria-labelledby="id"
+        aria-hidden="true"
     >
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -42,7 +46,7 @@
                                     v-if="item.imageInfo"
                                     class="gallery-img"
                                     :src="convertToUrl(item.imageInfo.url)"
-                                    @click="selectMedia(item)"
+                                    @click="getMediaClicked(item)"
                                 >
                                 <video
                                     v-if="item.videoInfo"
@@ -51,7 +55,7 @@
                                     class="gallery-img"
                                     preload="auto"
                                     crossOrigin="anonymous"
-                                    @click="selectMedia(item)"
+                                    @click="getMediaClicked(item)"
                                 >
                                     <source :src="convertToUrl(item.videoInfo.url)">
                                 </video>
@@ -60,14 +64,14 @@
                         </li>
                     </ul>
                 </div>
-                <div class="pd-20">
+                <!-- <div class="pd-20">
                     <button
                         @click="getMediaClicked()"
                         class="form-btn"
                     >
                         Choose {{ mediaType !== 1 ? 'Image' : 'Video' }}
                     </button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -128,8 +132,8 @@ export default {
             this.search();
             // $('#' + this.id).modal('show');
             $('#' + this.id).modal({
-                backdrop: 'static',
-                keyboard: true,
+                // backdrop: 'static',
+                // keyboard: true,
                 show: true
             });
         },
@@ -140,16 +144,25 @@ export default {
             this.getMedias();
         },
         async getMedias() {
-            let data = await this.findMedias({keyword: this.condition.keyword, type: this.condition.type || this.mediaType, limit: this.limit, skip: this.skip}).catch(err => {
+            let options = {
+                keyword: this.condition.keyword, 
+                type: this.condition.type || this.mediaType, 
+                limit: this.limit, 
+                skip: this.skip
+            };
+            console.log(options);
+            let data = await this.findMedias(options).catch(err => {
                 if (err)
                     console.log(err.message);
             });
             this.total = data && data.pagination && data.pagination.total;
+            this.mediaType =  MediaType.Image;
         },
-        selectMedia(item) {
+        // selectMedia(item) {
+        //     this.mediaSelected = item;
+        // },
+        async getMediaClicked(item) {
             this.mediaSelected = item;
-        },
-        async getMediaClicked() {
             this.$emit('galleryImage', this.mediaSelected);
             this.close();
         },
