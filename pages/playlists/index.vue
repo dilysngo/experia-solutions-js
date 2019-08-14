@@ -124,6 +124,7 @@ export default {
             await this.getPlaylists();
         },
         async getPlaylists() {
+            this.list = [];
             let options = {
                 keyword: this.keyword, 
                 limit: this.limit, 
