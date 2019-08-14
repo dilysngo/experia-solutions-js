@@ -5,7 +5,7 @@ export default {
         if (!condition)
             condition = {};
 
-        const data = await this.$axios.$get(`api/template?keyword=${condition.keyword || ''}${condition.type ? '&type=' + condition.type : '' }&skip=${condition.skip || ''}&limit=${condition.limit || ''}`);
+        const data = await this.$axios.$get(`api/template?keyword=${condition.keyword || ''}${condition.type ? '&type=' + condition.type : '' }&categoryId=${condition.categoryId || ''}&ratioId=${condition.ratioId || ''}&ratioType=${condition.ratioType || ''}&skip=${condition.skip || ''}&limit=${condition.limit || ''}`);
         commit(types.TEMPLATE_LIST, data.results);
         commit(types.TEMPLATE_PAGINATION, data.pagination);
         return data;
@@ -37,6 +37,7 @@ export default {
         delete data.id;
         delete data.code;
         delete data.ratio;
+        delete data.category;
         delete data.createdAt;
         delete data.updatedAt;
 

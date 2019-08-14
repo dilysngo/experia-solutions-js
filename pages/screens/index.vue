@@ -19,14 +19,14 @@
                 <div class="row">
                     <div
                         class="col-md-3"
-                        v-for="(template, index) in screenList"
+                        v-for="(template, index) in screens"
                         :key="index"
                     >
                         <block-template
                             :template="template"
                             @delete="handleDeleteScreen"
                             @edit="handleEdit"
-                            @preview="handlePreview"
+                            @preview="handlePreview($event, template.ratio)"
                         />
                     </div>
                 </div>
@@ -72,13 +72,7 @@ export default {
     data() {
         return {
             totalTemplate: 10,
-            templates: [
-                {id: 1, thumb: '/images/template-thumbnail.png', name: 'Lotteria Promotion ', size: '16:9', dateCreate: '23/10'},
-                {id: 2, thumb: '/images/template-thumbnail.png', name: 'Telescopes 101', size: '16:9', dateCreate: '12/10'},
-                {id: 3, thumb: '/images/template-thumbnail.png', name: 'Moon Fever', size: '16:9', dateCreate: '01/10'},
-                {id: 4, thumb: '/images/template-thumbnail.png', name: 'The Glossary Of Telescopes', size: '16:9', dateCreate: '26/10'},
-                {id: 5, thumb: '/images/template-thumbnail.png', name: 'Dentists Are Smiling Over Pain', size: '16:9', dateCreate: '30/10'}
-            ],
+            screens: [],
             skip: 0,
             limit: 12,
             total: 0,
@@ -113,12 +107,13 @@ export default {
             await this.getSreens();
         },
         async getSreens() {
+            this.screens = [];
             let data = await this.findScreens({keyword: this.keyword, limit: this.limit, skip: this.skip}).catch(err => {
                 if (err)
                     console.log(err.message);
             });
             this.total = data && data.pagination && data.pagination.total;
-            this.$forceUpdate();
+            this.screens = this.screenList;
         },
         handleDeleteScreen(item) {
             console.log('temeee', item);
@@ -132,9 +127,9 @@ export default {
             if (item.id)
                 this.$router.push(`/templates/design?screen=${item.id}`);
         },
-        handlePreview(item) {
+        handlePreview(item, ratio) {
             if (item)
-                this.$refs.popupReview.open(item);
+                this.$refs.popupReview.open(item, ratio && ratio.value);
         }
     },
 };

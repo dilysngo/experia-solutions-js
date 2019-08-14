@@ -4,12 +4,12 @@
             <h4>Templates ({{ total }})</h4>
             <div class="d-flex">
                 <filter-select
-                    placeholder="Ratio 16:9"
+                    @input="handlerRatio"
                     :data="dataSize"
                 />
                 <filter-select
-                    placeholder="Category"
                     :data="dataCategory"
+                    @input="handlerCategory"
                 />
                 <div class="form-search">
                     <input
@@ -72,32 +72,26 @@ export default {
     },
     data() {
         return {
-            dataCategory: [
-                {name: 'Category 1', value: 1}, 
-                {name: 'Category 2', value: 2},
-                {name: 'Category 3', value: 3},
-            ],
-            dataSize: [
-                {name: 'All Sreens', value: '', isTitle: true},
-                {name: 'Landscape', value: '', isTitle: true},
-                {name: 'Wide screen', value: '16:9', supTitle: '1920 x 1080, 1280 x 720'},
-                {name: 'Normal screen', value: '4:3', supTitle: '1024 x 768'},
-                {name: 'Wide screen', value: '16:10', supTitle: '1920 x 1200, 1152 x 720'},
-                {name: 'Portrait', value: '', isTitle: true},
-                {name: 'Wide screen', value: '9:16', supTitle: '1080 x 1920, 720 x 1280'},
-                {name: 'Normal screen', value: '3:4', supTitle: '768 x 1024'},
-                {name: 'Wide screen', value: '10:16', supTitle: '1200 x 1920, 720 x 1152'},
-            ],
+            dataCategory: [],
+            dataSize: [],
             skip: 0,
             limit: 12,
             total: 0,
             keyword: '',
-            isAdmin: false
+            isAdmin: false,
+            ratioType: null,
+            ratioId: null,
+            categoryId: null
         };
     },
     async created() {
         await this.getTemplates();
         this.isAdmin = this.userAuth.role.code === Roles.Admin;
+
+        await this.findRatios();
+        await this.findCategory();
+        this.dataSize = this.ratioList;
+        this.dataCategory = this.categoryList;
     },
     computed: {
         ...mapGetters('template', [
@@ -105,6 +99,12 @@ export default {
         ]),
         ...mapGetters('user', [
             'userAuth'
+        ]),
+        ...mapGetters('ratio', [
+            'ratioList'
+        ]),
+        ...mapGetters('category', [
+            'categoryList'
         ])
     },
     watch: {
@@ -122,13 +122,19 @@ export default {
         ...mapActions('screen', [
             'createScreen',
         ]),
+        ...mapActions('ratio', [
+            'findRatios',
+        ]),
+        ...mapActions('category', [
+            'findCategory',
+        ]),
         async changePage(page){
             let data = pagination(page, this.limit);
             this.skip = data;
             await this.getTemplates();
         },
         async getTemplates() {
-            let data = await this.findTemplates({keyword: this.keyword, limit: this.limit, skip: this.skip}).catch(err => {
+            let data = await this.findTemplates({keyword: this.keyword, categoryId: this.categoryId, ratioId: this.ratioId, ratioType: this.ratioType, limit: this.limit, skip: this.skip}).catch(err => {
                 if (err)
                     console.log(err.message);
             });
@@ -161,6 +167,18 @@ export default {
         handleEdit(item) {
             if (item.id)
                 this.$router.push(`/templates/design?template=${item.id}`);
+        },
+        handlerRatio(item) {
+            this.ratioType = (item && !item.value && item.type !== 1) ? item.type : '';
+            if (!this.ratioType)
+                this.ratioId = (item && item.value) ? item.id : '';
+            else this.ratioId = '';
+
+            this.getTemplates();
+        },
+        handlerCategory(item) {
+            this.categoryId = (item && item.value) ? item.id : '';
+            this.getTemplates();
         }
     },
 };

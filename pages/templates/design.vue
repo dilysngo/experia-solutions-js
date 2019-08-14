@@ -15,17 +15,9 @@
                 <filter-select
                     placeholder="Category"
                     :data="dataCategory"
+                    @input="handlerCategory"
+                    :select="categoryDefault"
                 />
-                <div class="form-search">
-                    <input
-                        type="text"
-                        placeholder="Search for..."
-                        class="search-input"
-                        name="search"
-                        maxlength="50"
-                    >
-                    <i class="icon-search icon-site" />
-                </div>
             </div>
         </div>
         <div class="page-body">
@@ -162,7 +154,6 @@
                     <popup-review
                         ref="popupReview"
                         id="popupReview"
-                        :ratio-size="ratioSize"
                     />
                 </div>
             </div>
@@ -242,12 +233,17 @@ export default {
             unitScale: 13 / 928, // fontSize/containerWidth
             ratioSelected: null,
             ratioSize: null,
-            ratioDefault: '16:9' 
+            ratioDefault: '16:9',
+            categoryDefault: null,
+            categorySelected: null
         };
     },
     async created() {
         await this.findRatios();
         this.dataSize = this.ratioList;
+
+        await this.findCategory();
+        this.dataCategory = this.categoryList;
 
         this.root = this;
         this.temporaryQueues = [];
@@ -277,6 +273,11 @@ export default {
 
         if (this.templateData.ratio)
             this.ratioDefault = this.templateData.ratio.value;
+
+        if (this.templateData.category)
+            this.categoryDefault = this.templateData.category.value;
+
+        console.log('this.templateData.category', this.templateData);
     },
     async mounted() {
         // this.getSizeScale();
@@ -291,6 +292,9 @@ export default {
         ]),
         ...mapGetters('ratio', [
             'ratioList'
+        ]),
+        ...mapGetters('category', [
+            'categoryList'
         ])
     },
     watch: {
@@ -310,6 +314,9 @@ export default {
         ]),
         ...mapActions('ratio', [
             'findRatios',
+        ]),
+        ...mapActions('category', [
+            'findCategory',
         ]),
         getSizeScale() {
             console.log('winresize');
@@ -353,6 +360,7 @@ export default {
             if (result) {
                 this.templateData = result.template;
                 this.templateData.ratio = result.ratio;
+                this.templateData.category = result.category;
                 this.titlePage = result.name;
 
                 if (result.template && result.template.template) {
@@ -388,8 +396,8 @@ export default {
                             text: error.message
                         });
                     });
-                else if (this.pageType === PageType.Screen) { // Update template of landing
-                    let dataUpdate = {name: this.titlePage, template: this.templateData, ratioId: this.ratioSelected.id};
+                else if (this.pageType === PageType.Screen) { // Update Screen
+                    let dataUpdate = {name: this.titlePage, template: this.templateData, ratioId: this.ratioSelected.id, categoryId: this.categorySelected.id};
                     result = await this.updateTemplateScreen({id: this.$route.query.screen, data: dataUpdate}).catch(error => {
                         this.$notify({
                             group: 'error',
@@ -674,19 +682,22 @@ export default {
         },
         preview() {
             if (this.template)
-                this.$refs.popupReview.open(this.template);
+                this.$refs.popupReview.open(this.template, this.ratioSelected.value);
         },
         handlerRatio(item) {
             this.ratioSelected = item;
             this.ratioSize = getRatioSize(item.value);
-            if (this.templateData) {
-                if (this.pageType === PageType.Template)
-                    this.templateData.ratioId = item.id;
-            }
+            if (this.templateData && this.pageType === PageType.Template)
+                this.templateData.ratioId = item.id;
             
             this.$nextTick(() => {
                 this.getSizeScale();
             });
+        },
+        handlerCategory(item) {
+            this.categorySelected = item;
+            if (this.templateData && this.pageType === PageType.Template)
+                this.templateData.categoryId = item.id;
         }
     }
 };

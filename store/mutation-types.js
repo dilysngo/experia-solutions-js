@@ -4,6 +4,7 @@ import templateTypes from './modules/template/types';
 import screenTypes from './modules/screen/types';
 import playlistTypes from './modules/playlist/types';
 import ratioTypes from './modules/ratio/types';
+import categoryTypes from './modules/category/types';
 import socketTypes from './modules/socket/types';
 
 export default {
@@ -13,5 +14,6 @@ export default {
     ...screenTypes,
     ...playlistTypes,
     ...ratioTypes,
+    ...categoryTypes,
     ...socketTypes
 };

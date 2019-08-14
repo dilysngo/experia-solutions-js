@@ -11,7 +11,7 @@
                 <span
                     v-if="!isKeyword"
                     class="filter-value form-control"
-                >{{ selected ? selected.name : placeholder }} {{ selected.description ? selected.value : '' }}</span>
+                >{{ selected ? selected.name : placeholder }} {{ selected && selected.description ? selected.value : '' }}</span>
                 <input
                     v-else
                     type="text"
@@ -36,6 +36,7 @@
                 >
                     <a
                         class="dropdown-link"
+                        @click="changeItem(item)"
                         v-if="!item.value"
                     >
                         <span
@@ -121,6 +122,8 @@ export default {
     mounted() {
         setTimeout(() => {
             this.list = this.data;
+            console.log('this.list', this.list);
+            console.log('this.select', this.select);
 
             if (this.select)
                 this.selected = this.list.find(item => item.value === this.select);

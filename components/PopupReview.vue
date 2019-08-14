@@ -39,6 +39,7 @@
 
 <script>
 import ElementContainer from '~/components/elements/ElementContainer';
+import {getRatioSize} from '~/helpers/dataHelper';
 
 export default {
     data() {
@@ -48,7 +49,8 @@ export default {
             unitScale: 13 / 928, // fontSize/containerWidth,
             interval: null,
             time: 0,
-            counter: 0
+            counter: 0,
+            ratioSize: null,
         };
     },
     props: {
@@ -56,16 +58,20 @@ export default {
             type: String,
             default: ''
         },
-        ratioSize: {
-            type: Object,
-            default: () => {}
-        },
+        // ratioSize: {
+        //     type: Object,
+        //     default: () => {}
+        // },
     },
     components: {
         ElementContainer
     },
     methods: {
-        open(data) {
+        open(data, ratioValue) {
+            this.ratioSize = getRatioSize(ratioValue);
+            console.log('this.ratioSize', this.ratioSize);
+            console.log('this.ratioValue', ratioValue);
+
             if (!data.screens)
                 this.data = data;
             else {
