@@ -82,6 +82,12 @@ export function getRatioSize(ratio) {
             height: 360
         };
         break;
+    case '1885x953':
+        size = {
+            width: 754,
+            height: 381.2
+        };
+        break;
     default: 
         size = {
             width: 712,

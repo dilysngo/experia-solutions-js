@@ -59,11 +59,12 @@
             </div>
         </div>
         <div class="template-info">
-            <h3
+            <a
+                :href="template.slug"
                 class="template-name"
             >
                 {{ template.name }}
-            </h3>
+            </a>
             <div class="temp-infor-more d-flex">
                 <div class="temp-sizes">
                     <i class="icon-sizes icon-site" />
