@@ -148,6 +148,7 @@ export default {
                 name: 'Screen-' + convertToString(new Date()),
                 ratioId: item.ratio.id,
                 categoryId: item.category.id,
+                slug: '',
                 template: {
                     id: 0,
                     code: 0,

@@ -59,7 +59,7 @@
             <div class="playlist-info">
                 <a
                     class="playlist-name"
-                    :href="data.slug"
+                    :href="'/playlist' + data.slug"
                     target="_blank"
                 >
                     {{ data.name }}

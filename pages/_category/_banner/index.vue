@@ -31,7 +31,6 @@ export default {
         ElementContainer
     },
     async created() {
-        console.log('this.$route', this.$route);
         await this.getBannerBySlug();
     },
     mounted() {
