@@ -45,8 +45,8 @@
                         aria-valuemin="0" 
                         aria-valuemax="100" 
                         style="width:0px"
-                    >
-                    </div>
+                    />
+                    <!-- </div> -->
                 </div>
             </div>
         </div>
