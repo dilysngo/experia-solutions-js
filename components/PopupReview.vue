@@ -33,6 +33,21 @@
                         />
                     </div>
                 </div>
+                <div    
+                    class="progress" 
+                    style="height:2px"
+                >
+                    <div 
+                        class="progress-bar bg-danger" 
+                        id="dynamic" 
+                        role="progressbar" 
+                        aria-valuenow="0" 
+                        aria-valuemin="0" 
+                        aria-valuemax="100" 
+                        style="width:0px"
+                    />
+                    <!-- </div> -->
+                </div>
             </div>
         </div>
     </div>
@@ -70,8 +85,6 @@ export default {
     methods: {
         open(data, ratioValue) {
             this.ratioSize = getRatioSize(ratioValue);
-            console.log('this.ratioSize', this.ratioSize);
-            console.log('this.ratioValue', ratioValue);
 
             if (!data.screens)
                 this.data = data;
@@ -79,8 +92,9 @@ export default {
                 let i = 0;
 
                 this.getScreen(data.screens[i]);
-                this.interval = setInterval(() => {
+                this.runProgressBar();
 
+                this.interval = setInterval(() => {
                     this.counter = this.counter + 1;
                     if (this.counter > this.time) {
                         i = i + 1;
@@ -88,9 +102,10 @@ export default {
                             clearInterval(this.interval);
                             return;
                         }
+                        this.runProgressBar();
                         this.getScreen(data.screens[i]);
                     }
-                }, 1000);
+                }, 3000);
             }
             $('#' + this.id).modal('show');
 
@@ -98,6 +113,23 @@ export default {
                 let containerWidth = $('.container-preview').width();
                 this.sizeScale = containerWidth * this.unitScale;
             }, 300);
+        },
+        runProgressBar(){     
+            $(function() { 
+                $("#dynamic")
+                    .css("width", "0%")
+                    .css("opacity", "0");
+                var current_progress = 0;
+                var interval = setInterval(function() {
+                    current_progress += 50;
+                    $("#dynamic")
+                        .css("width", current_progress + "%")
+                        .attr("aria-valuenow", current_progress);
+                    if (current_progress >= 100)
+                        clearInterval(interval);
+                    $("#dynamic").css("opacity", "1");                   
+                }, 1000);
+            });
         },
         getScreen(data) {
             this.counter = 0;
