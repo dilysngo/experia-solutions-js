@@ -103,6 +103,7 @@ export default {
                 let dataCreate = {
                     userId: this.userAuth.id,
                     name: 'Screen-' + convertToString(new Date()),
+                    slug: '',
                     template: {
                         id: 0,
                         code: 0,

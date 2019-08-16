@@ -142,9 +142,12 @@ export default {
             // this.$forceUpdate();
         },
         async createScreenByTemplate(item) {
+            console.log('item', item);
             let dataCreate = {
                 userId: this.userAuth.id,
                 name: 'Screen-' + convertToString(new Date()),
+                ratioId: item.ratio.id,
+                categoryId: item.category.id,
                 template: {
                     id: 0,
                     code: 0,
@@ -152,8 +155,8 @@ export default {
                     slug: '',
                     isDrag: true,
                     template: item.template,
-                    ratio: '',
-                    category: '',
+                    ratio: item.ratio,
+                    category: item.category,
                     createAt: ''
                 }
             };
