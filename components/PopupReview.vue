@@ -92,7 +92,7 @@ export default {
                 let i = 0;
 
                 this.getScreen(data.screens[i]);
-                this.runProgressBar();
+                this.runProgressBar(data.screens[i].time);
 
                 this.interval = setInterval(() => {
                     this.counter = this.counter + 1;
@@ -102,10 +102,10 @@ export default {
                             clearInterval(this.interval);
                             return;
                         }
-                        this.runProgressBar();
+                        this.runProgressBar(data.screens[i].time);
                         this.getScreen(data.screens[i]);
                     }
-                }, 3000);
+                }, 1000);
             }
             $('#' + this.id).modal('show');
 
@@ -114,14 +114,15 @@ export default {
                 this.sizeScale = containerWidth * this.unitScale;
             }, 300);
         },
-        runProgressBar(){     
+        runProgressBar(time){     
             $(function() { 
                 $("#dynamic")
                     .css("width", "0%")
                     .css("opacity", "0");
                 var current_progress = 0;
+                const taget = 100;
                 var interval = setInterval(function() {
-                    current_progress += 50;
+                    current_progress += taget / time;
                     $("#dynamic")
                         .css("width", current_progress + "%")
                         .attr("aria-valuenow", current_progress);
