@@ -57,9 +57,14 @@
                 </div>
             </div>
             <div class="playlist-info">
-                <h3 class="playlist-name">
+                <a
+                    class="playlist-name"
+                    :href="data.slug"
+                    target="_blank"
+                >
                     {{ data.name }}
-                </h3>
+                </a>
+                
                 <div class="playlist-infor-more d-flex">
                     <div class="pcol-left d-flex">
                         <div class="play-time">

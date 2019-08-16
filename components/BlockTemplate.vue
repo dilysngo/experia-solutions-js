@@ -61,6 +61,7 @@
         <div class="template-info">
             <a
                 :href="template.slug"
+                target="_blank"
                 class="template-name"
             >
                 {{ template.name }}
