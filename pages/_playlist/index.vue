@@ -31,7 +31,7 @@ export default {
         ElementContainer
     },
     async created() {
-        await this.getBannerBySlug();
+        await this.getPlaylistBySlug();
     },
     mounted() {
         this.getSizeScale();
@@ -40,10 +40,10 @@ export default {
         };
     },
     methods: {
-        async getBannerBySlug() {
+        async getPlaylistBySlug() {
             let slug = "";
             slug = this.$route && this.$route.path;
-            let results = await this.$axios.$get(`api/screen/banner?slug=${slug}`);
+            let results = await this.$axios.$get(`api/playlist/playlist?slug=${slug}`);
             if (results) {
                 this.ratioSize = getRatioSize(results.ratio.value);
                 this.banner = results.template;
