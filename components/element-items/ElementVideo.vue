@@ -27,7 +27,7 @@
             /> -->
             <div
                 class="element-not-data"
-                v-show="!setting.url"
+                v-show="!setting.url && !setting.link"
             >
                 <element-icon
                     v-if="designMode"
@@ -40,10 +40,20 @@
                 :style="{margin: setting.marginTop + 'em ' + setting.marginRight + 'em ' + setting.marginBottom + 'em ' + setting.marginLeft + 'em', padding: setting.paddingTop + 'em ' + setting.paddingRight + 'em ' + setting.paddingBottom + 'em '+ setting.paddingLeft + 'em' }"
                 style="margin: 0px -15px"
                 :class="setting.verticalAlign"
-                v-show="setting.url"
+                v-show="setting.url || setting.link"
             >
                 <div style="position: relative; height: 100%; width: 100%">
+                    <iframe
+                        width="100%"
+                        height="100%"
+                        v-if="setting.link"
+                        :src="setting.link"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    />
                     <video
+                        v-else
                         class="element-media-Video" 
                         oncontextmenu="return false;"
                         playsinline
@@ -65,12 +75,12 @@
                             type="video/ogg"
                         > 
                     </video>
-                    <button
+                    <!-- <button
                         type="button"
                         class="btn-play"
                         :class="{'d-none' : !isPlay}"
                         @click="play('dom-'+key)" 
-                    />
+                    /> -->
                 </div>
             </div>
         </div>
@@ -125,12 +135,10 @@ export default {
             btnSubmit: {
                 enable: true
             },
+            link: {
+                enable: true
+            },
         },
-        start: 0,
-        end: 0,
-        previousTimeSeek: 0,
-        currentTimeSeek: 0,
-        seekStart: null,
         interval: null,
         templateId: null,
         // landingId: null,

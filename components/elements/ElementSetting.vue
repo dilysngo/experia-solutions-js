@@ -564,6 +564,47 @@
                     </div>
                     <div
                         class="col-12"
+                        v-if="controls.screen && controls.screen.enable"
+                    >
+                        <label class="setting-box-label">Screen</label>
+                        <div class="filter-box">
+                            <div class="dropdown normal">
+                                <div
+                                    class="dropdown-toggle"
+                                    data-toggle="dropdown"
+                                >
+                                    <input
+                                        type="text"
+                                        class="ip-search filter-value form-control"
+                                        placeholder="Enter screen" 
+                                        v-model="condition.keyword"
+                                    >
+                                    <i class="fa fa-angle-down" />
+                                    <i class="fa fa-angle-up" />
+                                </div>
+                                <ul class="dropdown-menu">
+                                    <li
+                                        class="dropdown-menu-item"
+                                        v-for="(item, index) in screens"
+                                        :key="index"
+                                    >
+                                        <a
+                                            class="dropdown-link"
+                                            @click="selectScreen(item)"
+                                        >
+                                            <span
+                                                class="dropdown-link-title"
+                                            >
+                                                {{ item.name }}
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="col-12"
                         v-if="controls.addList && controls.addList.enable"
                     >
                         <label class="setting-box-label">Items</label>
@@ -579,7 +620,8 @@
                                 <span
                                     style="width:90%;display: inline-block;"
                                     @click="selectItem(index)"
-                                >+ {{ item }} </span><i
+                                    v-html="item"
+                                >+ </span><i
                                     @click="removeItem(index); save()"
                                     class="fa fa-times"
                                     aria-hidden="true" 
@@ -587,12 +629,16 @@
                             </li>
                         </ul>
                         <template v-if="isUpdateItem">
-                            <input
+                            <!-- <input
                                 placeholder="Item name"
                                 class="ip-setting"
                                 type="text"
                                 v-model="valueUpdate"
-                            > 
+                            > -->
+                            <vue-ckeditor
+                                v-model="valueUpdate"
+                                :config="config.configCKEditor"
+                            />
                             <button
                                 style="margin-left: 15px"
                                 @click="isUpdateItem=false"
@@ -608,12 +654,16 @@
                             </button>
                         </template>
                         <template v-else>
-                            <input
+                            <!-- <input
                                 placeholder="Item name"
                                 class="ip-setting"
                                 type="text"
                                 v-model="config.item"
-                            > 
+                            >  -->
+                            <vue-ckeditor
+                                v-model="config.item"
+                                :config="config.configCKEditor"
+                            />
                             <button
                                 class="elm-add"
                                 @click="addItem(config.item); save()"
@@ -705,7 +755,13 @@ export default {
             initialMouseX: 0,
             initialMouseY: 0,
             elMove: '',
-        }
+        },
+        condition: {
+            keyword: '',
+            skip: 0,
+            limit: 20
+        },
+        screens: null
     }),
     created() {
         // this.reset();
@@ -777,6 +833,7 @@ export default {
                 paddingRight: 0,
                 fullBox: 'no',
                 mediaId: null,
+                screenId: null,
                 trackName: null,
                 trackClick: 'no'
             };
@@ -849,15 +906,20 @@ export default {
                 },
                 track: {
                     enable: false
+                },
+                screen: {
+                    enable: false
                 }
             };
             this.config.backgroundColor = '#000000';
             this.config.borderColor = '#000000';
             this.config.color = '#000000';
+            this.condition.keyword = '';
         },
         open({instance, key, path, style, setting, controls}) {
             this.reset();
-            this.$nextTick(() => {
+
+            this.$nextTick( async () => {
                 this.instance = instance;
                 this.key = key;
                 this.path = path;
@@ -924,6 +986,14 @@ export default {
                         jQuery(head).append(css);
                     }, 500);
                 }
+
+                if (this.controls && this.controls.screen && this.controls.screen.enable) {
+                    await this.getScreens();
+                    let screenSelected = this.screens.find(item => item.id === this.setting.screenId);
+                    if (screenSelected)
+                        this.condition.keyword = screenSelected.name;
+                }
+
             });
         },
         openGallery(typeMedia) {
@@ -1053,6 +1123,16 @@ export default {
         toggleOpen() {
             if (this.key)
                 this.root.isSetting = !this.root.isSetting;
+        },
+        async getScreens() {
+            let result = await this.$axios.$get(`api/screen?keyword=${this.condition.keyword || ''}&skip=${this.condition.skip || ''}&limit=${this.condition.limit || ''}`);
+            if (result)
+                this.screens = result.results;
+        },
+        selectScreen(item) {
+            this.setting.screenId = item.id;
+            this.condition.keyword = item.name;
+            this.save();
         }
 
     }

@@ -31,8 +31,8 @@
             >
                 <element-icon
                     v-if="designMode"
-                    icon-class="icon-picture"
-                    title="Image"
+                    icon-class="icon-aws fa fa-desktop size-20"
+                    title="Screen"
                 />
             </div>
             <div
@@ -95,16 +95,7 @@ export default {
             height: {
                 enable: true
             },
-            link: {
-                enable: true
-            },
-            btnUpload: {
-                enable: true
-            },
             btnSubmit: {
-                enable: true
-            },
-            backgroundSize: {
                 enable: true
             },
             elementAlign: {
@@ -113,10 +104,9 @@ export default {
             verticalAlign: {
                 enable: true
             },
-            track: {
+            screen: {
                 enable: true
-            },
-
+            }
         },
         convertToUrl: convertToUrl
     }),

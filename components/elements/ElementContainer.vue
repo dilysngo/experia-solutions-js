@@ -30,12 +30,14 @@ import ElementText from '~/components/element-items/ElementText';
 // import ElementSocial from '~/components/element-items/ElementSocial';
 // import ElementDropdown from '~/components/element-items/ElementDropdown';
 // import ElementCheckbox from '~/components/element-items/ElementCheckbox';
-// import ElementRadio from '~/components/element-items/ElementRadio';
+import ElementListText from '~/components/element-items/ElementListText';
+import ElementScreen from '~/components/element-items/ElementScreen';
 import ElementVideo from '~/components/element-items/ElementVideo';
 import ElementImage from '~/components/element-items/ElementImage';
 
 Vue.component('element-section', ElementSection);
 Vue.component('element-text', ElementText);
+Vue.component('element-list-text', ElementListText);
 // Vue.component('element-button', ElementButton);
 // Vue.component('element-input', ElementInput);
 // Vue.component('element-text-area', ElementTextArea);
@@ -45,6 +47,7 @@ Vue.component('element-text', ElementText);
 // Vue.component('element-radio', ElementRadio);
 Vue.component('element-image', ElementImage);
 Vue.component('element-video', ElementVideo);
+Vue.component('element-screen', ElementScreen);
 
 export default {
     props: {

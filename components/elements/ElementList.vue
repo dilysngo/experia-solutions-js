@@ -22,6 +22,8 @@ export default {
         return {
             boxtool: [
                 {icon: 'icon-text', name: 'element-text'},
+                {icon: 'icon-aws fa fa-list-ol size-20', name: 'element-list-text'},
+                {icon: 'icon-aws fa fa-desktop size-20', name: 'element-screen'},
                 // {id: 'btn2', name: 'icon-internet'},
                 // {id: 'btn3', name: 'icon-text-block'},
                 // {id: 'btn4', name: 'icon-text-type'},

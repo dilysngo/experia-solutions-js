@@ -13,43 +13,41 @@
             :ref="'resize-'+key"
         />
         <div
-            class="element-form-default"
+            class="element-form-default" 
             draggable="true"
             @dragstart="dragstart_handler($event)"
             @mousedown="mouseDown($event)"
         >
-            <!-- <element-control-box
-                :root="root"
-                v-if="designMode"
-                :source="source"
-                :title="title"
-                :controls="controls"
-            /> -->
             <div
                 class="element-not-data"
-                v-if="!setting.url && !setting.link"
+                v-if="!setting.listItem || !setting.listItem.length"
             >
                 <element-icon
                     v-if="designMode"
-                    icon-class="icon-picture"
-                    title="Image"
+                    icon-class="icon-aws size-20 fa fa-list-ol"
+                    title="Text List"
                 />
             </div>
             <div
-                class="element-have-data"
-                :class="setting.verticalAlign"
-                style="margin: 0px -15px"
+                class="element-have-data"  
                 :style="{margin: setting.marginTop + 'em ' + setting.marginRight + 'em ' + setting.marginBottom + 'em ' + setting.marginLeft + 'em', padding: setting.paddingTop + 'em ' + setting.paddingRight + 'em ' + setting.paddingBottom + 'em '+ setting.paddingLeft + 'em' }"
-                v-else 
+                :class="[setting.verticalAlign]"
+                v-else
             >
                 <div
-                    class="box-elimage"
-                    :style="{'text-align': style['text-align']}"  
+                    class="full-width" 
+                    :style="style"
                 >
-                    <a
-                        :style="`background-image:url(${setting.link ? setting.link : convertToUrl(setting.url)}); background-size: ${style.backgroundSize}; width: ${style.width}; height: ${style.height}`"
-                        class="img-element auto-height fix-mobile"
-                    />
+                    <ul class="">
+                        <li
+                            class=""
+                            v-for="(item, index) in setting.listItem"
+                            :key="index"
+                            v-html="item"
+                        >
+                            <!-- {{ item }} -->
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -57,8 +55,7 @@
 </template>
 
 <script>
-import {convertToUrl} from '~/helpers/dataHelper';
-
+var WebFont;
 export default {
     props: {
         root: {
@@ -73,63 +70,61 @@ export default {
             type: Number,
             default: null
         },
-        landingId: {
-            type: String,
-            default: ''
-        },
         source: {
             type: Object,
             default: () => {}            
         }
     },
     data: () => ({
-        title: 'Image',
+        title: 'Text',
         key: '',
         path: '',
         style: {},
-        setting: {},
+        setting: {
+            url: null,
+            placeholder: null,
+            content: null,
+        },
         controls: {
-            width: {
-                enable: true
-            },
-            height: {
-                enable: true
-            },
-            link: {
-                enable: true
-            },
-            btnUpload: {
-                enable: true
-            },
-            btnSubmit: {
-                enable: true
-            },
-            backgroundSize: {
-                enable: true
-            },
-            elementAlign: {
+            font: {
                 enable: true
             },
             verticalAlign: {
                 enable: true
             },
-            track: {
+            addList: {
                 enable: true
-            },
-
+            }
         },
-        convertToUrl: convertToUrl
     }),
     created() {
         this.reset();
     },
+    mounted() {
+        WebFont = require('webfontloader');
+    },
     watch: {
-       
+        style: {
+            handler(value) {
+                let font = [];
+                if (value['font-family']) {
+                    font.push(value['font-family']);
+                    if (WebFont)
+                        WebFont.load({
+                            google: {
+                                families: font
+                            }
+                        });
+                }
+            },
+            deep: true
+        }
     },
     methods: {
         reset() {
-            console.log('Reset media', this.source);
+            console.log('Reset phone', this.source);
             console.log('sizeScale', this.sizeScale);
+
             this.style = {};
             this.setting = {};
 
@@ -150,16 +145,13 @@ export default {
                 if (this.$refs['resize-' + this.key])
                     this.$refs['resize-' + this.key].reset();
             }
-
-            // if (!this.style.height)
-            //     this.source.style.height = 150 / 13 + 'em';
-            // if (!this.style.width)
-            //     this.source.style.width = 200 / 13 + 'em';
         },
         dragstart_handler(ev) {
             if (!this.designMode)
                 return;
             // Add the target element's id to the data transfer object
+
+            console.log('this.source', this.source);
             ev.dataTransfer.setData('application/json', JSON.stringify(this.source));
             ev.dataTransfer.dropEffect = "move";
             document.getElementById(this.key).classList.add('is-drag');
