@@ -11,6 +11,7 @@
             :id="component.key"
             :root="root"
             :design-mode="designMode"
+            :is-preview="isPreview"
             :size-scale="sizeScale"
             :device-preview="devicePreview"
             :template-id="templateId"
@@ -56,6 +57,10 @@ export default {
             default: () => {}
         },
         designMode: {
+            type: Boolean,
+            default: false
+        },
+        isPreview: {
             type: Boolean,
             default: false
         },

@@ -26,6 +26,7 @@
                             :ref="'elementContainer'"
                             :root="this"
                             :design-mode="false"
+                            :is-preview="true"
                             v-if="data"
                             :source="data"
                             :size-scale="sizeScale"

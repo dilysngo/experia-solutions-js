@@ -251,7 +251,7 @@
     }
 }
 .element-box {
-    &.selected{
+    &.selected, &:hover{
         .control-box{
             opacity: 1;
         }

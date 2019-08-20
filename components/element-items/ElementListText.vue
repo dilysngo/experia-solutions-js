@@ -18,6 +18,13 @@
             @dragstart="dragstart_handler($event)"
             @mousedown="mouseDown($event)"
         >
+            <element-control-box
+                :root="root"
+                v-if="designMode"
+                :source="source"
+                :title="title"
+                :controls="controls"
+            />
             <div
                 class="element-not-data"
                 v-if="!setting.listItem || !setting.listItem.length"

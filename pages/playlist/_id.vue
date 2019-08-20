@@ -18,6 +18,8 @@
 <script>
 import {getRatioSize} from '~/helpers/dataHelper';
 import ElementContainer from '~/components/elements/ElementContainer';
+import Vue from 'vue';
+Vue.component('element-container', ElementContainer);
 export default {
     layout: 'render',
     data: () => ({
@@ -31,7 +33,7 @@ export default {
         counter: 0,
     }),
     components: {
-        ElementContainer
+        
     },
     async created() {
     },
