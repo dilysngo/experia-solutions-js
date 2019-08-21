@@ -240,10 +240,7 @@ export default {
     },
     async created() {
         await this.findRatios();
-        this.dataSize = this.ratioList;
-
         await this.findCategory();
-        this.dataCategory = this.categoryList;
 
         this.root = this;
         this.temporaryQueues = [];
@@ -302,7 +299,13 @@ export default {
             console.log('newData', newData);
             $('.element-box').removeClass('selected');
             document.querySelector('#' + newData.key).classList.add('selected');
-        }
+        },
+        ratioList: function() {
+            this.dataSize = this.ratioList;
+        },
+        categoryList: function() {
+            this.dataCategory = this.categoryList;
+        },
     },
     methods: {
         ...mapActions('template', [

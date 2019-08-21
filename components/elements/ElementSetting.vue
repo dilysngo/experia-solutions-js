@@ -909,6 +909,9 @@ export default {
                 },
                 screen: {
                     enable: false
+                },
+                weather: {
+                    enable: false
                 }
             };
             this.config.backgroundColor = '#000000';

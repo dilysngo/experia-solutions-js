@@ -90,8 +90,6 @@ export default {
 
         await this.findRatios();
         await this.findCategory();
-        this.dataSize = this.ratioList;
-        this.dataCategory = this.categoryList;
     },
     computed: {
         ...mapGetters('template', [
@@ -113,7 +111,13 @@ export default {
             this.timeOut = setTimeout(() => {
                 this.getTemplates();
             }, 500);
-        }
+        },
+        ratioList: function() {
+            this.dataSize = this.ratioList;
+        },
+        categoryList: function() {
+            this.dataCategory = this.categoryList;
+        },
     },
     methods: {
         ...mapActions('template', [
