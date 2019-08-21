@@ -47,7 +47,7 @@
                         width="100%"
                         height="100%"
                         v-if="setting.link"
-                        :src="setting.link"
+                        :src="setting.link + '?autoplay=1'"
                         frameborder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
@@ -60,6 +60,8 @@
                         controlsList="nodownload"
                         :id="'dom-'+key"
                         :path="path"
+                        autoplay="true"
+                        muted="muted"
                         @click="pause('dom-'+key)"
                         @pause="pause('dom-'+key)" 
                         @play="play('dom-'+key)"
@@ -164,6 +166,9 @@ export default {
         window.onresize = () => {
             console.log('winresize');
         };
+
+        // if (this.setting.url)
+        //     this.play('dom-' + this.key);
     },
     watch: {
         setting: {

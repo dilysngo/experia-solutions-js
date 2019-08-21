@@ -129,8 +129,9 @@
         height: 470px;
         background-color: rgba(0, 0, 0, 0.27) !important;
         .img-preview{
-            height: 100%;
+            height: auto;
             margin: 0 auto;
+            max-width: 100%;
         }
     }
 }
