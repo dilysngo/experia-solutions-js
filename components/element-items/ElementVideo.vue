@@ -222,7 +222,7 @@ export default {
             this.isPlay = false;
         },
         pause(id) {
-            document.getElementById(id).pause();
+            document.getElementById(id) && document.getElementById(id).pause();
             $('#' + id).removeAttr('controls', '');
             this.isPlay = true;
         },
