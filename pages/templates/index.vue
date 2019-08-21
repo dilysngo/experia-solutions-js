@@ -144,10 +144,10 @@ export default {
         async createScreenByTemplate(item) {
             console.log('item', item);
             let dataCreate = {
-                userId: this.userAuth.id,
+                userId: this.userAuth && this.userAuth.id,
                 name: 'Screen-' + convertToString(new Date()),
-                ratioId: item.ratio.id,
-                categoryId: item.category.id,
+                ratioId: item.ratio && item.ratio.id,
+                categoryId: item.category && item.category.id,
                 slug: '',
                 template: {
                     id: 0,
