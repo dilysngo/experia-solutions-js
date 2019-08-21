@@ -88,8 +88,11 @@ export default {
         await this.getTemplates();
         this.isAdmin = this.userAuth.role.code === Roles.Admin;
 
-        await this.findRatios();
-        await this.findCategory();
+        let ratioList = await this.findRatios();
+        let categoryList = await this.findCategory();
+
+        this.dataSize = ratioList.results || [];
+        this.dataCategory = categoryList.results || [];
     },
     computed: {
         ...mapGetters('template', [
@@ -98,12 +101,6 @@ export default {
         ...mapGetters('user', [
             'userAuth'
         ]),
-        ...mapGetters('ratio', [
-            'ratioList'
-        ]),
-        ...mapGetters('category', [
-            'categoryList'
-        ])
     },
     watch: {
         keyword: function(newData) {
@@ -111,12 +108,6 @@ export default {
             this.timeOut = setTimeout(() => {
                 this.getTemplates();
             }, 500);
-        },
-        ratioList: function() {
-            this.dataSize = this.ratioList;
-        },
-        categoryList: function() {
-            this.dataCategory = this.categoryList;
         },
     },
     methods: {
