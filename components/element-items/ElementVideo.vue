@@ -47,7 +47,7 @@
                         width="100%"
                         height="100%"
                         v-if="setting.link"
-                        :src="setting.link + '?autoplay=1'"
+                        :src="setting.link + `?autoplay=${isPreview ? '1' : '0'}`"
                         frameborder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
@@ -60,8 +60,8 @@
                         controlsList="nodownload"
                         :id="'dom-'+key"
                         :path="path"
-                        autoplay="true"
-                        muted="muted"
+                        :autoplay="`${isPreview ? true : false}`"
+                        :muted="`${isPreview ? 'muted' : ''}`"
                         @click="pause('dom-'+key)"
                         @pause="pause('dom-'+key)" 
                         @play="play('dom-'+key)"
@@ -100,6 +100,10 @@ export default {
             default: () => {}
         },
         designMode: {
+            type: Boolean,
+            default: false
+        },
+        isPreview: {
             type: Boolean,
             default: false
         },

@@ -7,6 +7,7 @@
             ref="elementContainer" 
             :root="this" 
             :design-mode="false" 
+            :is-preview="true"
             v-if="banner && banner.template" 
             :source="banner.template"
             :size-scale="sizeScale"
