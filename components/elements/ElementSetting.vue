@@ -605,6 +605,88 @@
                     </div>
                     <div
                         class="col-12"
+                        v-if="controls.weather && controls.weather.enable"
+                    >
+                        <label class="setting-box-label">Location</label>
+                        <div class="filter-box">
+                            <div class="dropdown normal">
+                                <div
+                                    class="dropdown-toggle"
+                                    data-toggle="dropdown"
+                                >
+                                    <input
+                                        type="text"
+                                        class="ip-search filter-value form-control"
+                                        placeholder="Enter screen" 
+                                        v-model="condition.keywordWeather"
+                                    >
+                                    <!-- <i class="fa fa-angle-down" />
+                                    <i class="fa fa-angle-up" /> -->
+                                </div>
+                                <ul class="dropdown-menu">
+                                    <li
+                                        class="dropdown-menu-item"
+                                        v-for="(item, index) in locations"
+                                        :key="index"
+                                    >
+                                        <a
+                                            class="dropdown-link"
+                                            @click="selectScreen(item)"
+                                        >
+                                            <span
+                                                class="dropdown-link-title"
+                                            >
+                                                <!-- {{ item.name }} -->
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <label class="setting-box-label">Title</label>
+                        <input
+                            placeholder="Change text"
+                            class="ip-setting"
+                            type="text"
+                            v-model="setting.weather.title"
+                            @input="save"
+                        >
+                        <label class="setting-box-label">Unit</label>
+                        <div class="filter-box">
+                            <div class="dropdown normal">
+                                <div
+                                    class="dropdown-toggle"
+                                    data-toggle="dropdown"
+                                >
+                                    <span class="filter-value form-control">
+                                        {{ setting.weather.unit ? setting.weather.unit : 'C' }}
+                                    </span>
+                                    <i class="fa fa-angle-down" />
+                                    <i class="fa fa-angle-up" />
+                                </div>
+                                <ul class="dropdown-menu">
+                                    <li
+                                        class="dropdown-menu-item"
+                                        v-for="(item, index) in units"
+                                        :key="index"
+                                    >
+                                        <a
+                                            class="dropdown-link"
+                                            @click="selectUnit(item)"
+                                        >
+                                            <span
+                                                class="dropdown-link-title"
+                                            >
+                                                {{ item }}
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="col-12"
                         v-if="controls.addList && controls.addList.enable"
                     >
                         <label class="setting-box-label">Items</label>
@@ -684,6 +766,7 @@
 
 <script>
 import fonts from '~/common/googleFonts';
+// import * as GoogleLocations from 'google-locations';
 
 export default {
     props: {
@@ -758,10 +841,13 @@ export default {
         },
         condition: {
             keyword: '',
+            keywordWeather: '',
             skip: 0,
             limit: 20
         },
-        screens: null
+        screens: null,
+        locations: [],
+        units: ['C', 'F']
     }),
     created() {
         // this.reset();
@@ -771,9 +857,9 @@ export default {
         
     },
     watch: {
-        // 'style.backgroundSize': function(newData) {
-        //     this.save();
-        // },
+        'style.backgroundSize': function(newData) {
+            this.save();
+        },
         // 'config.width': function(newData) {
         //     if (newData > 1095)
         //         this.config.width = 1095;
@@ -788,6 +874,26 @@ export default {
         //     else this.setting.trackClick = 'no';
         //     this.save();
         // },
+        'condition.keywordWeather': function(newData) {
+            if (this.controls && this.controls.weather && this.controls.weather.enable) {
+                // let locations = new GoogleLocations('');
+                // locations.search({keyword: newData}, function(err, response) {
+                //     console.log("search: ", response.results);
+                    
+                //     locations.details({placeid: response.results[0].place_id}, function(err, response) {
+                //         console.log("search details: ", response.result.name);
+                //         // search details: Google
+                //     });
+                // });
+
+                this.setting.weather.keyword = newData;
+                this.save();
+            }
+            
+        },
+        'setting.weather.unit': function(newData) {
+            this.save();
+        }
     },
     methods: {
         reset() {
@@ -834,8 +940,14 @@ export default {
                 fullBox: 'no',
                 mediaId: null,
                 screenId: null,
+                weather: {
+                    keyword: null,
+                    title: null,
+                    unit: null,
+                    date: null
+                },
                 trackName: null,
-                trackClick: 'no'
+                trackClick: 'no',
             };
             this.controls = {
                 width: {
@@ -997,6 +1109,9 @@ export default {
                         this.condition.keyword = screenSelected.name;
                 }
 
+                if (this.controls && this.controls.weather && this.controls.weather.enable) {
+                    this.condition.keywordWeather = this.setting.weather.keyword;
+                }
             });
         },
         openGallery(typeMedia) {
@@ -1136,6 +1251,9 @@ export default {
             this.setting.screenId = item.id;
             this.condition.keyword = item.name;
             this.save();
+        },
+        selectUnit(item) {
+            this.setting.weather.unit = item;
         }
 
     }

@@ -89,12 +89,12 @@ export default {
         style: {},
         setting: {},
         controls: {
-            width: {
-                enable: true
-            },
-            height: {
-                enable: true
-            },
+            // width: {
+            //     enable: true
+            // },
+            // height: {
+            //     enable: true
+            // },
             link: {
                 enable: true
             },

@@ -27,12 +27,12 @@
             />
             <div
                 class="element-not-data"
-                v-if="!setting.url && !setting.link"
+                v-if="!setting.weather || !setting.weather.keyword"
             >
                 <element-icon
                     v-if="designMode"
-                    icon-class="icon-picture"
-                    title="Image"
+                    icon-class="icon-aws fa fa-sun-o size-20"
+                    title="Weather"
                 />
             </div>
             <div
@@ -43,13 +43,17 @@
                 v-else 
             >
                 <div
-                    class="box-elimage"
-                    :style="{'text-align': style['text-align']}"  
+                    class=""
+                    v-if="weather && weather.length"
                 >
-                    <a
-                        :style="`background-image:url(${setting.link ? setting.link : convertToUrl(setting.url)}); background-size: ${style.backgroundSize}; width: ${style.width}; height: ${style.height}`"
-                        class="img-element auto-height fix-mobile"
-                    />
+                    <img
+                        class="weather-img"  
+                        :src="weather[0].current.imageUrl"
+                    >
+                    <div class="weather-info">
+                        <h6>{{ setting.weather.title ? setting.weather.title : weather[0].current.observationpoint }}</h6>
+                        <p>{{ weather[0].current.feelslike }} °{{ setting.weather.unit || 'C' }}</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -58,6 +62,8 @@
 
 <script>
 import {convertToUrl} from '~/helpers/dataHelper';
+import * as weather from 'weather-js';
+// var weather = require('weather-js');
 
 export default {
     props: {
@@ -73,52 +79,30 @@ export default {
             type: Number,
             default: null
         },
-        landingId: {
-            type: String,
-            default: ''
-        },
         source: {
             type: Object,
             default: () => {}            
         }
     },
     data: () => ({
-        title: 'Image',
+        title: 'Weather',
         key: '',
         path: '',
         style: {},
         setting: {},
         controls: {
-            width: {
+            // width: {
+            //     enable: true
+            // },
+            // height: {
+            //     enable: true
+            // },
+            weather: {
                 enable: true
-            },
-            height: {
-                enable: true
-            },
-            link: {
-                enable: true
-            },
-            btnUpload: {
-                enable: true
-            },
-            btnSubmit: {
-                enable: true
-            },
-            backgroundSize: {
-                enable: true
-            },
-            elementAlign: {
-                enable: true
-            },
-            verticalAlign: {
-                enable: true
-            },
-            track: {
-                enable: true
-            },
-
+            }
         },
-        convertToUrl: convertToUrl
+        weather: null,
+        interval: null
     }),
     created() {
         this.reset();
@@ -149,6 +133,13 @@ export default {
 
                 if (this.$refs['resize-' + this.key])
                     this.$refs['resize-' + this.key].reset();
+
+                if (this.source.setting.weather && this.source.setting.weather.keyword) {
+                    this.getWeather();
+                    this.interval = setInterval(() => {
+                        this.getWeather();
+                    }, 60000);
+                }
             }
 
             // if (!this.style.height)
@@ -175,7 +166,21 @@ export default {
         mouseDown(ev) {
             this.source.setting.stylesBox.x = ev.x * (13 / this.sizeScale);
             this.source.setting.stylesBox.y = ev.y * (13 / this.sizeScale);
+        },
+        getWeather() {
+            let keyword = this.source.setting.weather.keyword;
+            let type = this.source.setting.weather.unit || 'C';
+            
+            weather.find({search: keyword, degreeType: type}, (err, result) => {
+                if (err) return;
+                this.weather = result;
+            });
+            console.log('getWeather');
         }
+    },
+    destroyed() {
+        console.log('destroyed');
+        clearInterval(this.interval);
     }
 };
 </script>

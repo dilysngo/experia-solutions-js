@@ -35,6 +35,7 @@ import ElementListText from '~/components/element-items/ElementListText';
 import ElementScreen from '~/components/element-items/ElementScreen';
 import ElementVideo from '~/components/element-items/ElementVideo';
 import ElementImage from '~/components/element-items/ElementImage';
+import ElementWeather from '~/components/element-items/ElementWeather';
 
 Vue.component('element-section', ElementSection);
 Vue.component('element-text', ElementText);
@@ -45,7 +46,7 @@ Vue.component('element-list-text', ElementListText);
 // Vue.component('element-social', ElementSocial);
 // Vue.component('element-dropdown', ElementDropdown);
 // Vue.component('element-checkbox', ElementCheckbox);
-// Vue.component('element-radio', ElementRadio);
+Vue.component('element-weather', ElementWeather);
 Vue.component('element-image', ElementImage);
 Vue.component('element-video', ElementVideo);
 Vue.component('element-screen', ElementScreen);

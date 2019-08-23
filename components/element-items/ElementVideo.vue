@@ -53,6 +53,30 @@
                         allowfullscreen
                     />
                     <video
+                        v-else-if="isPreview"
+                        class="element-media-Video" 
+                        oncontextmenu="return false;"
+                        playsinline
+                        controlsList="nodownload"
+                        :id="'dom-'+key"
+                        :path="path"
+                        autoplay="true"
+                        @click="pause('dom-'+key)"
+                        @pause="pause('dom-'+key)" 
+                        @play="play('dom-'+key)"
+                    >
+                        <source
+                            v-if="setting.url"
+                            :src="convertToUrl(setting.url)"
+                            type="video/mp4"
+                        >
+                        <source
+                            v-if="setting.url"
+                            :src="convertToUrl(setting.url)"
+                            type="video/ogg"
+                        > 
+                    </video>
+                    <video
                         v-else
                         class="element-media-Video" 
                         oncontextmenu="return false;"
@@ -60,8 +84,6 @@
                         controlsList="nodownload"
                         :id="'dom-'+key"
                         :path="path"
-                        :autoplay="`${isPreview ? true : false}`"
-                        :muted="`${isPreview ? 'muted' : ''}`"
                         @click="pause('dom-'+key)"
                         @pause="pause('dom-'+key)" 
                         @play="play('dom-'+key)"
