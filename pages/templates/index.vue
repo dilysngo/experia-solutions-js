@@ -88,10 +88,11 @@ export default {
         await this.getTemplates();
         this.isAdmin = this.userAuth.role.code === Roles.Admin;
 
-        await this.findRatios();
-        await this.findCategory();
-        this.dataSize = this.ratioList;
-        this.dataCategory = this.categoryList;
+        let ratioList = await this.findRatios();
+        let categoryList = await this.findCategory();
+
+        this.dataSize = ratioList.results || [];
+        this.dataCategory = categoryList.results || [];
     },
     computed: {
         ...mapGetters('template', [
@@ -100,12 +101,6 @@ export default {
         ...mapGetters('user', [
             'userAuth'
         ]),
-        ...mapGetters('ratio', [
-            'ratioList'
-        ]),
-        ...mapGetters('category', [
-            'categoryList'
-        ])
     },
     watch: {
         keyword: function(newData) {
@@ -113,7 +108,7 @@ export default {
             this.timeOut = setTimeout(() => {
                 this.getTemplates();
             }, 500);
-        }
+        },
     },
     methods: {
         ...mapActions('template', [
@@ -144,10 +139,11 @@ export default {
         async createScreenByTemplate(item) {
             console.log('item', item);
             let dataCreate = {
-                userId: this.userAuth.id,
+                userId: this.userAuth && this.userAuth.id,
                 name: 'Screen-' + convertToString(new Date()),
-                ratioId: item.ratio.id,
-                categoryId: item.category.id,
+                ratioId: item.ratio && item.ratio.id,
+                categoryId: item.category && item.category.id,
+                slug: '',
                 template: {
                     id: 0,
                     code: 0,

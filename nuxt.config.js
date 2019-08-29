@@ -31,7 +31,7 @@ module.exports = {
      */
     loading: false,
     modules: [
-        '@nuxtjs/axios'
+        '@nuxtjs/axios',
     ],
     plugins: [
         {src: '~/plugins/bootstrap'},
@@ -73,6 +73,10 @@ module.exports = {
                     loader: 'eslint-loader',
                     exclude: /(node_modules)/
                 });
+
+                config.node = {
+                    fs: 'empty'
+                }
             }
         }
     }

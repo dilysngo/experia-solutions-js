@@ -4,6 +4,7 @@
         :class="designMode ? 'boder-work' : ''"
         :style="{top: setting.stylesBox.top/13 + 'em', left: setting.stylesBox.left/13 + 'em', width: setting.stylesBox.width/13 + 'em', height: setting.stylesBox.height/13 + 'em', position: setting.stylesBox.position, zIndex:setting.stylesBox.zIndex}"
         @click="openSetting"
+        :data-element="this.key + '-' + this.isPreview.toString()"
     >
         <element-resize
             :root="root" 
@@ -27,12 +28,12 @@
             />
             <div
                 class="element-not-data"
-                v-if="!setting.url && !setting.link"
+                v-if="!banner"
             >
                 <element-icon
                     v-if="designMode"
-                    icon-class="icon-picture"
-                    title="Image"
+                    icon-class="icon-aws fa fa-desktop size-20"
+                    title="Screen"
                 />
             </div>
             <div
@@ -43,12 +44,17 @@
                 v-else 
             >
                 <div
-                    class="box-elimage"
-                    :style="{'text-align': style['text-align']}"  
+                    :class="'container-screen-preview-'+key+'-'+isPreview.toString()" 
+                    :style="{fontSize: sizeScaleScreen*sizeChange * (13 / sizeScaleScreen) + 'px'}" 
                 >
-                    <a
-                        :style="`background-image:url(${setting.link ? setting.link : convertToUrl(setting.url)}); background-size: ${style.backgroundSize}; width: ${style.width}; height: ${style.height}`"
-                        class="img-element auto-height fix-mobile"
+                    <element-container
+                        ref="elementContainer" 
+                        :root="this" 
+                        :design-mode="false" 
+                        v-if="banner && banner.template" 
+                        :source="banner.template"
+                        :size-scale="sizeScaleScreen"
+                        :ratio-size="ratioSize"
                     />
                 </div>
             </div>
@@ -57,7 +63,10 @@
 </template>
 
 <script>
-import {convertToUrl} from '~/helpers/dataHelper';
+import {getRatioSize} from '~/helpers/dataHelper';
+import ElementContainer from '~/components/elements/ElementContainer';
+import Vue from 'vue';
+Vue.component('element-container', ElementContainer);
 
 export default {
     props: {
@@ -69,13 +78,13 @@ export default {
             type: Boolean,
             default: false
         },
+        isPreview: {
+            type: Boolean,
+            default: false
+        },
         sizeScale: {
             type: Number,
             default: null
-        },
-        landingId: {
-            type: String,
-            default: ''
         },
         source: {
             type: Object,
@@ -95,16 +104,7 @@ export default {
             // height: {
             //     enable: true
             // },
-            link: {
-                enable: true
-            },
-            btnUpload: {
-                enable: true
-            },
             btnSubmit: {
-                enable: true
-            },
-            backgroundSize: {
                 enable: true
             },
             elementAlign: {
@@ -113,24 +113,34 @@ export default {
             verticalAlign: {
                 enable: true
             },
-            track: {
+            screen: {
                 enable: true
-            },
-
+            }
         },
-        convertToUrl: convertToUrl
+        banner: null,
+        sizeScaleScreen: null,
+        unitScale: 13 / 928, // fontSize/containerWidth,
+        ratioSize: null,
+        sizeChange: 1,
     }),
     created() {
         this.reset();
     },
+    mounted() {
+    },
     watch: {
        
     },
+    components: {
+        // ElementContainer
+    },
     methods: {
-        reset() {
-
+        async reset() {
+            console.log('Reset media', this.source);
+            console.log('sizeScale', this.sizeScaleScreen);
             this.style = {};
             this.setting = {};
+            this.banner = null;
 
             if (this.source) {
                 this.key = this.source.key;
@@ -148,6 +158,16 @@ export default {
 
                 if (this.$refs['resize-' + this.key])
                     this.$refs['resize-' + this.key].reset();
+
+                if (this.source.setting.screenId) {
+                    let results = await this.$axios.get(`api/screen/${this.source.setting.screenId}`);
+                    if (results) {
+                        this.ratioSize = getRatioSize(results.data.ratio && results.data.ratio.value);
+                        this.banner = results.data.template;
+                        this.getSizeScale();
+                    }
+                }
+
             }
 
             // if (!this.style.height)
@@ -174,7 +194,24 @@ export default {
         mouseDown(ev) {
             this.source.setting.stylesBox.x = ev.x * (13 / this.sizeScale);
             this.source.setting.stylesBox.y = ev.y * (13 / this.sizeScale);
-        }
+        },
+        getSizeScale() {
+            console.log('resize');
+            setTimeout(() => {
+                let containerWidth = $(`[data-element="${this.key + '-' + this.isPreview.toString()}"]`).width();
+                let containerHeight = $(`[data-element="${this.key + '-' + this.isPreview.toString()}"]`).height();
+                
+                this.sizeScaleScreen = containerWidth * this.unitScale;
+
+                if (containerWidth > containerHeight) {
+                    this.sizeChange = containerHeight / this.ratioSize.height;
+                }
+                else if (containerWidth < containerHeight) {
+                    this.sizeChange = containerWidth / this.ratioSize.width;
+                }
+
+            }, 100);
+        },
     }
 };
 </script>

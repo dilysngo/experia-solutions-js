@@ -239,11 +239,11 @@ export default {
         };
     },
     async created() {
-        await this.findRatios();
-        this.dataSize = this.ratioList;
+        let ratioList = await this.findRatios();
+        let categoryList = await this.findCategory();
 
-        await this.findCategory();
-        this.dataCategory = this.categoryList;
+        this.dataSize = ratioList.results || [];
+        this.dataCategory = categoryList.results || [];
 
         this.root = this;
         this.temporaryQueues = [];
@@ -290,19 +290,13 @@ export default {
         ...mapGetters('user', [
             'userAuth'
         ]),
-        ...mapGetters('ratio', [
-            'ratioList'
-        ]),
-        ...mapGetters('category', [
-            'categoryList'
-        ])
     },
     watch: {
         elementSelected: function(newData) {
             console.log('newData', newData);
             $('.element-box').removeClass('selected');
             document.querySelector('#' + newData.key).classList.add('selected');
-        }
+        },
     },
     methods: {
         ...mapActions('template', [

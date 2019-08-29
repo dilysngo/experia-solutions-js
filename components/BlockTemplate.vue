@@ -61,6 +61,7 @@
         <div class="template-info">
             <a
                 :href="template.slug"
+                target="_blank"
                 class="template-name"
             >
                 {{ template.name }}
@@ -82,10 +83,12 @@
 <script>
 import {convertToDateString} from '~/helpers/dateHelper';
 import ElementContainer from '~/components/elements/ElementContainer';
+import Vue from 'vue';
+Vue.component('element-container', ElementContainer);
 
 export default {
     components: {
-        ElementContainer
+        
     },
     props: {
         template: {

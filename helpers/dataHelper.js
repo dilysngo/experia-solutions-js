@@ -21,7 +21,8 @@ export function convertToTime(time) {
 }
 
 export function convertToUrl(url) {
-    return process.env.CDN_BASE + url;
+    return process.env.CDN_BASE + url; // local
+    // return process.env.CDN_BASE + '/experia-solutions-dev/' + url; // live
 }
 
 export function setCookie(cname, cvalue, exdays) {
@@ -82,7 +83,7 @@ export function getRatioSize(ratio) {
             height: 360
         };
         break;
-    case '1885x953':
+    case '1885:953':
         size = {
             width: 754,
             height: 381.2

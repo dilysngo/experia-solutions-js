@@ -71,6 +71,9 @@
 .container-preview{
     position: relative;
     overflow: hidden;
+    .template-body {
+        border: 0;
+    }
 }
 
 .element-not-data {
@@ -248,7 +251,7 @@
     }
 }
 .element-box {
-    &.selected{
+    &.selected, &:hover{
         .control-box{
             opacity: 1;
         }

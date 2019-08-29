@@ -18,6 +18,9 @@ $ npm run dev
 $ npm run build
 $ npm start
 ```
+## Fix Querystring
+=> node_modules/weather-js/index.js
+=> Change qs = require('querystring-browser')
 
 For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
 

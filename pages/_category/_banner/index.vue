@@ -7,6 +7,7 @@
             ref="elementContainer" 
             :root="this" 
             :design-mode="false" 
+            :is-preview="true"
             v-if="banner && banner.template" 
             :source="banner.template"
             :size-scale="sizeScale"
@@ -18,6 +19,9 @@
 <script>
 import {getRatioSize} from '~/helpers/dataHelper';
 import ElementContainer from '~/components/elements/ElementContainer';
+import Vue from 'vue';
+Vue.component('element-container', ElementContainer);
+
 export default {
     layout: 'render',
     data: () => ({
@@ -28,7 +32,7 @@ export default {
         ratioSize: null,
     }),
     components: {
-        ElementContainer
+        
     },
     async created() {
         await this.getBannerBySlug();

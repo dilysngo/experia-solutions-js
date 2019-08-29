@@ -677,6 +677,129 @@
                     </div>
                     <div
                         class="col-12"
+                        v-if="controls.screen && controls.screen.enable"
+                    >
+                        <label class="setting-box-label">Screen</label>
+                        <div class="filter-box">
+                            <div class="dropdown normal">
+                                <div
+                                    class="dropdown-toggle"
+                                    data-toggle="dropdown"
+                                >
+                                    <input
+                                        type="text"
+                                        class="ip-search filter-value form-control"
+                                        placeholder="Enter screen" 
+                                        v-model="condition.keyword"
+                                    >
+                                    <i class="fa fa-angle-down" />
+                                    <i class="fa fa-angle-up" />
+                                </div>
+                                <ul class="dropdown-menu">
+                                    <li
+                                        class="dropdown-menu-item"
+                                        v-for="(item, index) in screens"
+                                        :key="index"
+                                    >
+                                        <a
+                                            class="dropdown-link"
+                                            @click="selectScreen(item)"
+                                        >
+                                            <span
+                                                class="dropdown-link-title"
+                                            >
+                                                {{ item.name }}
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="col-12"
+                        v-if="controls.weather && controls.weather.enable"
+                    >
+                        <label class="setting-box-label">Location</label>
+                        <div class="filter-box">
+                            <div class="dropdown normal">
+                                <div
+                                    class="dropdown-toggle"
+                                    data-toggle="dropdown"
+                                >
+                                    <input
+                                        type="text"
+                                        class="ip-search filter-value form-control"
+                                        placeholder="Enter screen" 
+                                        v-model="condition.keywordWeather"
+                                    >
+                                    <!-- <i class="fa fa-angle-down" />
+                                    <i class="fa fa-angle-up" /> -->
+                                </div>
+                                <ul class="dropdown-menu">
+                                    <li
+                                        class="dropdown-menu-item"
+                                        v-for="(item, index) in locations"
+                                        :key="index"
+                                    >
+                                        <a
+                                            class="dropdown-link"
+                                            @click="selectScreen(item)"
+                                        >
+                                            <span
+                                                class="dropdown-link-title"
+                                            >
+                                                <!-- {{ item.name }} -->
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <label class="setting-box-label">Title</label>
+                        <input
+                            placeholder="Change text"
+                            class="ip-setting"
+                            type="text"
+                            v-model="setting.weather.title"
+                            @input="save"
+                        >
+                        <label class="setting-box-label">Unit</label>
+                        <div class="filter-box">
+                            <div class="dropdown normal">
+                                <div
+                                    class="dropdown-toggle"
+                                    data-toggle="dropdown"
+                                >
+                                    <span class="filter-value form-control">
+                                        {{ setting.weather.unit ? setting.weather.unit : 'C' }}
+                                    </span>
+                                    <i class="fa fa-angle-down" />
+                                    <i class="fa fa-angle-up" />
+                                </div>
+                                <ul class="dropdown-menu">
+                                    <li
+                                        class="dropdown-menu-item"
+                                        v-for="(item, index) in units"
+                                        :key="index"
+                                    >
+                                        <a
+                                            class="dropdown-link"
+                                            @click="selectUnit(item)"
+                                        >
+                                            <span
+                                                class="dropdown-link-title"
+                                            >
+                                                {{ item }}
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="col-12"
                         v-if="controls.addList && controls.addList.enable"
                     >
                         <label class="setting-box-label">Items</label>
@@ -692,7 +815,8 @@
                                 <span
                                     style="width:90%;display: inline-block;"
                                     @click="selectItem(index)"
-                                >+ {{ item }} </span><i
+                                    v-html="item"
+                                >+ </span><i
                                     @click="removeItem(index); save()"
                                     class="fa fa-times"
                                     aria-hidden="true" 
@@ -700,12 +824,16 @@
                             </li>
                         </ul>
                         <template v-if="isUpdateItem">
-                            <input
+                            <!-- <input
                                 placeholder="Item name"
                                 class="ip-setting"
                                 type="text"
                                 v-model="valueUpdate"
-                            > 
+                            > -->
+                            <vue-ckeditor
+                                v-model="valueUpdate"
+                                :config="config.configCKEditor"
+                            />
                             <button
                                 style="margin-left: 15px"
                                 @click="isUpdateItem=false"
@@ -721,12 +849,16 @@
                             </button>
                         </template>
                         <template v-else>
-                            <input
+                            <!-- <input
                                 placeholder="Item name"
                                 class="ip-setting"
                                 type="text"
                                 v-model="config.item"
-                            > 
+                            >  -->
+                            <vue-ckeditor
+                                v-model="config.item"
+                                :config="config.configCKEditor"
+                            />
                             <button
                                 class="elm-add"
                                 @click="addItem(config.item); save()"
@@ -747,6 +879,8 @@
 
 <script>
 import fonts from '~/common/googleFonts';
+// import * as GoogleLocations from 'google-locations';
+
 export default {
     props: {
         root: {
@@ -823,7 +957,16 @@ export default {
             initialMouseX: 0,
             initialMouseY: 0,
             elMove: '',
-        }
+        },
+        condition: {
+            keyword: '',
+            keywordWeather: '',
+            skip: 0,
+            limit: 20
+        },
+        screens: null,
+        locations: [],
+        units: ['C', 'F']
     }),
     created() {
         // this.reset();
@@ -833,9 +976,9 @@ export default {
         
     },
     watch: {
-        // 'style.backgroundSize': function(newData) {
-        //     this.save();
-        // },
+        'style.backgroundSize': function(newData) {
+            this.save();
+        },
         // 'config.width': function(newData) {
         //     if (newData > 1095)
         //         this.config.width = 1095;
@@ -850,6 +993,26 @@ export default {
         //     else this.setting.trackClick = 'no';
         //     this.save();
         // },
+        'condition.keywordWeather': function(newData) {
+            if (this.controls && this.controls.weather && this.controls.weather.enable) {
+                // let locations = new GoogleLocations('');
+                // locations.search({keyword: newData}, function(err, response) {
+                //     console.log("search: ", response.results);
+                    
+                //     locations.details({placeid: response.results[0].place_id}, function(err, response) {
+                //         console.log("search details: ", response.result.name);
+                //         // search details: Google
+                //     });
+                // });
+
+                this.setting.weather.keyword = newData;
+                this.save();
+            }
+            
+        },
+        'setting.weather.unit': function(newData) {
+            this.save();
+        }
     },
     methods: {
         backgroundFillColor(){
@@ -916,8 +1079,15 @@ export default {
                 paddingRight: 0,
                 fullBox: 'no',
                 mediaId: null,
+                screenId: null,
+                weather: {
+                    keyword: null,
+                    title: null,
+                    unit: null,
+                    date: null
+                },
                 trackName: null,
-                trackClick: 'no'
+                trackClick: 'no',
             };
             this.controls = {
                 width: {
@@ -996,16 +1166,24 @@ export default {
                     enable: false
                 },
                 shape: {
+                    enable: false                    
+                },
+                screen: {
+                    enable: false
+                },
+                weather: {
                     enable: false
                 }
             };
             this.config.backgroundColor = '#000000';
             this.config.borderColor = '#000000';
             this.config.color = '#000000';
+            this.condition.keyword = '';
         },
         open({instance, key, path, style, setting, controls}) {
             this.reset();
-            this.$nextTick(() => {
+
+            this.$nextTick( async () => {
                 this.instance = instance;
                 this.key = key;
                 this.path = path;
@@ -1078,6 +1256,17 @@ export default {
                                 '</style>';
                         jQuery(head).append(css);
                     }, 500);
+                }
+
+                if (this.controls && this.controls.screen && this.controls.screen.enable) {
+                    await this.getScreens();
+                    let screenSelected = this.screens.find(item => item.id === this.setting.screenId);
+                    if (screenSelected)
+                        this.condition.keyword = screenSelected.name;
+                }
+
+                if (this.controls && this.controls.weather && this.controls.weather.enable) {
+                    this.condition.keywordWeather = this.setting.weather.keyword;
                 }
             });
         },
@@ -1208,6 +1397,19 @@ export default {
         toggleOpen() {
             if (this.key)
                 this.root.isSetting = !this.root.isSetting;
+        },
+        async getScreens() {
+            let result = await this.$axios.$get(`api/screen?keyword=${this.condition.keyword || ''}&skip=${this.condition.skip || ''}&limit=${this.condition.limit || ''}`);
+            if (result)
+                this.screens = result.results;
+        },
+        selectScreen(item) {
+            this.setting.screenId = item.id;
+            this.condition.keyword = item.name;
+            this.save();
+        },
+        selectUnit(item) {
+            this.setting.weather.unit = item;
         }
 
     }

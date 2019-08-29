@@ -423,6 +423,11 @@ $size-list: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70);
 $size-num: (0px, 5px, 10px, 15px, 20px, 25px, 30px, 35px, 40px, 45px, 50px, 55px, 60px, 65px, 70px);
 
 @for $i from 1 through length($size-list) {
+
+    .size-#{nth($size-list, $i)} {
+        font-size: nth($size-num, $i) !important;
+    }
+
   .p-#{nth($size-list, $i)} {
     padding: nth($size-num, $i);
   }
