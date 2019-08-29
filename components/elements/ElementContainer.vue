@@ -24,6 +24,7 @@
 import Vue from 'vue';
 import ElementSection from '~/components/elements/ElementSection';
 import ElementText from '~/components/element-items/ElementText';
+import ElementShape from '~/components/element-items/ElementShape';
 // import ElementButton from '~/components/element-items/ElementButton';
 // import ElementInput from '~/components/element-items/ElementInput';
 // import ElementTextArea from '~/components/element-items/ElementTextArea';
@@ -36,6 +37,7 @@ import ElementImage from '~/components/element-items/ElementImage';
 
 Vue.component('element-section', ElementSection);
 Vue.component('element-text', ElementText);
+Vue.component('element-shape', ElementShape);
 // Vue.component('element-button', ElementButton);
 // Vue.component('element-input', ElementInput);
 // Vue.component('element-text-area', ElementTextArea);

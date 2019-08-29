@@ -128,8 +128,7 @@ export default {
     },
     methods: {
         reset() {
-            console.log('Reset media', this.source);
-            console.log('sizeScale', this.sizeScale);
+
             this.style = {};
             this.setting = {};
 

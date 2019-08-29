@@ -222,7 +222,7 @@ export default {
         dragEndHandler(e) {
             console.log('dragEndHandler', this.setting);
 
-            this.root.updateElement({instance: this.$parent, path: this.path, setting: this.setting});
+            this.root.updateElement({instance: this.$parent, path: this.path, style: this.style, setting: this.setting});
         }
     }
 };

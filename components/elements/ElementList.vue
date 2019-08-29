@@ -27,6 +27,7 @@ export default {
                 // {id: 'btn4', name: 'icon-text-type'},
                 {icon: 'icon-picture', name: 'element-image'},
                 {icon: 'icon-play-button', name: 'element-video'},
+                {icon: 'icon-shapes', name: 'element-shape'},
                 // {id: 'btn7', name: 'icon-gallery'},
                 // {id: 'btn8', name: 'icon-shapes'},
                 // {id: 'btn9', name: 'icon-wall-clock'},

@@ -109,6 +109,119 @@
                         </div>
                     </div>
                     <div
+                        class="col-md-12"
+                        v-if="controls.shape && controls.shape.enable"
+                    >
+                        <label class="setting-box-label">Shape</label>
+                        <ul class="list-alignment">
+                            <li
+                                :class="{active: setting.shape === 'circle'}"
+                                class="alignment-item"
+                                @click="setting.shape = 'circle'; save()"
+                            >
+                                <i class="" /> Circle
+                            </li>
+                            <li
+                                :class="{active: setting.shape === 'rect'}"
+                                class="alignment-item"
+                                @click="setting.shape = 'rect'; save()"
+                            >
+                                <i class="" /> Rect
+                            </li>
+                            <li
+                                :class="{active: setting.shape === 'ellipse'}"
+                                class="alignment-item"
+                                @click="setting.shape = 'ellipse'; save()"
+                            >
+                                <i class="" /> Ellipse
+                            </li>
+                            <li
+                                :class="{active: setting.shape === 'triangle'}"
+                                class="alignment-item"
+                                @click="setting.shape = 'triangle'; save()"
+                            >
+                                <i class="" /> Triangle
+                            </li>
+                            <li
+                                :class="{active: setting.shape === 'line'}"
+                                class="alignment-item"
+                                @click="setting.shape = 'line'; save()"
+                            >
+                                <i class="" /> Line
+                            </li>
+                            <li
+                                :class="{active: setting.shape === 'arrow'}"
+                                class="alignment-item"
+                                @click="setting.shape = 'arrow'; save()"
+                            >
+                                <i class="" /> Arrow
+                            </li>                                                              
+                        </ul>
+                    </div> 
+                    <div 
+                        class="col-md-12"
+                        v-if="controls.shape && controls.shape.enable"
+                    >
+                        <label class="setting-box-label">Appearance</label>
+                    </div>
+
+                    <div 
+                        class="col-md-6"
+                        v-if="controls.shape && controls.shape.enable"
+                    >
+                        <ul class="list-alignment">
+                            <li class="alignment-item">
+                                Fill
+                            </li>   
+                        </ul>
+                        <label class="switch">
+                            <input 
+                                v-if="!flagFrame"
+                                type="checkbox"
+                                @click="backgroundFillColor" 
+                            >
+                            <span class="slider round" />
+                        </label>     
+                        <div 
+                            class="box-pts"
+                            v-if="flagFill"
+                        >
+                            <pts-picker
+                                v-show="config.pickers.backgroundFill"
+                                v-model="config.backgroundColorFill"
+                                @input="style['colorFill'] = config.backgroundColorFill.hex; save()"
+                            />
+                        </div>
+                        <div 
+                            class="box-pts"
+                            v-if="flagFrame"
+                        >
+                            <pts-picker
+                                v-show="config.pickers.backgroundFrame"
+                                v-model="config.backgroundColorFrame"
+                                @input="style['colorFrame'] = config.backgroundColorFrame.hex; save()"
+                            />
+                        </div>
+                    </div>
+                    <div 
+                        class="col-md-6 "
+                        v-if="controls.shape && controls.shape.enable"
+                    >
+                        <ul class="list-alignment">
+                            <li class="alignment-item">
+                                Frame
+                            </li>
+                        </ul>
+                        <label class="switch">
+                            <input
+                                v-if="!flagFill" 
+                                type="checkbox"
+                                @click="backgroundFrameColor"
+                            >
+                            <span class="slider round" />
+                        </label>                          
+                    </div>                  
+                    <div
                         class="setting-upload"
                         v-if="controls.btnUpload && controls.btnUpload.enable"
                     >
@@ -304,7 +417,7 @@
                         </ul>
                         <!-- <div class="checkbox-setting">
                             <input type="checkbox" v-model="setting.centerBox"/><label class="setting-box-label"> Center Box </label>  
-                        </div> -->
+                        </div> -->                        
                     </div>
                     <div
                         class="col-md-12"
@@ -634,7 +747,6 @@
 
 <script>
 import fonts from '~/common/googleFonts';
-
 export default {
     props: {
         root: {
@@ -652,6 +764,8 @@ export default {
         path: '',
         style: null,
         setting: null,
+        flagFill: false,
+        flagFrame: false,
         isUpdateItem: false,
         valueUpdate: '',
         selected: null,
@@ -660,10 +774,14 @@ export default {
             fontFamily: fonts.googleFonts,
             fontSelect: null,
             backgroundColor: '#000000',
+            backgroundColorFill: '#000000',          
+            backgroundColorFrame: '#000000',     
             borderColor: '#000000',
             color: '#000000',
             pickers: {
                 background: false,
+                backgroundFill: false,
+                backgroundFrame: false,
                 border: false,
                 text: false
             },
@@ -734,6 +852,22 @@ export default {
         // },
     },
     methods: {
+        backgroundFillColor(){
+            if (this.flagFrame === true)
+                return;
+            else {
+                this.flagFill = !this.flagFill;
+                this.config.pickers.backgroundFill = !this.config.pickers.backgroundFill;
+            }    
+        },
+        backgroundFrameColor(){
+            if (this.flagFill === true)
+                return;
+            else {
+                this.flagFrame = !this.flagFrame;
+                this.config.pickers.backgroundFrame = !this.config.pickers.backgroundFrame;
+            }   
+        },
         reset() {
             this.instance = null;
             this.key = '';
@@ -752,6 +886,8 @@ export default {
                 'text-decoration': null,
                 'text-align': '',
                 'background-color': null,
+                'colorFill': null,
+                'colorFrame': null,
                 backgroundSize: 'contain',
                 'border-color': null,
                 'color': null,
@@ -764,10 +900,13 @@ export default {
                 url: null,
                 link: null,
                 content: null,
+                shape: null,
+                backgroundFill: null,
+                backgroundFrame: null,                                
                 listItem: [],
                 poster: '',
                 duration: 0,
-                marginTop: 0,
+                marginTop: 0, 
                 marginBottom: 0,
                 marginLeft: 0,
                 marginRight: 0,
@@ -796,6 +935,12 @@ export default {
                 background: {
                     enable: false
                 },
+                backgroundFill: {
+                    enable: false
+                },
+                backgroundFrame: {
+                    enable: false
+                },                
                 border: {
                     enable: false
                 },
@@ -848,6 +993,9 @@ export default {
                     enable: false
                 },
                 track: {
+                    enable: false
+                },
+                shape: {
                     enable: false
                 }
             };
@@ -902,8 +1050,15 @@ export default {
                     this.config.color = this.style['color'];
                 if (this.style['border-color'])
                     this.config.borderColor = this.style['border-color'];
+                    
                 if (this.style['background-color'])
                     this.config.backgroundColor = this.style['background-color'];
+                
+                if (this.style['colorFill'])
+                    this.config.backgroundColorFill = this.style['colorFill'];
+
+                if (this.style['colorFrame'])
+                    this.config.backgroundColorFrame = this.style['colorFrame'];
 
                 if (this.setting.fullBox === 'yes')
                     this.config.fullBox = true;
@@ -933,6 +1088,8 @@ export default {
             this.key = '';
             this.root.isSetting = false;
             this.config.pickers.background = false;
+            this.config.pickers.backgroundFill = false;
+            this.config.pickers.backgroundFrame = false;
             this.config.pickers.border = false;
             this.config.pickers.text = false;
         },
@@ -961,8 +1118,6 @@ export default {
             this.setting.paddingBottom = this.config.paddingBottom / 13;
             this.setting.paddingLeft = this.config.paddingLeft / 13;
             this.setting.paddingRight = this.config.paddingRight / 13;
-
-            // console.log('this.setting', this.setting);
 
             this.root.updateElement({instance: this.instance, path: this.path, style: this.style, setting: this.setting});
             // this.close();

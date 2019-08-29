@@ -44,7 +44,6 @@
                         aria-valuenow="0" 
                         aria-valuemin="0" 
                         aria-valuemax="100" 
-                        style="width:0px"
                     />
                     <!-- </div> -->
                 </div>
@@ -114,23 +113,21 @@ export default {
                 this.sizeScale = containerWidth * this.unitScale;
             }, 300);
         },
-        runProgressBar(time){     
-            $(function() { 
+        runProgressBar(time){ 
+            $("#dynamic")
+                .css("width", "0%")
+                .css("opacity", "0");
+            var current_progress = 0;
+            const taget = 100;
+            var interval = setInterval(function() {
+                current_progress += taget / time;
                 $("#dynamic")
-                    .css("width", "0%")
-                    .css("opacity", "0");
-                var current_progress = 0;
-                const taget = 100;
-                var interval = setInterval(function() {
-                    current_progress += taget / time;
-                    $("#dynamic")
-                        .css("width", current_progress + "%")
-                        .attr("aria-valuenow", current_progress);
-                    if (current_progress >= 100)
-                        clearInterval(interval);
-                    $("#dynamic").css("opacity", "1");                   
-                }, 1000);
-            });
+                    .css("width", current_progress + "%")
+                    .attr("aria-valuenow", current_progress);
+                if (current_progress >= 100)
+                    clearInterval(interval);
+                $("#dynamic").css("opacity", "1");                   
+            }, 1000);
         },
         getScreen(data) {
             this.counter = 0;
