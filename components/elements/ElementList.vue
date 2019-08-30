@@ -7,11 +7,12 @@
             v-for="btn in boxtool"
             :key="btn.name"
             :id="btn.name"
+            :title="btn.title"
         >
             <i 
                 :class="btn.icon"
                 class="icon-site"
-            />
+            />            
         </button>
     </div>
 </template>
@@ -21,14 +22,14 @@ export default {
     data() {
         return {
             boxtool: [
-                {icon: 'icon-text', name: 'element-text'},
-                {icon: 'icon-aws fa fa-list-ol size-20', name: 'element-list-text'},
-                {icon: 'icon-aws fa fa-desktop size-20', name: 'element-screen'},
+                {icon: 'icon-text', name: 'element-text', title: 'Add Text'},
+                {icon: 'icon-aws fa fa-list-ol size-20', name: 'element-list-text', title: 'Add List Text'},
+                {icon: 'icon-aws fa fa-desktop size-20', name: 'element-screen', title: 'Add Screen'},
                 // {id: 'btn2', name: 'icon-internet'},
                 // {id: 'btn3', name: 'icon-text-block'},
                 // {id: 'btn4', name: 'icon-text-type'},
-                {icon: 'icon-picture', name: 'element-image'},
-                {icon: 'icon-play-button', name: 'element-video'},
+                {icon: 'icon-picture', name: 'element-image', title: 'Add Image'},
+                {icon: 'icon-play-button', name: 'element-video', title: 'Add Video'},
                 // {id: 'btn7', name: 'icon-gallery'},
                 // {id: 'btn8', name: 'icon-shapes'},
                 // {id: 'btn9', name: 'icon-wall-clock'},

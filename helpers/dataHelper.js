@@ -22,8 +22,10 @@ export function convertToTime(time) {
 
 export function convertToUrl(url) {
     // return process.env.CDN_BASE + url; // local
-    return process.env.CDN_BASE + '/experia-solutions-dev/' + url; // live
+    return process.env.CDN_BASE + url; // live
 }
+
+// + '/experia-solutions-dev/'
 
 export function setCookie(cname, cvalue, exdays) {
     let d = new Date();
