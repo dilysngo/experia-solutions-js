@@ -58,6 +58,7 @@
             <div class="btn-google-facebook">
                 <button 
                     class="loginBtn loginBtn--facebook"
+                    @click="facebookSignin"
                 >
                     Login with Facebook
                 </button>
@@ -179,6 +180,35 @@ export default {
             });
         },
 
+        facebookSignin(){
+            FB.login(function(response) {
+                this.statusChangeCallback(response);
+            }, {scope: 'publish_actions'});
+        },
+        
+        statusChangeCallback(response) {
+            this.ready = true;
+            console.log('statusChangeCallback');
+            console.log(response);
+            if (response.status === 'connected') {
+                this.authorized = true;
+                this.getProfile();
+            } 
+            else if (response.status === 'not_authorized') {
+                this.authorized = false;
+            } 
+            else {
+                this.authorized = false;
+            }
+        },
+
+        getProfile() {
+            FB.api('/me', function(response) {
+                console.log(response);
+                this.$set(this, 'profile', response);
+            });
+        },      
+          
         async onSuccess(user){
             var self = this;
             var data = {};
@@ -216,5 +246,18 @@ export default {
 
         } 
     },
+    mounted() {
+        window.fbAsyncInit = () => {
+            FB.init({
+                appId: '518625492256840',
+                cookie: true,
+                xfbml: true,
+                version: 'v3.3'
+            });
+            FB.getLoginStatus(function(response) {
+                this.statusChangeCallback(response);
+            });
+        };
+    }
 };
 </script>
