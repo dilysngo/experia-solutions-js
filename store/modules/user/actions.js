@@ -39,6 +39,21 @@ export default {
         return reset;
     },
 
+    async updateProfileUser({commit}, conditions){
+        delete conditions.id;
+        delete conditions.role;
+        delete conditions.avatar;
+        delete conditions.createdAt;
+        delete conditions.updatedAt;
+        
+        const data = await this.$axios.$post(`/api/users/profile`, conditions);
+        return data;
+    },
+    async uploadAvatar({commit}, file){
+        const data = await this.$axios.$post(`/api/users/avatar`, file);
+        return data;
+    },
+
     signout({commit}) {
         storeUserAuthentication(commit);
         this.$router.push('/login');

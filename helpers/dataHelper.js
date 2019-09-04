@@ -25,6 +25,10 @@ export function convertToUrl(url) {
     // return process.env.CDN_BASE + '/experia-solutions-dev/' + url; // live
 }
 
+export function convertToUrlAvatar(url) {
+    return process.env.API_URL + '/uploads' + url; 
+}
+
 export function setCookie(cname, cvalue, exdays) {
     let d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
