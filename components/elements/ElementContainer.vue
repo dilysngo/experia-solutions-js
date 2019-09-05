@@ -18,11 +18,15 @@
             :source="component"
             :ref="component.key"
         />
+        <h4 style="margin-top: 340px; color: #4b6c90; opacity: 0.6; font-family: Bookman, Tahoma, Verdana;">
+            {{ screenName }}
+        </h4>
     </div>
 </template>
 
 <script>
 import Vue from 'vue';
+import {mapActions, mapGetters} from 'vuex';
 import ElementSection from '~/components/elements/ElementSection';
 import ElementText from '~/components/element-items/ElementText';
 import ElementShape from '~/components/element-items/ElementShape';
@@ -106,9 +110,11 @@ export default {
     created() {
         this.reset();
     },
+    computed: {
+        ...mapGetters('screen', ['screenName'])
+    },
     methods: {
         reset() {
-            console.log('Reset container');
             this.style = {};
             this.setting = {};
             this.components = [];

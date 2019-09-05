@@ -5,6 +5,7 @@
         <div
             :id="'playlist' + data.id"
             class="block-playlist"
+            :style="data.status == 'approved' ? 'border-style:solid; border-width:1px; border-color:red;' : null"
         >
             <div class="playlist-thumbnail">
                 <div class="playlist-img d-flex">

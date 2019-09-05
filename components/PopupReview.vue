@@ -55,6 +55,7 @@
 
 <script>
 import ElementContainer from '~/components/elements/ElementContainer';
+import {mapActions, mapGetters} from 'vuex';
 import {getRatioSize} from '~/helpers/dataHelper';
 
 export default {
@@ -83,6 +84,9 @@ export default {
         ElementContainer
     },
     methods: {
+        ...mapActions('screen', [
+            'getNameScreen'
+        ]),
         open(data, ratioValue) {
             this.ratioSize = getRatioSize(ratioValue);
 
@@ -92,7 +96,8 @@ export default {
                 let i = 0;
 
                 this.getScreen(data.screens[i]);
-                this.runProgressBar(data.screens[i].time);
+                this.getNameScreen(data.screens[i].data.name);
+                this.runProgressBar(data.screens[i].time );
 
                 this.interval = setInterval(() => {
                     this.counter = this.counter + 1;
@@ -102,8 +107,9 @@ export default {
                             clearInterval(this.interval);
                             return;
                         }
-                        this.runProgressBar(data.screens[i].time);
                         this.getScreen(data.screens[i]);
+                        this.getNameScreen(data.screens[i].data.name);                        
+                        this.runProgressBar(data.screens[i].time);
                     }
                 }, 1000);
             }

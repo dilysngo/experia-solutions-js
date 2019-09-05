@@ -7,6 +7,7 @@ export default {
     state: {
         screenList: null,
         screenDetail: null,
+        screenName: null,
         screenPagination: null
     },
     getters,

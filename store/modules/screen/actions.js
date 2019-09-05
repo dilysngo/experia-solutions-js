@@ -18,6 +18,13 @@ export default {
         return screen;
     },
 
+    async getNameScreen({commit}, screenName){
+        if (!screenName)
+            return;
+        commit(types.SCREEN_NAME, screenName);
+        return screenName;    
+    },
+
     async createScreen({commit}, data) {
         if (!data)
             return;
