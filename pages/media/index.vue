@@ -54,7 +54,7 @@
                             <div
                                 class="g-thumbnail"
                                 :style="{ 
-                                    'background-image': gItem.type !== mediaType.Video ? 'url(' + convertToUrl(gItem.imageInfo.url) + ')' : '',
+                                    'background-image': gItem.type !== mediaType.Video && gItem.type !== mediaType.Music ? 'url(' + convertToUrl(gItem.imageInfo.url) + ')' : '',
                                     'background-size': 'cover',
                                     'background-repeat': 'no-repeat'
                                 }"
@@ -78,6 +78,15 @@
                                     >
                                         <source :src="convertToUrl(gItem.videoInfo.url)">
                                     </video>
+                                    <video
+                                        v-if="gItem.type == mediaType.Music"
+                                        loop
+                                        ref="videoReview"
+                                        preload="auto"
+                                        crossOrigin="anonymous"
+                                    >
+                                        <source :src="convertToUrl(gItem.musicInfo.url)">
+                                    </video>                                    
                                     <!-- <img 
                                         v-else
                                         :src="urlFake + gItem.imageInfo.url" 
@@ -126,7 +135,8 @@
                                             class="icon-site"
                                             :class="gItem.imageInfo ? 'icon-picture' : 'icon-play'" 
                                         />
-                                        <span>{{ (gItem.imageInfo ? gItem.imageInfo.size : gItem.videoInfo.size) | convertToSize }}</span>
+                                        <span v-if="gItem.musicInfo">{{ gItem.musicInfo.size | convertToSize }}</span>
+                                        <span v-else>{{ (gItem.imageInfo ? gItem.imageInfo.size : gItem.videoInfo.size) | convertToSize }}</span>
                                     </div>
                                     <div
                                         class="g-created"
@@ -173,7 +183,7 @@
                         <img src="~/assets/images/close.svg">
                     </button>
                     <video
-                        v-show="mediaShow && mediaShow.type === mediaType.Video"
+                        v-show="mediaShow && mediaShow.type === mediaType.Video || mediaShow && mediaShow.type === mediaType.Music"
                         id="videoDisplay"
                         controls
                         poster="data:image/gif,AAAA"
@@ -218,6 +228,7 @@ export default {
                 {name: 'All', value: ''}, 
                 {name: 'Image', value: MediaType.Image}, 
                 {name: 'Video', value: MediaType.Video},
+                {name: 'Music', value: MediaType.Music},
             ],
             gallery: [
                 {id: 1, name: 'What Is Botox', size: '236kb', dateCreated: '5/3', type: '.jpg', url: 'images/gallery-1.png'},
@@ -242,7 +253,7 @@ export default {
         ]),
         ...mapGetters('media', [
             'mediaList'
-        ])
+        ]),
     },
     watch: {
         keyword: function(newData) {
@@ -254,6 +265,9 @@ export default {
     },
     async created() {
         await this.getAllMedia();
+    },
+    mounted() {
+        console.log('mediaList', this.mediaList);        
     },
     methods: {
         ...mapActions('media', 
@@ -272,6 +286,7 @@ export default {
                     console.log(err.message);
             });
             this.total = data && data.pagination && data.pagination.total;
+            console.log('this.data', data);
         },
         async changeMedia(event) {
             let formData = new FormData();
@@ -311,10 +326,20 @@ export default {
                 frameVideo.load();
                 frameVideo.play();
             }
+            else if (item.type === this.mediaType.Music) {
+                let frameVideo = document.getElementById('videoDisplay');
+                frameVideo.src = convertToUrl(item.musicInfo.url);
+                frameVideo.load();
+                frameVideo.play();
+            }
             $('#modalVideo').modal('show');
         },
         closeMedia() {
             if (this.mediaShow.type === this.mediaType.Video) {
+                let frameVideo = document.getElementById('videoDisplay');
+                frameVideo.pause();
+            }
+            else if (this.mediaShow.type === this.mediaType.Music){
                 let frameVideo = document.getElementById('videoDisplay');
                 frameVideo.pause();
             }

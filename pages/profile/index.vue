@@ -5,9 +5,9 @@
                 <h3>Profile</h3>
                 <div class="avatar-wrapper">
                     <img 
-                        class="profile-pic" 
+                        class="profile-pic"
                         :src="imageData" 
-                    />
+                    >  
                     <div class="upload-button">
                         <label for="myfile">
                             <i 
@@ -22,7 +22,7 @@
                         name="myfile" 
                         @change="previewImage" 
                         accept="image/*" 
-                    />
+                    >
                 </div>
             </div>
             <div class="col-sm-9 container-profile">
@@ -172,7 +172,6 @@ export default {
                 return;   
 
             if (this.file){
-                console.log('file', this.file);
                 let upload = await this.uploadAvatar(this.file).catch(err => {
                     if (err)
                         console.log('err', err.message);

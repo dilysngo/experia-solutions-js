@@ -36,6 +36,7 @@
                         :ref="'playlist-'+item.id"
                         @delete="handleDeletePlaylist"
                         @edit="handleEdit"
+                        @reset="getPlaylists"
                         @preview="handlePreview"
                     />
                 </div>

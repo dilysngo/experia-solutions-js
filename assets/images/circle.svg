@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="38px" height="38px" viewBox="0 0 38 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>Group 3</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-3" transform="translate(1.000000, 1.000000)">
+            <rect id="Rectangle-Copy" stroke="#F0F2F5" fill="#FFFFFF" x="0" y="0" width="36" height="36"></rect>
+            <g id="checked" transform="translate(6.000000, 6.000000)" fill="#1D1D1B" fill-rule="nonzero">
+                <path d="M11.99925,0 C5.38275,0 0,5.383125 0,12 C0,18.616875 5.38275,24 11.99925,24 C18.616875,24 24,18.616875 24,12 C24,5.383125 18.616875,0 11.99925,0 Z M11.9992143,23 C5.93467857,23 1,18.0653214 1,12 C1,5.93467857 5.93467857,1 11.9992143,1 C18.0649286,1 23,5.93467857 23,12 C23,18.0653214 18.0649286,23 11.9992143,23 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

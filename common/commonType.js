@@ -1,6 +1,7 @@
 export let MediaType = {
     Video: 1,
     Image: 2,
+    Music: 4,
     Thumbnail: 3
 };
 

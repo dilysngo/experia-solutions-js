@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="38px" height="38px" viewBox="0 0 38 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>Group 6</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-6" transform="translate(1.000000, 1.000000)">
+            <rect id="Rectangle" stroke="#F0F2F5" fill="#FFFFFF" x="0" y="0" width="36" height="36"></rect>
+            <g id="equilateral-triangle" transform="translate(5.000000, 6.000000)" fill="#010002" fill-rule="nonzero">
+                <path d="M24.6505,21.675 L13.394,1.049 C13.146,0.595 12.768,0.334 12.3575,0.334 C11.945,0.334 11.567,0.596 11.32,1.0535 L0.1935,21.674 C-0.0485,22.1235 -0.0645,22.5875 0.1505,22.9475 C0.3655,23.3075 0.781,23.5145 1.2915,23.5145 L23.559,23.5145 C24.0695,23.5145 24.485,23.3075 24.699,22.947 C24.913,22.5865 24.896,22.1235 24.6505,21.675 Z M23.839,22.436 C23.8205,22.467 23.7305,22.513 23.5585,22.513 L1.2915,22.513 C1.119,22.513 1.0285,22.4655 1.0095,22.434 C0.9905,22.403 0.992,22.3 1.074,22.1485 L12.2005,1.529 C12.2775,1.386 12.347,1.3385 12.3505,1.333 C12.369,1.3385 12.4385,1.385 12.5165,1.5285 L23.773,22.1545 C23.855,22.3055 23.858,22.4055 23.839,22.436 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -119,43 +119,43 @@
                                 class="alignment-item"
                                 @click="setting.shape = 'circle'; save()"
                             >
-                                <i class="" /> Circle
+                                <img src="~/assets/images/circle.svg"> Circle
                             </li>
                             <li
                                 :class="{active: setting.shape === 'rect'}"
                                 class="alignment-item"
                                 @click="setting.shape = 'rect'; save()"
                             >
-                                <i class="" /> Rect
+                                <img src="~/assets/images/rect.svg"> Rect
                             </li>
                             <li
                                 :class="{active: setting.shape === 'ellipse'}"
                                 class="alignment-item"
                                 @click="setting.shape = 'ellipse'; save()"
                             >
-                                <i class="" /> Ellipse
-                            </li>
-                            <li
-                                :class="{active: setting.shape === 'triangle'}"
-                                class="alignment-item"
-                                @click="setting.shape = 'triangle'; save()"
-                            >
-                                <i class="" /> Triangle
+                                <img src="~/assets/images/ellipse.svg"> Ellipse
                             </li>
                             <li
                                 :class="{active: setting.shape === 'line'}"
                                 class="alignment-item"
                                 @click="setting.shape = 'line'; save()"
                             >
-                                <i class="" /> Line
+                                <img src="~/assets/images/line.svg"> Line
                             </li>
                             <li
                                 :class="{active: setting.shape === 'arrow'}"
                                 class="alignment-item"
                                 @click="setting.shape = 'arrow'; save()"
                             >
-                                <i class="" /> Arrow
-                            </li>                                                              
+                                <img src="~/assets/images/arrow.svg"> Arrow
+                            </li>  
+                            <li
+                                :class="{active: setting.shape === 'triangle'}"
+                                class="alignment-item"
+                                @click="setting.shape = 'triangle'; save()"
+                            >
+                                <img src="~/assets/images/triangle.svg"> Triangle
+                            </li>                                                                                        
                         </ul>
                     </div> 
                     <div 

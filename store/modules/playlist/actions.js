@@ -30,8 +30,14 @@ export default {
         delete data.code;
         delete data.createdAt;
         delete data.updatedAt;
-
         const result = await this.$axios.$put(`api/playlist/${id}`, data);
+        return result;
+    },
+
+    async updateStatus({commit}, condition) {
+        var data = {};
+        condition.status === 'approved' ? data.status = 'waiting' : data.status = 'approved';
+        const result = await this.$axios.$put(`api/playlist/${condition.id}`, data);
         return result;
     },
 

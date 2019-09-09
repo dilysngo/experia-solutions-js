@@ -1112,6 +1112,9 @@
   /* Rounded sliders */
   .slider.round {
     border-radius: 34px;
+    width: 42px;
+    height: 25px;
+    margin-top: -5px;
   }
   
   .slider.round:before {
@@ -1166,5 +1169,10 @@
                 opacity: 1;
             }
         }
+    }
+}
+.alignment-item{
+    img{
+        width: 30px;
     }
 }

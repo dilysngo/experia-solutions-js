@@ -1,6 +1,7 @@
 <template>
     <div
         class="col-md-6"
+        v-if="renderComponent"
     >
         <div
             :id="'playlist' + data.id"
@@ -54,7 +55,21 @@
                         class="btn-link"
                     >
                         <i class="icon-trash icon-site" />
+                    </a>                    
+                    <a 
+                        v-if="data.status == 'approved'"
+                        class="btn-link"
+                        @click="passivePlaylists(data.id, data.status)"
+                    >
+                        <img src="~/assets/images/passive.svg">
                     </a>
+                    <a 
+                        v-else
+                        class="btn-link"
+                        @click="activePlaylists(data.id, data.status)"
+                    >
+                        <img src="~/assets/images/active.svg">
+                    </a>                  
                 </div>
             </div>
             <div class="playlist-info">
@@ -91,11 +106,13 @@
 <script>
 import {convertToDateString} from '~/helpers/dateHelper';
 import {convertToTime} from '~/helpers/dataHelper';
+import {mapGetters, mapActions} from 'vuex';
 import ElementContainer from '~/components/elements/ElementContainer';
 
 export default {
     data: () => ({
         time: 0,
+        renderComponent: true,
         sizeScale: null,
         unitScale: 13 / 928, // fontSize/containerWidth
     }),
@@ -118,6 +135,32 @@ export default {
         }, 200);
     },
     methods: {
+        ...mapActions("playlist", ["updateStatus"]),
+
+        async activePlaylists(id, status){
+            const data = {id: id, status: status};
+            const result = await this.updateStatus(data);
+            this.$emit('reset');
+            this.forceRerender();
+        },
+
+        async passivePlaylists(id, status){
+            const data = {id: id, status: status};
+            const result = await this.updateStatus(data);   
+            this.$emit('reset');              
+            this.forceRerender();               
+        },
+
+        forceRerender() {
+            // Remove my-component from the DOM
+            this.renderComponent = false;
+            
+            this.$nextTick(() => {
+            // Add the component back in
+                this.renderComponent = true;
+            }); 
+        },
+
         calculator() {
             let time = 0;
 
@@ -146,7 +189,7 @@ export default {
         convertToTime(time) {
             return convertToTime(time);
         }
-    }
+    } 
 };
 </script>
 
