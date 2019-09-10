@@ -58,22 +58,22 @@
                     Sign up
                 </nuxt-link>
             </div>
-            <div class="btn-google-facebook">
-                <button 
-                    class="loginBtn loginBtn--facebook"
-                    @click="facebookSignin"
-                >
-                    Login with Facebook
-                </button>
-
-                <button 
-                    class="loginBtn loginBtn--google"
-                    @click="googleSignin"
-                >
-                    Login with Google
-                </button>
-            </div>
         </form>
+        <div class="btn-google-facebook">
+            <button 
+                class="loginBtn loginBtn--facebook"
+                @click="facebookSignin"
+            >
+                Login with Facebook
+            </button>
+
+            <button 
+                class="loginBtn loginBtn--google"
+                @click="googleSignin"
+            >
+                Login with Google
+            </button>
+        </div>        
     </div>
 </template>
 
@@ -147,42 +147,29 @@ export default {
         },
         googleSignin() {
             var self = this;
-            gapi.load('client:auth2',  {
+            gapi.load('client:auth2', {
                 callback: function() {
                     gapi.client.init({
                         apiKey: 'f8oXxkInbby_PVqYVup8UOuC',
                         clientId: '577215710190-gra8k9ut1alqdug2qppsn7t1ksovt027.apps.googleusercontent.com',
                         scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.me'
                     }).then(
-                        function(success) {
+                        function(success) {    
                             gapi.auth2.getAuthInstance().signIn().then(
                                 function(success) {
                                     gapi.client.request({path: 'https://www.googleapis.com/plus/v1/people/me'}).then(
                                         function(success) {
-                                            var user_info = JSON.parse(success.body);
+                                            const user_info = JSON.parse(success.body);
                                             self.onSuccess(user_info);
                                         },
-                                        function(error) {
-                                            console.log(error);
-                                        }
                                     );
                                 },
-                                function(error) {
-                                    console.log(error);
-                                }
                             );                            
                         }, 
-                        function(error) {
-                            console.log(error);
-                        }
                     );
                 },
-                onerror: function() {
-                    console.log("error");
-                }
             });
         },
-
         facebookSignin(){
             FB.login(function(response) {
                 this.statusChangeCallback(response);

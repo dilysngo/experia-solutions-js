@@ -19,8 +19,6 @@ module.exports = {
         script: [
             {src: '/js/ckeditor/ckeditor.js'}, /* eslint-disable */
             {src: 'https://apis.google.com/js/api.js', async: true, defer: true},
-            {src: '//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'}
-
         ],
     },
     css: [
