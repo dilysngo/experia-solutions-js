@@ -29,6 +29,8 @@ export function convertToUrlAvatar(url) {
     return process.env.API_URL + '/uploads' + url; 
 }
 
+// + '/experia-solutions-dev/'
+
 export function setCookie(cname, cvalue, exdays) {
     let d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
