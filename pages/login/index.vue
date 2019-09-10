@@ -44,7 +44,7 @@
                     type="submit"
                 >
                     Sign in
-                </button>
+                </button>              
                 <nuxt-link
                     to="/forgot-password"
                     class="btn-fogot m-r-5"
@@ -57,6 +57,21 @@
                 >
                     Sign up
                 </nuxt-link>
+            </div>
+            <div class="btn-google-facebook">
+                <button 
+                    class="loginBtn loginBtn--facebook"
+                    @click="facebookSignin"
+                >
+                    Login with Facebook
+                </button>
+
+                <button 
+                    class="loginBtn loginBtn--google"
+                    @click="googleSignin"
+                >
+                    Login with Google
+                </button>
             </div>
         </form>
     </div>
@@ -71,7 +86,7 @@ export default {
     data: () => ({
         errorMessage: '',
         dataUser: {
-            email: '',
+            email: '',  
             password: '',
         },
     }),
@@ -82,7 +97,7 @@ export default {
     },
     methods: {
         ...mapActions('user', [
-            'signin'
+            'signin', 'signup'
         ]),
         async login() {
             if (!this.validateEmail())
@@ -108,7 +123,7 @@ export default {
                 const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 if (!regex.test(this.dataUser.email)) {
                     this.errorMessage = 'Must be a valid email.';
-                    return false;
+                    return false;   
                 }
                 else {
                     this.errorMessage = '';
@@ -116,7 +131,7 @@ export default {
                 }
             }
         },
-        validatePassword() {
+        validatePassword() {    
             if (!this.dataUser.password) {
                 this.errorMessage = 'The password is required.';
                 return false;
@@ -129,7 +144,123 @@ export default {
                 this.errorMessage = '';
                 return true;
             }
-        }
+        },
+        googleSignin() {
+            var self = this;
+            gapi.load('client:auth2',  {
+                callback: function() {
+                    gapi.client.init({
+                        apiKey: 'f8oXxkInbby_PVqYVup8UOuC',
+                        clientId: '577215710190-gra8k9ut1alqdug2qppsn7t1ksovt027.apps.googleusercontent.com',
+                        scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.me'
+                    }).then(
+                        function(success) {
+                            gapi.auth2.getAuthInstance().signIn().then(
+                                function(success) {
+                                    gapi.client.request({path: 'https://www.googleapis.com/plus/v1/people/me'}).then(
+                                        function(success) {
+                                            var user_info = JSON.parse(success.body);
+                                            self.onSuccess(user_info);
+                                        },
+                                        function(error) {
+                                            console.log(error);
+                                        }
+                                    );
+                                },
+                                function(error) {
+                                    console.log(error);
+                                }
+                            );                            
+                        }, 
+                        function(error) {
+                            console.log(error);
+                        }
+                    );
+                },
+                onerror: function() {
+                    console.log("error");
+                }
+            });
+        },
+
+        facebookSignin(){
+            FB.login(function(response) {
+                this.statusChangeCallback(response);
+            }, {scope: 'publish_actions'});
+        },
+        
+        statusChangeCallback(response) {
+            this.ready = true;
+            console.log('statusChangeCallback');
+            console.log(response);
+            if (response.status === 'connected') {
+                this.authorized = true;
+                this.getProfile();
+            } 
+            else if (response.status === 'not_authorized') {
+                this.authorized = false;
+            } 
+            else {
+                this.authorized = false;
+            }
+        },
+
+        getProfile() {
+            FB.api('/me', function(response) {
+                console.log(response);
+                this.$set(this, 'profile', response);
+            });
+        },      
+          
+        async onSuccess(user){
+            var self = this;
+            var data = {};
+            data.email = user.emails[0].value;
+            data.password = user.etag.substring(40, 20);
+
+            let dataUser = await self.signin(data).catch(err => {
+                self.errorMessage = err.message;
+                return false;
+            });
+            if (!self.errorMessage)
+                self.$router.push('/screens');
+            else
+                self.registerUser(user);
+               
+        },
+
+        async registerUser(user){
+            var self = this;
+            var pass = user.etag.substring(40, 20);
+            const dataUser = {};
+            dataUser.firstName = user.name.givenName;
+            dataUser.lastName = user.name.familyName;
+            dataUser.email = user.emails[0].value;
+            dataUser.password = pass;
+            dataUser.cfPass = pass;
+
+            let register = await self.signup(dataUser).catch(err => {
+                self.messError = err.message;
+                return false;
+            });
+            if (!self.messError){
+                self.$router.push('/screens');
+            }
+
+        } 
+    },
+    mounted() {
+        window.fbAsyncInit = () => {
+            FB.init({
+                appId: '518625492256840',
+                cookie: true,
+                xfbml: true,
+                version: 'v3.3'
+            });
+            FB.getLoginStatus(function(response) {
+                this.statusChangeCallback(response);
+            });
+        };
     }
 };
 </script>
