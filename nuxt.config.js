@@ -31,7 +31,7 @@ module.exports = {
      */
     loading: false,
     modules: [
-        '@nuxtjs/axios',
+        '@nuxtjs/axios'
     ],
     plugins: [
         {src: '~/plugins/bootstrap'},
@@ -41,18 +41,18 @@ module.exports = {
         {src: '~/plugins/socket.io', ssr: false},
         {src: '~/plugins/event-bus', ssr: false},
         {src: '~/plugins/vue-notification', ssr: false},
-        {src: '~/plugins/vue-ckeditor2', ssr: false},
+        // {src: '~/plugins/vue-ckeditor2', ssr: false},
         {src: '~/plugins/vue-color', ssr: false},
     ],
     /*
-     ** Build configuration
+     ** Build   
      */
     build: {
         vendor: [
             'jquery',
             'bootstrap',
             'vue-notification',
-            'vue-ckeditor2',
+            // 'vue-ckeditor2',
             'vue-color',
         ],
         plugins: [
@@ -66,6 +66,9 @@ module.exports = {
          ** Run ESLint on save
          */
         extend(config, {isDev, isClient}) {
+            config.node = {
+                fs: 'empty'
+            }
             if (isDev && isClient) {
                 config.module.rules.push({
                     enforce: 'pre',
@@ -73,10 +76,6 @@ module.exports = {
                     loader: 'eslint-loader',
                     exclude: /(node_modules)/
                 });
-
-                config.node = {
-                    fs: 'empty'
-                }
             }
         }
     }

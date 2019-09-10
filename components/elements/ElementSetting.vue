@@ -879,9 +879,13 @@
 
 <script>
 import fonts from '~/common/googleFonts';
+import VueCkeditor from 'vue-ckeditor2';
 // import * as GoogleLocations from 'google-locations';
 
 export default {
+    components: {
+        VueCkeditor
+    },
     props: {
         root: {
             type: Object,
