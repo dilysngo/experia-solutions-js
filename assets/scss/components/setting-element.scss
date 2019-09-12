@@ -1084,7 +1084,7 @@
   }
   
   .slider:before {
-    // position: absolute;
+    position: absolute;
     content: "";
     height: 26px;
     width: 26px;
@@ -1096,29 +1096,33 @@
   }
   
   input:checked + .slider {
-    background-color: #2196F3;
+    background-color: #AB1313;
   }
   
-  input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-  }
+//   input:focus + .slider {
+//     box-shadow: 0 0 1px #AB1313;
+//   }
   
   input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
+    -webkit-transform: translateX(22px);
+    -ms-transform: translateX(22px);
+    transform: translateX(22px);
   }
   
   /* Rounded sliders */
   .slider.round {
     border-radius: 34px;
-    width: 42px;
-    height: 25px;
+    width: 48px;
+    height: 28px;
     margin-top: -5px;
   }
   
   .slider.round:before {
     border-radius: 50%;
+    width: 23px;
+    height: 23px;
+    margin-left: -2px;
+    margin-bottom: -2px;
   }
 
 .elm-add{
