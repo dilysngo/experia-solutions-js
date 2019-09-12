@@ -41,18 +41,21 @@
                     <a 
                         @click="previewItem" 
                         class="btn-link"
+                        title="Preview"
                     >
                         <i class="icon-play icon-site" />
                     </a>
                     <a 
                         @click="editItem"
                         class="btn-link"
+                        title="Edit"
                     >
                         <i class="icon-creative icon-site" />
                     </a>
                     <a
                         @click="deleteItem"
                         class="btn-link"
+                        title="Delete"
                     >
                         <i class="icon-trash icon-site" />
                     </a>                    
@@ -60,6 +63,7 @@
                         v-if="data.status == 'approved'"
                         class="btn-link"
                         @click="passivePlaylists(data.id, data.status)"
+                        title="Passive"
                     >
                         <img src="~/assets/images/passive.svg">
                     </a>
@@ -67,6 +71,7 @@
                         v-else
                         class="btn-link"
                         @click="activePlaylists(data.id, data.status)"
+                        title="Active"
                     >
                         <img src="~/assets/images/active.svg">
                     </a>                  
