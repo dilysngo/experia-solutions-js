@@ -95,6 +95,20 @@ export default {
             'signinMessage'
         ])
     },
+    mounted() {
+        var self = this;
+        window.fbAsyncInit = () => {
+            FB.init({
+                appId: '518625492256840',
+                cookie: true,
+                xfbml: true,
+                version: 'v3.3'
+            });
+            FB.getLoginStatus(function(response) {
+                self.statusChangeCallback(response);
+            });
+        };
+    },
     methods: {
         ...mapActions('user', [
             'signin', 'signup'
@@ -150,8 +164,8 @@ export default {
             gapi.load('client:auth2', {
                 callback: function() {
                     gapi.client.init({
-                        apiKey: 'f8oXxkInbby_PVqYVup8UOuC',
-                        clientId: '577215710190-gra8k9ut1alqdug2qppsn7t1ksovt027.apps.googleusercontent.com',
+                        apiKey: 'tHJxu4Om8jHhbemCM6xyTar_',
+                        clientId: '577215710190-te0m6v9mgst682oiaosd1pe3aight9s4.apps.googleusercontent.com',
                         scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.me'
                     }).then(
                         function(success) {    
@@ -171,8 +185,9 @@ export default {
             });
         },
         facebookSignin(){
+            var self = this;            
             FB.login(function(response) {
-                this.statusChangeCallback(response);
+                self.statusChangeCallback(response);
             }, {scope: 'publish_actions'});
         },
         
@@ -236,18 +251,5 @@ export default {
 
         } 
     },
-    mounted() {
-        window.fbAsyncInit = () => {
-            FB.init({
-                appId: '518625492256840',
-                cookie: true,
-                xfbml: true,
-                version: 'v3.3'
-            });
-            FB.getLoginStatus(function(response) {
-                this.statusChangeCallback(response);
-            });
-        };
-    }
 };
 </script>

@@ -40,7 +40,7 @@ export default {
         delete data.category;
         delete data.createdAt;
         delete data.updatedAt;
-
+        
         const result = await this.$axios.$put(`api/template/${id}`, data);
         return result;
     },

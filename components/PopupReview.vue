@@ -6,6 +6,7 @@
         role="dialog" 
         :aria-labelledby="id" 
         aria-hidden="true"
+        @click="close()"        
     >
         <div class="modal-dialog modal-dialog-centered text-center">
             <div class="modal-content">
@@ -46,7 +47,6 @@
                         aria-valuemin="0" 
                         aria-valuemax="100" 
                     />
-                    <!-- </div> -->
                 </div>
             </div>
         </div>
@@ -62,6 +62,7 @@ export default {
     data() {
         return {
             data: null,
+            music: '',
             sizeScale: null,
             unitScale: 13 / 928, // fontSize/containerWidth,
             interval: null,
@@ -78,7 +79,6 @@ export default {
         // ratioSize: {
         //     type: Object,
         //     default: () => {}
-        // },
     },
     components: {
         ElementContainer
@@ -88,6 +88,12 @@ export default {
             'getNameScreen'
         ]),
         open(data, ratioValue) {
+            if (data.style){
+                this.music = new Audio();
+                this.music.setAttribute('src',`${data.style.music}`);   
+                this.music.load();
+                this.music.play();  
+            }   
             this.ratioSize = getRatioSize(ratioValue);
 
             if (!data.screens)
@@ -144,12 +150,17 @@ export default {
                 this.data = data.data.template.template;
             });
         },
+        close(){
+            if (this.music)
+                this.music.pause();         
+        },  
         cancel() {
+            if (this.music)
+                this.music.pause();
             $('#' + this.id).modal('hide');
             setTimeout(() => {
                 this.data = null;
             }, 200);
-            // this.$emit('cancel');
         },
     }
 };

@@ -73,6 +73,12 @@
                                     style="font-size: 21px"
                                 /> 
                             </button>
+                            <button
+                                class="btn-tool"
+                                @click="openGallery(mediaType.Music)"
+                            >
+                                <img src="~/assets/images/music.svg">                                
+                            </button>                        
                             <div
                                 class="box-pts"
                                 v-show="pickersBackground"
@@ -196,6 +202,8 @@ export default {
             root: null,
             titlePage: '',
             enableUndo: false,
+            audio: '',
+            urlMusic: '',
             enableRedo: false,
             maxQueues: 100,
             temporaryQueues: [],
@@ -373,7 +381,6 @@ export default {
                 this.showSavingStatus = true;
                 let result;
                 this.templateData.template = this.template;
-
                 // if (this.pageType === PageType.Template) {
                 //     this.templateData.template = this.template;
                 // }
@@ -381,7 +388,6 @@ export default {
                 //     this.templateData.template = this.template;
                 // }
                 // console.log('save nao', this.templateData);
-
                 if (this.pageType === PageType.Template) // Update template
                     result = await this.updateTemplate({id: this.$route.query.template, data: this.templateData}).catch(error => {
                         this.$notify({
@@ -646,16 +652,28 @@ export default {
             }
         },
         openGallery(value) {
-            if (value === 1) {
-                this.$refs.gallery.open(1);
-            }
+            if (value === 1) 
+                this.$refs.gallery.open(1); 
+            else if (value === 4) 
+                this.$refs.gallery.open(4);    
+            else if (value === 2) 
+                this.$refs.gallery.open(2);                                 
             else {
                 this.$refs.gallery.open(value.type);
                 this.dataGallery = value.data;
             }
         },
         handleGallery(data) {
-            if (!this.dataGallery) {
+
+            if (data.type === 4){
+                if (this.audio)
+                    this.audio.pause();
+
+                this.urlMusic = convertToUrl(data.musicInfo.url);                          
+                this.template.style.music = this.urlMusic;  
+                this.saveTemplate();
+            }
+            else if (!this.dataGallery) {
                 this.backgroundImage = convertToUrl(data.imageInfo.url);
                 this.changeBackground('image');
             }
@@ -692,7 +710,7 @@ export default {
             this.categorySelected = item;
             if (this.templateData && this.pageType === PageType.Template)
                 this.templateData.categoryId = item.id;
-        }
+        },
     }
 };
 </script>

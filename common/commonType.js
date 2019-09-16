@@ -1,8 +1,8 @@
 export let MediaType = {
     Video: 1,
     Image: 2,
-    Music: 4,
-    Thumbnail: 3
+    Thumbnail: 3,
+    Music: 4
 };
 
 export let PageType = {

@@ -21,7 +21,6 @@ export default {
     async createMedia({commit}, data) {
         if (!data)
             return;
-        console.log('dataaaaaaaaaaa', data);
         const result = await this.$axios.$post(`api/media/`, data);
         return result;
     },

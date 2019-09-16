@@ -19,7 +19,7 @@
             :ref="component.key"
         />
         <h4 style="margin-top: 340px; color: #4b6c90; opacity: 0.6; font-family: Bookman, Tahoma, Verdana;">
-            {{ screenName }}
+            {{ nameScreen }}
         </h4>
     </div>
 </template>
@@ -104,6 +104,7 @@ export default {
         key: '',
         path: '',
         style: {},
+        nameScreen: '',
         setting: {},
         components: [],
     }),
@@ -113,6 +114,11 @@ export default {
     computed: {
         ...mapGetters('screen', ['screenName'])
     },
+    mounted() {
+        this.nameScreen = this.screenName;
+        if (window.location.pathname === '/templates/design')
+            this.nameScreen = '';
+    },    
     methods: {
         reset() {
             this.style = {};

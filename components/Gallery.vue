@@ -16,7 +16,16 @@
                     <img src="~/assets/images/close.svg">
                 </button>
                 <div class="pd-20">
-                    <h1 class="title-component">
+                    <h1 
+                        v-if="mediaType===4"
+                        class="title-component"
+                    >
+                        Music Gallery
+                    </h1>                    
+                    <h1 
+                        v-else
+                        class="title-component"
+                    >
                         {{ mediaType !== 1 ? 'Image' : 'Video' }} Gallery
                     </h1>
                     <input
@@ -59,6 +68,17 @@
                                 >
                                     <source :src="convertToUrl(item.videoInfo.url)">
                                 </video>
+                                <video
+                                    v-if="item.musicInfo"
+                                    loop
+                                    ref="videoReview"
+                                    class="gallery-img"
+                                    preload="auto"
+                                    crossOrigin="anonymous"
+                                    @click="getMediaClicked(item)"
+                                >
+                                    <source :src="convertToUrl(item.musicInfo.url)">
+                                </video>                                
                                 <h3 class="name-item">{{ item.name }}</h3>
                             </label>
                         </li>
@@ -156,7 +176,8 @@ export default {
                     console.log(err.message);
             });
             this.total = data && data.pagination && data.pagination.total;
-            this.mediaType =  MediaType.Image;
+            // if (this.mediaType !== 4)
+            //     this.mediaType =  MediaType.Image;
         },
         // selectMedia(item) {
         //     this.mediaSelected = item;

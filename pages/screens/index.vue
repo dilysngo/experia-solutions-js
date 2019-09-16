@@ -14,7 +14,9 @@
                 <i class="icon-search icon-site" />
             </div>
         </div>
-        <div class="page-body">
+        <div 
+            class="page-body" 
+        >
             <div class="container-screens">
                 <div class="row">
                     <div
@@ -116,7 +118,6 @@ export default {
             this.screens = this.screenList;
         },
         handleDeleteScreen(item) {
-            console.log('temeee', item);
             this.$refs.popupConfirm.open(item);
         },
         async handleDelete(item) {
