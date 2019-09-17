@@ -10,6 +10,13 @@ export default {
         commit(types.SCREEN_PAGINATION, data.pagination);
         return data;
     },
+
+    async findScreenWithUser({commit}, id) {
+        if (!id)
+            return;
+        const data = await this.$axios.$get(`api/screen/user/${id}`);
+        return data.results;
+    },   
     async getScreen({commit}, id) {
         if (!id)
             return;

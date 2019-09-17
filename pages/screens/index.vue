@@ -28,6 +28,7 @@
                             :template="template"
                             @delete="handleDeleteScreen"
                             @edit="handleEdit"
+                            @selectUsers="handleSelectUser"
                             @preview="handlePreview($event, template.ratio)"
                         />
                     </div>
@@ -48,12 +49,16 @@
         <popup-review
             ref="popupReview"
             id="popupReview"
-        />
+        />   
         <popup-confirm
             ref="popupConfirm"
             id="deleteScreen"
             @success="handleDelete"
         />
+        <popup-purchase
+            ref="popupPurchase"
+            id="popupPurchase"
+        />             
     </section>
 </template>
 <script>
@@ -63,13 +68,15 @@ import {pagination} from '~/helpers/dataHelper';
 import Pagination from '~/components/Pagination';
 import PopupConfirm from '~/components/PopupConfirm';
 import PopupReview from '~/components/PopupReview';
+import PopupPurchase from '~/components/PopupPurchase';
 
 export default {
     components: {
         BlockTemplate,
         Pagination,
         PopupConfirm,
-        PopupReview
+        PopupReview,
+        PopupPurchase
     },
     data() {
         return {
@@ -131,6 +138,10 @@ export default {
         handlePreview(item, ratio) {
             if (item)
                 this.$refs.popupReview.open(item, ratio && ratio.value);
+        }, 
+        handleSelectUser(item) {
+            if (item)
+                this.$refs.popupPurchase.open(item);
         }
     },
 };

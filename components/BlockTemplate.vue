@@ -41,6 +41,12 @@
                 >
                     <i class="icon-trash icon-site" />
                 </a>
+                <a 
+                    class="btn-link"
+                    @click="selectUsers"
+                >
+                    <img src="~/assets/images/addUser.svg">
+                </a>                
             </div>
             <div class="template-using">
                 <a 
@@ -55,7 +61,7 @@
                     v-if="isAdmin"
                 >
                     Edit template
-                </a>
+                </a>            
             </div>
         </div>
         <div class="template-info">
@@ -138,6 +144,9 @@ export default {
         },
         previewTemplate() {
             this.$emit('preview', this.templateData);
+        },
+        selectUsers() {
+            this.$emit('selectUsers', this.template);
         },
         reRender() {
             setTimeout(() => {

@@ -248,7 +248,43 @@ ul{
             border-color: $color-second;
             background-color: $color-second;
         }
+    }   
+}
+
+.btn-submit{
+    color: $color-primary;
+    font-family: $font-primary;
+    font-size: 13px;
+    font-weight: normal;
+    padding: 8px 12px;
+    @include border-radius(3px);
+    border: 1px solid red;
+    background-color: transparent;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.07);
+    height: 36px;
+    display: inline-block;
+    vertical-align: top;
+    min-width: 112px;
+    text-align: center;
+    margin-right: -375px;
+    margin-left: 6px;
+    margin-top: 30px;
+    margin-bottom: -10px;
+    @include transition(all, 0.2s, ease);
+    cursor: pointer;
+    &:hover{
+        background-color: $color-third;
+        color: #ffffff;
+        border-color: $color-third;
     }
+    &:first-child{
+        margin-left: 0;
+    }
+    &.btn-disable{
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
 }
 
 .btn-play{
