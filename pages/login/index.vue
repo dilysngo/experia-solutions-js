@@ -97,17 +97,17 @@ export default {
     },
     mounted() {
         var self = this;
-        window.fbAsyncInit = () => {
-            FB.init({
-                appId: '518625492256840',
-                cookie: true,
-                xfbml: true,
-                version: 'v3.3'
-            });
-            FB.getLoginStatus(function(response) {
-                self.statusChangeCallback(response);
-            });
-        };
+        // window.fbAsyncInit = () => {
+        //     FB.init({
+        //         appId: '518625492256840',
+        //         cookie: true,
+        //         xfbml: true,
+        //         version: 'v3.3'
+        //     });
+        //     FB.getLoginStatus(function(response) {
+        //         self.statusChangeCallback(response);
+        //     });
+        // };
     },
     methods: {
         ...mapActions('user', [

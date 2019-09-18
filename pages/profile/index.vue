@@ -127,6 +127,7 @@ import {mapGetters, mapActions} from 'vuex';
 import {convertToUrlAvatar} from '~/helpers/dataHelper';
 import moment from "moment";
 export default {
+    middleware: ['authentication'],
     data: () => ({
         file: '',
         messError: '',

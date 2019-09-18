@@ -43,8 +43,8 @@ export default {
         ])
     },
     async mounted(){
-        console.log(this.userAuth.profile.avatar);
-        this.imageData = convertToUrlAvatar(this.userAuth.profile.avatar);
+        if (this.userAuth.profile.avatar)
+            this.imageData = convertToUrlAvatar(this.userAuth.profile.avatar);
     },
     methods: {
         ...mapActions('user', [
