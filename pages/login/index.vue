@@ -104,9 +104,9 @@ export default {
                 xfbml: true,
                 version: 'v4.0'    
             });
-            FB.getLoginStatus(function(response) {
-                self.statusChangeCallback(response);
-            });
+            // FB.getLoginStatus(function(response) {
+            //     self.statusChangeCallback(response);
+            // });
         };
     },
     methods: {
@@ -195,7 +195,7 @@ export default {
             var self = this;
             self.ready = true;
             console.log('statusChangeCallback');
-            console.log('v4.0', response);
+            console.log('v4.0 2', response);
             if (response.status === 'connected') {
                 self.authorized = true;
                 self.getProfile();
@@ -209,10 +209,9 @@ export default {
         },
 
         getProfile() {
-            var self = this;
             FB.api('/me', function(response) {
                 console.log(response);
-                self.$set(this, 'profile', response);
+                this.$set(this, 'profile', response);
             });
         },      
           
