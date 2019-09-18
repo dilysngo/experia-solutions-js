@@ -102,16 +102,13 @@ export default {
                 appId: '518625492256840',
                 cookie: true,
                 xfbml: true,
-                version: 'v2.10'    
-            });
-            FB.getLoginStatus(function(response) {
-                self.statusChangeCallback(response);
+                version: 'v4.0'    
             });
         };
     },
     methods: {
         ...mapActions('user', [
-            'signin', 'signup'
+            'signin', 'signup', 'getProfileFB'
         ]),
         async login() {
             if (!this.validateEmail())
@@ -181,11 +178,11 @@ export default {
                             );                            
                         }, 
                     );
-                },
+                },      
             });
         },
-        facebookSignin(){
-            var self = this;            
+        async facebookSignin(){
+            var self = this;
             FB.login(function(response) {
                 self.statusChangeCallback(response);
             }, {scope: 'publish_actions'});
@@ -195,7 +192,7 @@ export default {
             var self = this;
             self.ready = true;
             console.log('statusChangeCallback');
-            console.log('v2.10', response);
+            console.log('v4.0', response);
             if (response.status === 'connected') {
                 self.authorized = true;
                 self.getProfile();
@@ -212,7 +209,6 @@ export default {
             var self = this;
             FB.api('/me', function(response) {
                 console.log(response);
-                self.$set(this, 'profile', response);
             });
         },      
           
