@@ -97,17 +97,16 @@ export default {
     },
     mounted() {
         var self = this;
-        // window.fbAsyncInit = () => {
-        //     FB.init({
-        //         appId: '518625492256840',
-        //         cookie: true,
-        //         xfbml: true,
-        //         version: 'v3.3'
-        //     });
-        //     FB.getLoginStatus(function(response) {
-        //         self.statusChangeCallback(response);
-        //     });
-        // };
+        window.fbAsyncInit = () => {
+            FB.init({
+                appId: '518625492256840',
+                cookie: true,
+                xfbml: true,
+            });
+            FB.getLoginStatus(function(response) {
+                self.statusChangeCallback(response);
+            });
+        };
     },
     methods: {
         ...mapActions('user', [
@@ -192,25 +191,27 @@ export default {
         },
         
         statusChangeCallback(response) {
-            this.ready = true;
+            var self = this;
+            self.ready = true;
             console.log('statusChangeCallback');
             console.log(response);
             if (response.status === 'connected') {
-                this.authorized = true;
-                this.getProfile();
+                self.authorized = true;
+                self.getProfile();
             } 
             else if (response.status === 'not_authorized') {
-                this.authorized = false;
+                self.authorized = false;
             } 
             else {
-                this.authorized = false;
+                self.authorized = false;
             }
         },
 
         getProfile() {
+            var self = this;
             FB.api('/me', function(response) {
                 console.log(response);
-                this.$set(this, 'profile', response);
+                self.$set(this, 'profile', response);
             });
         },      
           
