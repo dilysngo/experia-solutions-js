@@ -102,6 +102,7 @@ export default {
                 appId: '518625492256840',
                 cookie: true,
                 xfbml: true,
+                version: 'v2.10'    
             });
             FB.getLoginStatus(function(response) {
                 self.statusChangeCallback(response);
@@ -194,7 +195,7 @@ export default {
             var self = this;
             self.ready = true;
             console.log('statusChangeCallback');
-            console.log(response);
+            console.log('v2.10', response);
             if (response.status === 'connected') {
                 self.authorized = true;
                 self.getProfile();
