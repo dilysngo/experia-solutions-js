@@ -211,7 +211,6 @@ export default {
         getProfile() {
             FB.api('/me', function(response) {
                 console.log(response);
-                this.$set(this, 'profile', response);
             });
         },      
           
