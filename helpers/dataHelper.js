@@ -31,6 +31,8 @@ export function convertToUrlAvatar(url) {
 
 // + '/experia-solutions-dev/'
 
+export const PASSWORD_SOCIAL = process.env.PASS_SOCIAL;
+
 export function setCookie(cname, cvalue, exdays) {
     let d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));

@@ -79,6 +79,7 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex';
+import {PASSWORD_SOCIAL} from '~/helpers/dataHelper';
 
 export default {
     layout: 'blank',
@@ -104,9 +105,6 @@ export default {
                 xfbml: true,
                 version: 'v4.0'    
             });
-            // FB.getLoginStatus(function(response) {
-            //     self.statusChangeCallback(response);
-            // });
         };
     },
     methods: {
@@ -195,11 +193,10 @@ export default {
         statusChangeCallback(response) {
             var self = this;
             self.ready = true;
-            console.log('statusChangeCallback');
-            console.log('v4.0 2', response);
+            console.log('v4.0 3', response);
             if (response.status === 'connected') {
                 self.authorized = true;
-                self.getProfile();
+                self.getProfile(response);
             } 
             else if (response.status === 'not_authorized') {
                 self.authorized = false;
@@ -209,17 +206,34 @@ export default {
             }
         },
 
-        getProfile() {
-            FB.api('/me', function(response) {
-                console.log(response);
-            });
+        async getProfile(response) {
+            var token = response.authResponse.accessToken;
+            var data = await this.getProfileFB(token);
+            this.onSuccessFB(data);
         },      
-          
+
+        async onSuccessFB(user){
+            var self = this;
+            var data = {};
+            data.email = user.email;
+            data.password = PASSWORD_SOCIAL;
+
+            let dataUser = await self.signin(data).catch(err => {
+                self.errorMessage = err.message;
+                return false;
+            });  
+            if (!self.errorMessage)
+                self.$router.push('/screens');
+            else
+                self.registerUserFB(user);
+               
+        },
+
         async onSuccess(user){
             var self = this;
             var data = {};
             data.email = user.emails[0].value;
-            data.password = user.etag.substring(40, 20);
+            data.password = PASSWORD_SOCIAL;
 
             let dataUser = await self.signin(data).catch(err => {
                 self.errorMessage = err.message;
@@ -234,13 +248,29 @@ export default {
 
         async registerUser(user){
             var self = this;
-            var pass = user.etag.substring(40, 20);
             const dataUser = {};
             dataUser.firstName = user.name.givenName;
             dataUser.lastName = user.name.familyName;
             dataUser.email = user.emails[0].value;
-            dataUser.password = pass;
-            dataUser.cfPass = pass;
+            dataUser.password = PASSWORD_SOCIAL;
+            dataUser.cfPass = PASSWORD_SOCIAL;
+
+            let register = await self.signup(dataUser).catch(err => {
+                self.messError = err.message;
+                return false;
+            });
+            if (!self.messError){
+                self.$router.push('/screens');
+            }
+        },
+
+        async registerUserFB(user){
+            var self = this;
+            const dataUser = {};
+            dataUser.firstName = user.name;
+            dataUser.email = user.email;    
+            dataUser.password = PASSWORD_SOCIAL;
+            dataUser.cfPass = PASSWORD_SOCIAL;
 
             let register = await self.signup(dataUser).catch(err => {
                 self.messError = err.message;
@@ -250,7 +280,7 @@ export default {
                 self.$router.push('/screens');
             }
 
-        } 
+        }         
     },
 };
 </script>
