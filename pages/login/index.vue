@@ -104,6 +104,9 @@ export default {
                 xfbml: true,
                 version: 'v4.0'    
             });
+            // FB.getLoginStatus(function(response) {
+            //     self.statusChangeCallback(response);
+            // });
         };
     },
     methods: {
@@ -181,18 +184,19 @@ export default {
                 },      
             });
         },
-        async facebookSignin(){
-            var self = this;
+
+        facebookSignin(){
+            var self = this;  
             FB.login(function(response) {
-                self.statusChangeCallback(response);
-            }, {scope: 'publish_actions'});
+                self.statusChangeCallback(response);    
+            }, {scope: 'public_profile,email'});
         },
-        
+
         statusChangeCallback(response) {
             var self = this;
             self.ready = true;
             console.log('statusChangeCallback');
-            console.log('v4.0', response);
+            console.log('v4.0 2', response);
             if (response.status === 'connected') {
                 self.authorized = true;
                 self.getProfile();
@@ -206,7 +210,6 @@ export default {
         },
 
         getProfile() {
-            var self = this;
             FB.api('/me', function(response) {
                 console.log(response);
             });
