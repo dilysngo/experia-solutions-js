@@ -186,9 +186,9 @@ export default {
         },
         facebookSignin(){
             var self = this;            
-            FB.login(function(response) {
+            FB.getLoginStatus(function(response) {   
                 self.statusChangeCallback(response);
-            }, {scope: 'publish_actions'});
+            });
         },
         
         statusChangeCallback(response) {
