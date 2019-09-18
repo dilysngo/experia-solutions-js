@@ -102,7 +102,7 @@ export default {
                 appId: '518625492256840',
                 cookie: true,
                 xfbml: true,
-                version: 'v2.10'    
+                version: 'v4.0'    
             });
             FB.getLoginStatus(function(response) {
                 self.statusChangeCallback(response);
@@ -185,17 +185,17 @@ export default {
             });
         },
         facebookSignin(){
-            var self = this;            
-            FB.getLoginStatus(function(response) {   
-                self.statusChangeCallback(response);
-            });
+            var self = this;  
+            FB.login(function(response) {
+                self.statusChangeCallback(response);    
+            }, {scope: 'public_profile,email'});
         },
-        
+
         statusChangeCallback(response) {
             var self = this;
             self.ready = true;
             console.log('statusChangeCallback');
-            console.log('v2.10', response);
+            console.log('v4.0', response);
             if (response.status === 'connected') {
                 self.authorized = true;
                 self.getProfile();
