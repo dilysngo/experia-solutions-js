@@ -193,7 +193,7 @@ export default {
         statusChangeCallback(response) {
             var self = this;
             self.ready = true;
-            console.log('v4.0 4', response);
+            console.log('v4.0 5', response);
             if (response.status === 'connected') {
                 self.authorized = true;
                 self.getProfile(response);
