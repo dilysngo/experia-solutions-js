@@ -17,12 +17,27 @@ export default {
         const data = await this.$axios.$get(`api/screen/user/${id}`);
         return data.results;
     },   
+
     async getScreen({commit}, id) {
         if (!id)
             return;
         const screen = await this.$axios.$get(`api/screen/${id}`);
         commit(types.SCREEN_DETAIL, screen);
         return screen;
+    },
+
+    async getScreenBySlug({commit}, slug) {
+        if (!slug)
+            return;
+        const data = await this.$axios.$get(`api/screen/banner?slug=${slug}`);
+        data.categoryId = data.category.id;
+        data.ratioId = data.ratio.id;
+        delete data.category;
+        delete data.ratio;
+        delete data.createdAt;
+        delete data.updatedAt;
+        delete data.userId;
+        return data;
     },
 
     async getNameScreen({commit}, screenName){

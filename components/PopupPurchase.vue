@@ -44,6 +44,7 @@
                         <div class="col-lg-5 col-md-6 col-sm-12 pr-md-2 offset-lg-1">
                             <button
                                 class="btn-submit"
+                                @click="handelSubmit"
                             >
                                 Submit
                             </button>
@@ -65,6 +66,7 @@ export default {
     data() {
         return {
             users: [],
+            arrBefore: [],
             screenUser: [],
             selectedUsers: [],
             isLoading: false
@@ -100,7 +102,7 @@ export default {
     }, 
     methods: {
         ...mapActions('user', ['findUsers']),
-        ...mapActions('screen', ['findScreenWithUser']),
+        ...mapActions('screen', ['findScreenWithUser', 'getScreenBySlug', 'createScreen', 'deleteScreen']),
 
         limitText(count) {
             return `and ${count} other users`;
@@ -111,29 +113,57 @@ export default {
                 if (err)
                     console.log(err.message);
             });
-            data.results.filter(i => i.role.id !== 1);
             this.users = data.results;
-            // this.users.forEach(x => this.screenUser.forEach(y => {
-            //     if (x.email === y.user.email){
-            //         this.selectedUsers.push(x);
-            //     }
-            // }));
             this.isLoading = false;
-        },       
+        },
+        async handelSubmit() {
+            var arrFlag = [];
+            var removeArr = [];
+            var addArr = [] ;              
+
+            if (!this.data.slug)
+                return;
+            let data = await this.getScreenBySlug(this.data.slug).catch(err => {
+                if (err)
+                    console.log(err.message);
+            });            
+
+            this.arrBefore.forEach(x => this.selectedUsers.forEach(y => {
+                if (x.id === y.id)
+                    arrFlag.push(x);
+            }));
+            console.log(arrFlag, 'arrFlag');
+
+            this.arrBefore.forEach(x => arrFlag.forEach(y => {
+                if (x.id !== y.id)
+                    removeArr.push(y);
+            }));
+
+            console.log(removeArr, 'removeArr');
+
+            // if (removeArr.length !== 0)
+            //     removeArr.forEach(item => this.deleteScreen());
+
+            // this.selectedUsers.forEach(x => arrFlag.forEach(y => {
+            //     if (x.id !== y.id)
+            //         addArr.push(x);
+            // }));
+            // if (addArr.length !== 0)
+            //     addArr.forEach(item => this.selectedUsers.push(item.user));
+
+        },   
         async open(data) {
+            this.selectedUsers = [];
             this.data = data;
             this.screenUser = await this.findScreenWithUser(this.data.id).catch(err => {
                 if (err)
                     console.log(err.message);
             });
+
             const results = this.screenUser;
-            results.forEach(item => {
-                item.email = item.user.email,
-                item.id = item.user.id,
-                delete item.user,
-                delete item.userId,
-                this.selectedUsers.push(item);
-            });
+            results.forEach(item => this.selectedUsers.push(item.user));
+            this.arrBefore = this.selectedUsers;
+
             $('#' + this.id).modal('show');
         },
         success() {

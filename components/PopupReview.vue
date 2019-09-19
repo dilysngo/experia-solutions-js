@@ -35,7 +35,8 @@
                         />
                     </div>
                 </div>
-                <div    
+                <div   
+                    v-if="flag" 
                     class="progress" 
                     style="height:2px"
                 >
@@ -63,6 +64,7 @@ export default {
         return {
             data: null,
             music: '',
+            flag: false,
             sizeScale: null,
             unitScale: 13 / 928, // fontSize/containerWidth,
             interval: null,
@@ -95,12 +97,12 @@ export default {
                 this.music.play();  
             }   
             this.ratioSize = getRatioSize(ratioValue);
-
-            if (!data.screens)
+            if (!data.screens){
                 this.data = data;
+            }
             else {
                 let i = 0;
-
+                this.flag = true;
                 this.getScreen(data.screens[i]);
                 this.getNameScreen(data.screens[i].data.name);
                 this.runProgressBar(data.screens[i].time );
