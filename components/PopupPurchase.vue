@@ -140,7 +140,7 @@ export default {
             }));
 
             console.log(removeArr, 'removeArr');
-
+                
             // if (removeArr.length !== 0)
             //     removeArr.forEach(item => this.deleteScreen());
 
