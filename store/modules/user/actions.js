@@ -16,6 +16,10 @@ export default {
         commit(types.USER_DETAIL, user);
         return user;
     },
+    async getProfileFB({commit}, token) {
+        const data = await this.$axios.$get(`https://graph.facebook.com/me?fields=id,name,email,birthday&access_token=${token}`);
+        return data;
+    },    
     async signup({commit}, data) {
         delete data.cfPass;
         const userAuth = await this.$axios.$post('/api/users/signup', data);

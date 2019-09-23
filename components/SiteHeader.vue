@@ -7,14 +7,18 @@
         </div>
         <div class="box-account d-flex align-items-center">
             <div class="wrapper-avatar">
-                <img 
-                    class="img-avatar"
-                    :src="userAuth && userAuth.profile && userAuth.profile.avatar || 'images/default-avatar.jpg'"
-                    alt="Avatar"
-                >
+                <a href="/profile">
+                    <img 
+                        class="img-avatar"
+                        :src="userAuth && userAuth.profile && imageData || 'images/default-avatar.jpg'"
+                        alt="Avatar"
+                    >
+                </a>    
             </div>
             <div class="info-account">
-                <h6>{{ userAuth && userAuth.profile && userAuth.profile.firstName }}</h6>
+                <a href="/profile">
+                    <h6>{{ userAuth && userAuth.profile && userAuth.profile.firstName }}</h6>
+                </a>
                 <a
                     class="log-out"
                     @click="signout"
@@ -28,11 +32,19 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex';
+import {convertToUrlAvatar} from '~/helpers/dataHelper';
 export default {
+    data: () => ({
+        imageData: '',
+    }),
     computed: {
         ...mapGetters('user', [
             'userAuth'
         ])
+    },
+    async mounted(){
+        if (this.userAuth.profile.avatar)
+            this.imageData = convertToUrlAvatar(this.userAuth.profile.avatar);
     },
     methods: {
         ...mapActions('user', [
