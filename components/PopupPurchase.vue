@@ -70,7 +70,7 @@
                             class="col-lg-5 col-md-6 col-sm-12 pr-md-2 offset-lg-1"
                         >
                             <button
-                                class="btn-submit"
+                                class="btn-screen"
                                 @click="handelSubmit"
                             >
                                 Submit
