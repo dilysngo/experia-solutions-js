@@ -101,7 +101,7 @@ export default {
         window.fbAsyncInit = () => {
             FB.init({
                 appId: '518625492256840',
-                cookie: true,
+                status: true,
                 xfbml: true,
                 version: 'v4.0'    
             });
@@ -193,7 +193,7 @@ export default {
         statusChangeCallback(response) {
             var self = this;
             self.ready = true;
-            console.log('v4.0 3', response);
+            console.log('v4.0 5', response);
             if (response.status === 'connected') {
                 self.authorized = true;
                 self.getProfile(response);
@@ -217,7 +217,7 @@ export default {
             var data = {};
             data.email = user.email;
             data.password = PASSWORD_SOCIAL;
-
+            console.log('PASSWORD_SOCIAL', PASSWORD_SOCIAL);
             let dataUser = await self.signin(data).catch(err => {
                 self.errorMessage = err.message;
                 return false;
