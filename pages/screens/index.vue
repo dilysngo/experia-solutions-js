@@ -55,7 +55,7 @@
             id="popupPurchase"
             :style="flag"
             @deleteScreen="handleRemoveScreen"
-        /> 
+        />  
         <popup-confirm
             ref="popupConfirm"
             id="deleteScreen"
