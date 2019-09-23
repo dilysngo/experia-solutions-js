@@ -5,6 +5,7 @@
         role="dialog"
         data-backdrop="static" 
         data-keyboard="false"
+        style=""
     >
         <div class="modal-dialog modal-dialog-centered text-center">
             <div class="modal-content">
@@ -18,7 +19,15 @@
                     <h3 class="box-title modal-title m-b-30">
                         {{ title }}
                     </h3>
-                    <div>
+                    <div class="fiter-user">
+                        <filter-select
+                            :data="optionUsers"
+                            @input="handlerUsers"
+                        />
+                    </div>
+                    <div
+                        v-if="!flag"
+                    >
                         <multiselect 
                             v-model="selectedUsers"
                             id="ajax"
@@ -31,7 +40,7 @@
                             :searchable="true"
                             :loading="isLoading" 
                             :clear-on-select="false" 
-                            :close-on-select="false"
+                            :close-on-select="true"
                             :options-limit="300"
                             :limit="3"
                             :limit-text="limitText"
@@ -40,15 +49,33 @@
                             @search-change="asyncFind" 
                         />
                     </div>
+                    <div
+                        v-else
+                    >
+                        <multiselect 
+                            v-model="selectedUsersRemove" 
+                            tag-placeholder="Add this as new tag"   
+                            placeholder="Search or add a tag" 
+                            label="email" 
+                            track-by="id"
+                            :limit="3" 
+                            :options="selectedUsersRemove" 
+                            :multiple="true" 
+                            :taggable="true" 
+                        />
+                    </div>                    
+                                         
                     <div class="row group-button no-gutters m-b-20">
-                        <div class="col-lg-5 col-md-6 col-sm-12 pr-md-2 offset-lg-1">
+                        <div 
+                            class="col-lg-5 col-md-6 col-sm-12 pr-md-2 offset-lg-1"
+                        >
                             <button
                                 class="btn-submit"
                                 @click="handelSubmit"
                             >
                                 Submit
                             </button>
-                        </div>
+                        </div>                    
                     </div>
                 </div>
             </div>
@@ -58,17 +85,25 @@
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <script>
 import {mapGetters, mapActions} from 'vuex';
+import FilterSelect from '~/components/FilterSelect';
 import Multiselect from 'vue-multiselect';
+import moment from "moment";
 export default {
     components: {
-        Multiselect
+        Multiselect,
+        FilterSelect
     },
     data() {
         return {
             users: [],
+            flag: false,
+            optionUsers: [
+                {name: 'Add user', value: 1}, 
+                {name: 'Delete user', value: 2},
+            ],
             arrBefore: [],
-            screenUser: [],
             selectedUsers: [],
+            selectedUsersRemove: [],
             isLoading: false
         };
     },
@@ -102,67 +137,97 @@ export default {
     }, 
     methods: {
         ...mapActions('user', ['findUsers']),
-        ...mapActions('screen', ['findScreenWithUser', 'getScreenBySlug', 'createScreen', 'deleteScreen']),
+        ...mapActions('screen', ['findScreenWithUser', 'getScreenBySlug', 'addScreenForUser', 'deleteScreen']),
 
         limitText(count) {
             return `and ${count} other users`;
         },
+        handlerUsers(item){
+            this.selectedUsersRemove = [];
+            this.selectedUsers = [];
+            if (item.value === 2){
+                this.flag = true;
+                this.selectedUsersRemove = this.arrBefore;
+            }
+            else {
+                this.flag = false;
+            }
+        },
         async asyncFind(query) {
+            this.users = [];
             this.isLoading = true;
-            let data = await this.findUsers({keyword: query, limit: this.limit, skip: this.skip}).catch(err => {
-                if (err)
-                    console.log(err.message);
-            });
-            this.users = data.results;
-            this.isLoading = false;
+            if (!this.flag){
+                var data = await this.findUsers({keyword: query, limit: this.limit, skip: this.skip}).catch(err => {
+                    if (err)
+                        console.log(err.message);
+                });
+            }
+            this.findSelectUser(data.results);
+            this.isLoading = false;                    
+        },
+        findSelectUser(data){
+            var arr = [];
+            data.forEach(x => this.arrBefore.forEach(y => {
+                if (x.id === y.id) arr.push(x);
+            }));
+            this.users = data.filter((obj) => arr.indexOf(obj) === -1);
         },
         async handelSubmit() {
-            var arrFlag = [];
-            var removeArr = [];
-            var addArr = [] ;              
-
             if (!this.data.slug)
                 return;
-            let data = await this.getScreenBySlug(this.data.slug).catch(err => {
-                if (err)
-                    console.log(err.message);
-            });            
-
-            this.arrBefore.forEach(x => this.selectedUsers.forEach(y => {
-                if (x.id === y.id)
-                    arrFlag.push(x);
-            }));
-            console.log(arrFlag, 'arrFlag');
-
-            this.arrBefore.forEach(x => arrFlag.forEach(y => {
-                if (x.id !== y.id)
-                    removeArr.push(y);
-            }));
-
-            console.log(removeArr, 'removeArr');
-                
-            // if (removeArr.length !== 0)
-            //     removeArr.forEach(item => this.deleteScreen());
-
-            // this.selectedUsers.forEach(x => arrFlag.forEach(y => {
-            //     if (x.id !== y.id)
-            //         addArr.push(x);
-            // }));
-            // if (addArr.length !== 0)
-            //     addArr.forEach(item => this.selectedUsers.push(item.user));
-
-        },   
-        async open(data) {
-            this.selectedUsers = [];
-            this.data = data;
-            this.screenUser = await this.findScreenWithUser(this.data.id).catch(err => {
+            var data = await this.getScreenBySlug(this.data.slug).catch(err => {
                 if (err)
                     console.log(err.message);
             });
+            let clone_data = Object.assign({}, data);                    
 
+            if (this.selectedUsers.length !== 0){
+                this.selectedUsers.forEach(item => {
+                    data.userId = item.id;
+                    data.name = 'Screen-' + moment(new Date()).format("MM/DD/YYYY hh:mm:ss") + ` ${item.id}`;
+                    let clone_obj = Object.assign({}, data);
+                    this.addScreen(clone_obj);
+                });
+                this.$notify({
+                    group: 'success',
+                    title: 'Success',
+                    text: 'Successfully updated!',
+                });                 
+                $('#' + this.id).modal('hide');
+                return;               
+            }
+
+            if (this.selectedUsersRemove.length >= 0) {
+                var data = [];
+                var result = this.arrBefore.filter((obj) => this.selectedUsersRemove.indexOf(obj) === -1);
+                this.screenUser.forEach(x => result.forEach(y => {
+                    if (x.user.id === y.id) data.push(x.id);
+                })); 
+                if (data.length > 0) this.deleteScreenByUser(data);     
+            }
+        },  
+        async addScreen(obj) {
+            let data = await this.addScreenForUser(obj).catch(err => {
+                if (err)
+                    console.log(err.message);
+            });
+        },
+        async deleteScreenByUser(data) {
+            this.$emit('deleteScreen', data);
+        },
+
+        async open(data) {
+            this.selectedUsers = [];
+            this.arrBefore = [];
+            this.data = data;
+            this.screenUser = await this.findScreenWithUser(this.data.slug).catch(err => {
+                if (err)
+                    console.log(err.message);
+            });
             const results = this.screenUser;
-            results.forEach(item => this.selectedUsers.push(item.user));
-            this.arrBefore = this.selectedUsers;
+            if (results.length > 0)
+                results.forEach(item => this.arrBefore.push(item.user));
+            this.selectedUsersRemove = this.arrBefore;
 
             $('#' + this.id).modal('show');
         },

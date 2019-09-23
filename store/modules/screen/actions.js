@@ -11,10 +11,10 @@ export default {
         return data;
     },
 
-    async findScreenWithUser({commit}, id) {
-        if (!id)
+    async findScreenWithUser({commit}, slug) {
+        if (!slug)
             return;
-        const data = await this.$axios.$get(`api/screen/user/${id}`);
+        const data = await this.$axios.$get(`api/screen/user/?slug=${slug}`);
         return data.results;
     },   
 
@@ -35,6 +35,7 @@ export default {
         delete data.category;
         delete data.ratio;
         delete data.createdAt;
+        delete data.id;
         delete data.updatedAt;
         delete data.userId;
         return data;
@@ -48,9 +49,17 @@ export default {
     },
 
     async createScreen({commit}, data) {
+        console.log('data', data);
         if (!data)
             return;
         const result = await this.$axios.$post(`api/screen/`, data);
+        return result;
+    },
+
+    async addScreenForUser({commit}, data) {
+        if (!data)
+            return;
+        const result = await this.$axios.$post(`api/screen/add/`, data);
         return result;
     },
 
@@ -65,6 +74,7 @@ export default {
     },
 
     async deleteScreen({commit}, id) {
+        console.log('id ===>', id);
         const result = await this.$axios.delete(`api/screen/${id}`);
         return result;
     }

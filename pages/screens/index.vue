@@ -50,15 +50,18 @@
             ref="popupReview"
             id="popupReview"
         />   
+        <popup-purchase
+            ref="popupPurchase"
+            id="popupPurchase"
+            :style="flag"
+            @deleteScreen="handleRemoveScreen"
+        /> 
         <popup-confirm
             ref="popupConfirm"
             id="deleteScreen"
             @success="handleDelete"
-        />
-        <popup-purchase
-            ref="popupPurchase"
-            id="popupPurchase"
-        />             
+            @cancel="handleCancel"
+        />                   
     </section>
 </template>
 <script>
@@ -82,6 +85,7 @@ export default {
         return {
             totalTemplate: 10,
             screens: [],
+            flag: '',
             skip: 0,
             limit: 12,
             total: 0,
@@ -127,9 +131,34 @@ export default {
         handleDeleteScreen(item) {
             this.$refs.popupConfirm.open(item);
         },
-        async handleDelete(item) {
-            await this.deleteScreen(item.id);
-            await this.getSreens();
+        handleRemoveScreen(data){
+            this.flag = 'display: none;';
+            this.$refs.popupConfirm.open(data);
+        },
+        async handleDelete(data) {
+            if (data.length > 0){
+                data.forEach(id => {
+                    this.removeScreen(id);
+                });
+            }
+            else {  
+                await this.deleteScreen(item.id);
+                await this.getSreens();
+            }
+
+        },
+        async removeScreen(id){
+            let result = await this.deleteScreen(id).catch(err => {
+                if (err)
+                    console.log(err.message);
+            });
+            if (result){   
+                this.flag = 'display: block;';
+                this.$refs.popupPurchase.cancel();
+            }
+        },
+        handleCancel(){
+            this.flag = 'display: block;';
         },
         handleEdit(item) {
             if (item.id)

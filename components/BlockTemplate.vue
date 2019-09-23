@@ -42,6 +42,7 @@
                     <i class="icon-trash icon-site" />
                 </a>
                 <a 
+                    v-if="userAuth.role.id===1"
                     class="btn-link"
                     @click="selectUsers"
                 >
@@ -90,12 +91,10 @@
 import {convertToDateString} from '~/helpers/dateHelper';
 import ElementContainer from '~/components/elements/ElementContainer';
 import Vue from 'vue';
+import {mapGetters, mapActions} from 'vuex';
 Vue.component('element-container', ElementContainer);
 
 export default {
-    components: {
-        
-    },
     props: {
         template: {
             type: Object,
@@ -124,6 +123,9 @@ export default {
                 this.templateData = this.template.template.template;
         }, 100);
     },
+    computed: {
+        ...mapGetters('user',['userAuth'])  
+    },    
     mounted() {
         setTimeout(() => {
             let containerWidth = $('.preview-img').width();
