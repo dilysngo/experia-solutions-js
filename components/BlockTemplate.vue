@@ -40,9 +40,9 @@
                     @click="deleteItem"
                 >
                     <i class="icon-trash icon-site" />
-                </a>
+                </a>                         
                 <a 
-                    v-if="userAuth.role.id===1"
+                    v-if="userAuth.role.id===1||userAuth.role.id===5"                          
                     class="btn-link"
                     @click="selectUsers"
                 >
