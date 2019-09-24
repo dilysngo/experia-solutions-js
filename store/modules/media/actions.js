@@ -2,11 +2,25 @@ import types from '../../mutation-types';
 
 export default {
     async findMedias({commit}, condition) {
+        var mediaAdmin = [];
+        var results = [];
+        const user = await this.$axios.$get(`api/users/getId`);
+
         if (!condition)
             condition = {};
 
+        if (user)
+            condition.id = user.id;
         const data = await this.$axios.$get(`api/media?keyword=${condition.keyword || ''}${condition.type ? '&type=' + condition.type : '' }&skip=${condition.skip || ''}&limit=${condition.limit || ''}`);
-        commit(types.MEDIA_LIST, data.results);
+        
+        if (condition.code !== 1){
+            mediaAdmin = await this.$axios.$get(`api/media/mediaAdmin?keyword=${condition.keyword || ''}${condition.type ? '&type=' + condition.type : '' }&skip=${condition.skip || ''}&limit=${condition.limit || ''}&id=${condition.id || ''}`);
+            results = data.results.concat(mediaAdmin.results);
+        }
+        else
+            results = data.results;
+
+        commit(types.MEDIA_LIST, results);
         commit(types.MEDIA_PAGINATION, data.pagination);
         return data;
     },

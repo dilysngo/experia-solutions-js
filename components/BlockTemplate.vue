@@ -42,7 +42,7 @@
                     <i class="icon-trash icon-site" />
                 </a>                         
                 <a 
-                    v-if="userAuth.role.id===1||userAuth.role.id===5"                          
+                    v-if="userAuth.role.code===1"                          
                     class="btn-link"
                     @click="selectUsers"
                 >

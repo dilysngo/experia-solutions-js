@@ -94,7 +94,10 @@
                                         alt=""
                                     > -->
                                 </div>
-                                <div class="g-action d-flex">
+                                <div 
+                                    class="g-action d-flex"
+                                    v-if="userAuth.role.code===1"
+                                >
                                     <a
                                         @click="showMedia(gItem)"
                                         class="btn-link"
@@ -108,6 +111,24 @@
                                         <i class="icon-trash icon-site" />
                                     </a>
                                 </div>
+                                <div 
+                                    class="g-action d-flex"
+                                    v-else
+                                >
+                                    <a
+                                        @click="showMedia(gItem)"
+                                        class="btn-link"
+                                    >
+                                        <i class="icon-play icon-site" />
+                                    </a>
+                                    <a
+                                        v-if="gItem.user.role.code!==1"
+                                        @click="deleteItem(gItem)"
+                                        class="btn-link"
+                                    >
+                                        <i class="icon-trash icon-site" />
+                                    </a>
+                                </div>                                
                             </div>
                             <div 
                                 class="g-info"
@@ -281,7 +302,7 @@ export default {
             await this.getAllMedia();
         },
         async getAllMedia() {
-            let data = await this.findMedias({keyword: this.keyword, type: this.type, limit: this.limit, skip: this.skip}).catch(err => {
+            let data = await this.findMedias({keyword: this.keyword, type: this.type, limit: this.limit, skip: this.skip, code: this.userAuth.role.code}).catch(err => {
                 if (err)
                     console.log(err.message);
             });
@@ -317,7 +338,6 @@ export default {
             await this.getAllMedia();
         },
         showMedia(item) {
-            console.log('item', item);
             this.mediaShow = item;
             if (item.type === this.mediaType.Video) {
                 let frameVideo = document.getElementById('videoDisplay');
