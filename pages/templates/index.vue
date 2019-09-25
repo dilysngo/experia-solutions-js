@@ -84,15 +84,9 @@ export default {
     },
     async created() {
         await this.getTemplates();
-        this.findRatios();
-        this.findCategory();
+        await this.findRatios();
+        await this.findCategory();
         this.isAdmin = this.userAuth.role.code === Roles.Admin;
-    },
-    computed: {
-        ...mapGetters('template', ['templateList']),
-        ...mapGetters('category', ['categoryList']),
-        ...mapGetters('ratio', ['ratioList']),
-        ...mapGetters('user', ['userAuth']),
     },
     watch: {
         keyword: function(newData) {
@@ -101,6 +95,12 @@ export default {
                 this.getTemplates();
             }, 500);
         },
+    },
+    computed: {
+        ...mapGetters('template', ['templateList']),
+        ...mapGetters('user', ['userAuth']),
+        ...mapGetters('category', ['categoryList']),
+        ...mapGetters('ratio', ['ratioList']),
     },
     methods: {
         ...mapActions('template', [

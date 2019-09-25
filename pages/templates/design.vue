@@ -1,20 +1,18 @@
 <template>
     <section class="page-container page-create">
         <div class="page-header d-flex">
-            <!-- <h4>Design space</h4> -->
             <input
                 class="input-title" 
                 v-model="titlePage" 
             >
             <div class="d-flex">
                 <filter-select
-                    :data="dataSize"
+                    :data="ratioList"
                     @input="handlerRatio"
                     :select="ratioDefault"
                 />
                 <filter-select
-                    placeholder="Category"
-                    :data="dataCategory"
+                    :data="categoryList"
                     @input="handlerCategory"
                     :select="categoryDefault"
                 />
@@ -229,12 +227,6 @@ export default {
             },
             backgroundImage: null,
             mediaType: MediaType,
-            dataCategory: [
-                {name: 'Category 1', value: 1}, 
-                {name: 'Category 2', value: 2},
-                {name: 'Category 3', value: 3},
-            ],
-            dataSize: [],
             pageType: null,
             sizeScale: null,
             sizeContainer: null,
@@ -247,12 +239,8 @@ export default {
         };
     },
     async created() {
-        let ratioList = await this.findRatios();
-        let categoryList = await this.findCategory();
-
-        this.dataSize = ratioList.results || [];
-        this.dataCategory = categoryList.results || [];
-
+        await this.findRatios();
+        await this.findCategory();
         this.root = this;
         this.temporaryQueues = [];
         this.template = {
@@ -295,9 +283,9 @@ export default {
         };
     },
     computed: {
-        ...mapGetters('user', [
-            'userAuth'
-        ]),
+        ...mapGetters('user', ['userAuth']),
+        ...mapGetters('category', ['categoryList']),
+        ...mapGetters('ratio', ['ratioList']),
     },
     watch: {
         elementSelected: function(newData) {
