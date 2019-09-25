@@ -22,7 +22,11 @@ export default {
 
         commit(types.MEDIA_LIST, results);
         commit(types.MEDIA_PAGINATION, data.pagination);
-        return data;
+
+        if (data.pagination.total > 11)
+            return data;
+        else
+            return mediaAdmin;
     },
     async getMedia({commit}, id) {
         if (!id)

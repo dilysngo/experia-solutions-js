@@ -74,6 +74,7 @@ import PopupReview from '~/components/PopupReview';
 import PopupPurchase from '~/components/PopupPurchase';
 
 export default {
+    middleware: ['authentication'],
     components: {
         BlockTemplate,
         Pagination,
@@ -96,10 +97,8 @@ export default {
         await this.getSreens();
     },
     computed: {
-        ...mapGetters('screen', [
-            'screenList',
-            'screenPagination'
-        ])
+        ...mapGetters('screen', ['screenList', 'screenPagination']),
+        ...mapGetters('user', ['userAuth'])
     },
     watch: {
         keyword: function(newData) {
@@ -142,7 +141,7 @@ export default {
                 });
             }
             else {  
-                await this.deleteScreen(item.id);
+                await this.deleteScreen(data.id);
                 await this.getSreens();
             }
 

@@ -237,6 +237,7 @@ import Pagination from '~/components/Pagination';
 import PopupConfirm from '~/components/PopupConfirm';
 
 export default {
+    middleware: ['authentication'],
     components: {
         FilterSelect,
         Pagination,
@@ -268,14 +269,6 @@ export default {
             convertToUrl: convertToUrl,
         };
     },
-    computed: {
-        ...mapGetters('user', [
-            'userAuth'
-        ]),
-        ...mapGetters('media', [
-            'mediaList'
-        ]),
-    },
     watch: {
         keyword: function(newData) {
             clearTimeout(this.timeOut);
@@ -287,8 +280,12 @@ export default {
     async created() {
         await this.getAllMedia();
     },
+    computed: {
+        ...mapGetters('user', ['userAuth']),
+        ...mapGetters('media', ['mediaList'])
+    },   
     mounted() {
-        console.log('mediaList', this.mediaList);        
+        console.log('mediaList', this.mediaList);      
     },
     methods: {
         ...mapActions('media', 
@@ -307,7 +304,6 @@ export default {
                     console.log(err.message);
             });
             this.total = data && data.pagination && data.pagination.total;
-            console.log('this.data', data);
         },
         async changeMedia(event) {
             let formData = new FormData();
