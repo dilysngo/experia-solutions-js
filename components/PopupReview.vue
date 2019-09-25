@@ -8,7 +8,10 @@
         aria-hidden="true"
         @click="close()"        
     >
-        <div class="modal-dialog modal-dialog-centered text-center">
+        <div 
+            class="modal-dialog modal-dialog-centered text-center"
+            v-if="renderComponent"
+        >
             <div class="modal-content">
                 <button
                     @click="cancel()"
@@ -63,6 +66,7 @@ export default {
             time: 0,
             counter: 0,
             ratioSize: null,
+            renderComponent: true,
         };
     },
     props: {
@@ -123,7 +127,7 @@ export default {
         runProgressBar(time) { 
             $(function() {
                 const index = time * 10;
-                var elem = document.getElementById("myBar");   
+                var element = document.getElementById('myBar');   
                 var width = 0;
                 var id = setInterval(frame, index);
                 function frame() {
@@ -131,7 +135,7 @@ export default {
                         clearInterval(id);
                     else {
                         width++; 
-                        elem.style.width = width + '%'; 
+                        element.style.width = width + '%'; 
                     }
                 }
             });  
@@ -147,15 +151,28 @@ export default {
         close(){
             if (this.music)
                 this.music.pause();
+            clearInterval(this.interval);
+            setTimeout(() => {
+                this.data = null;
+            }, 200);
+            this.forceRerender();
         },  
         cancel() {
             if (this.music)
                 this.music.pause();
             $('#' + this.id).modal('hide');
+            clearInterval(this.interval);
             setTimeout(() => {
                 this.data = null;
             }, 200);
+            this.forceRerender();
         },
+        forceRerender() {
+            this.renderComponent = false;
+            this.$nextTick(() => {
+                this.renderComponent = true;
+            });
+        }
     }
 };
 </script>

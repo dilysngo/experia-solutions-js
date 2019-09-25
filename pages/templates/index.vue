@@ -4,11 +4,11 @@
             <h4>Templates ({{ total ? total : 0 }})</h4>
             <div class="d-flex">
                 <filter-select
+                    :data="ratioList"
                     @input="handlerRatio"
-                    :data="dataSize"
                 />
                 <filter-select
-                    :data="dataCategory"
+                    :data="categoryList"
                     @input="handlerCategory"
                 />
                 <div class="form-search">
@@ -72,8 +72,6 @@ export default {
     },
     data() {
         return {
-            dataCategory: [],
-            dataSize: [],
             skip: 0,
             limit: 12,
             total: 0,
@@ -86,21 +84,15 @@ export default {
     },
     async created() {
         await this.getTemplates();
+        this.findRatios();
+        this.findCategory();
         this.isAdmin = this.userAuth.role.code === Roles.Admin;
-
-        let ratioList = await this.findRatios();
-        let categoryList = await this.findCategory();
-
-        this.dataSize = ratioList.results || [];
-        this.dataCategory = categoryList.results || [];
     },
     computed: {
-        ...mapGetters('template', [
-            'templateList',
-        ]),
-        ...mapGetters('user', [
-            'userAuth'
-        ]),
+        ...mapGetters('template', ['templateList']),
+        ...mapGetters('category', ['categoryList']),
+        ...mapGetters('ratio', ['ratioList']),
+        ...mapGetters('user', ['userAuth']),
     },
     watch: {
         keyword: function(newData) {
@@ -137,7 +129,6 @@ export default {
             // this.$forceUpdate();
         },
         async createScreenByTemplate(item) {
-            console.log('item', item);
             let dataCreate = {
                 userId: this.userAuth && this.userAuth.id,
                 name: 'Screen-' + convertToString(new Date()),
