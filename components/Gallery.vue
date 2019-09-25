@@ -144,7 +144,7 @@ export default {
     // },
     methods: {
         ...mapActions('media', [
-            'findMedias'
+            'findMediaWithType'
         ]),
         open(mediaType) {
             if (mediaType)
@@ -170,8 +170,7 @@ export default {
                 limit: this.limit, 
                 skip: this.skip
             };
-            console.log(options);
-            let data = await this.findMedias(options).catch(err => {
+            let data = await this.findMediaWithType(options).catch(err => {
                 if (err)
                     console.log(err.message);
             });
