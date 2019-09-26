@@ -10,7 +10,6 @@
     >
         <div 
             class="modal-dialog modal-dialog-centered text-center"
-            v-if="renderComponent"
         >
             <div class="modal-content">
                 <button
@@ -39,10 +38,13 @@
                     </div>
                 </div>
                 <div 
-                    v-if="flag"
+                    v-if="renderComponent"
                     id="myProgress"
                 >
-                    <div id="myBar" />
+                    <div
+                        v-if="flag" 
+                        id="myBar" 
+                    />
                 </div>
             </div>
         </div>
@@ -59,6 +61,7 @@ export default {
         return {
             data: null,
             music: '',
+            musicPlay: '',
             flag: false,
             sizeScale: null,
             unitScale: 13 / 928, // fontSize/containerWidth,
@@ -141,6 +144,14 @@ export default {
             });  
         },
         getScreen(data) {
+            if (data.data.template.template.style.music) {
+                this.musicPlay = new Audio();
+                this.musicPlay.setAttribute('src',`${data.data.template.template.style.music}`);   
+                this.musicPlay.load();
+                this.musicPlay.play();                      
+            }
+            else
+                this.musicPlay.pause(); 
             this.counter = 0;
             this.time = data.time;
             this.data = null;
@@ -149,17 +160,14 @@ export default {
             });
         },
         close(){
-            if (this.music)
-                this.music.pause();
+            this.music ? this.music.pause() : '';                           // pause music in screen
+            this.musicPlay ? this.musicPlay.pause() : '';                   // pause music in playlist
             clearInterval(this.interval);
-            setTimeout(() => {
-                this.data = null;
-            }, 200);
             this.forceRerender();
         },  
         cancel() {
-            if (this.music)
-                this.music.pause();
+            this.music ? this.music.pause() : '';                           // pause music in screen
+            this.musicPlay ? this.musicPlay.pause() : '';                   // pause music in playlist
             $('#' + this.id).modal('hide');
             clearInterval(this.interval);
             setTimeout(() => {
