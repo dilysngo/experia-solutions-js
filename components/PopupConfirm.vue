@@ -87,7 +87,7 @@ export default {
         },
         cancel() {
             $('#' + this.id).modal('hide');
-            this.$emit('cancel');
+            this.$emit('cancel', this.data);
         }
     }
 };

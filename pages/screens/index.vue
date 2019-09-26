@@ -156,8 +156,9 @@ export default {
                 this.$refs.popupPurchase.cancel();
             }
         },
-        handleCancel(){
-            this.flag = 'display: block;';
+        handleCancel(data){
+            if (data.length > 0)
+                this.flag = 'display: block;';
         },
         handleEdit(item) {
             if (item.id)
