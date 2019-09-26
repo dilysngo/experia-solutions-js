@@ -225,6 +225,11 @@
             id="deleteMedia"
             @success="handleDeleteMedia"
         />
+        <loading
+            ref="loading"
+            id="loading"
+            :is-show-loading="loading"
+        />
     </section>
 </template>
 <script>
@@ -235,13 +240,15 @@ import {convertToDateString} from '~/helpers/dateHelper';
 import {convertToSize, convertToUrl, pagination} from '~/helpers/dataHelper';
 import Pagination from '~/components/Pagination';
 import PopupConfirm from '~/components/PopupConfirm';
+import Loading from '~/components/Loading';
 
 export default {
     middleware: ['authentication'],
     components: {
         FilterSelect,
         Pagination,
-        PopupConfirm
+        PopupConfirm,
+        Loading
     },
     data() {
         return {
@@ -267,6 +274,7 @@ export default {
             timeOut: null,
             mediaShow: null,
             convertToUrl: convertToUrl,
+            loading: false
         };
     },
     watch: {
@@ -306,11 +314,13 @@ export default {
             this.total = data && data.pagination && data.pagination.total;
         },
         async changeMedia(event) {
+            this.loading = true;
             let formData = new FormData();
             let file = event.target ? event.target.files[0] : event[0];
 
             formData.append('media', file);
             let uploadMedia = await this.uploadMedia(formData).catch(err => {
+                this.loading = false;
                 this.$notify({
                     group: 'error',
                     title: 'Upload failed',
@@ -320,6 +330,7 @@ export default {
                 return false;
             });
             if (uploadMedia) {
+                this.loading = false;
                 this.$notify({
                     group: 'success',
                     title: 'Success',
