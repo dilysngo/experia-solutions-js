@@ -1,7 +1,8 @@
 <template>
     <section
         class="container-preview" 
-        :style="{fontSize: sizeScale*sizeChange * (13 / sizeScale) + 'px', width: '100%', height: '100vh'}" 
+        :style="{fontSize: sizeScale*sizeChange * (13 / sizeScale) + 'px', width: '100%', height: '100vh'}"
+        @dblclick="handleFullScreen" 
     >
         <element-container
             ref="elementContainer" 
@@ -30,6 +31,7 @@ export default {
         unitScale: 13 / 928, // fontSize/containerWidth,
         ratioSize: null,
         interval: null,
+        flag: false,
         time: 0,
         counter: 0,
     }),
@@ -68,6 +70,39 @@ export default {
                 }, 1000);
             }
 
+        },
+        handleFullScreen(){
+            this.flag = !this.flag;
+            var elem = document.documentElement;
+            
+            if (this.flag){
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } 
+                else if (elem.mozRequestFullScreen) {
+                    elem.mozRequestFullScreen();
+                } 
+                else if (elem.webkitRequestFullscreen) { 
+                    elem.webkitRequestFullscreen();
+                } 
+                else if (elem.msRequestFullscreen) {
+                    elem.msRequestFullscreen();
+                }
+            }
+            else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } 
+                else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                }
+                else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } 
+                else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }                
+            }
         },
         getScreen(data) {
             this.counter = 0;
