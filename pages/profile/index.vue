@@ -30,7 +30,9 @@
                     class="container-form d-flex flex-wrap"
                 >
                     <div class="col-sm-4 box-input">
-                        <label for="firstName">Firs Name</label>
+                        <label for="firstName">
+                            First Name <span class="requied">*</span>
+                        </label>
                         <input
                             id="firstName"
                             type="text"
@@ -42,7 +44,9 @@
                         >
                     </div>
                     <div class="col-sm-4 box-input">
-                        <label for="lastName">Last Name</label>
+                        <label for="lastName">
+                            Last Name <span class="requied">*</span>
+                        </label>
                         <input
                             id="lastName"
                             type="text"
@@ -54,7 +58,9 @@
                         >
                     </div>
                     <div class="col-sm-4 box-input">
-                        <label for="phone">Phone No</label>
+                        <label for="phone">
+                            Phone <span class="requied">*</span>
+                        </label>
                         <input
                             id="phone"
                             type="text"
@@ -66,7 +72,9 @@
                         >
                     </div>
                     <div class="col-sm-4 box-input">
-                        <label for="phone">Email</label>
+                        <label for="phone">
+                            Email <span class="requied">*</span>
+                        </label>
                         <input
                             id="email"
                             type="text"
@@ -78,7 +86,9 @@
                         >
                     </div>
                     <div class="col-sm-4 box-input">
-                        <label for="pass">Date Of Birth</label>
+                        <label for="pass">
+                            Date Of Birth <span class="requied">*</span>
+                        </label>
                         <input
                             id="pass"
                             type="date"
@@ -90,7 +100,9 @@
                         >
                     </div>
                     <div class="col-sm-4 box-input">
-                        <label for="address">Address</label>
+                        <label for="address">
+                            Address <span class="requied">*</span>  
+                        </label>
                         <input
                             id="address"
                             type="text"

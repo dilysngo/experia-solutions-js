@@ -35,6 +35,12 @@
             &:not(.box-input-pass){
                 margin-bottom: 28px;
             }
+            .requied{
+                color: #e6173e;
+                &.remove{
+                    display: none;
+                }
+              }
         }
         .box-error{
             -webkit-box-flex: 0;

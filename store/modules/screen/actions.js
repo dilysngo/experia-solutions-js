@@ -30,14 +30,15 @@ export default {
         if (!slug)
             return;
         const data = await this.$axios.$get(`api/screen/banner?slug=${slug}`);
-        data.categoryId = data.category.id;
-        data.ratioId = data.ratio.id;
+
+        data.category ? data.categoryId = data.category.id  : data.categoryId = null;
+        data.ratio ? data.ratioId = data.ratio.id  : data.ratioId = null;
         delete data.category;
         delete data.ratio;
         delete data.createdAt;
         delete data.id;
         delete data.updatedAt;
-        delete data.userId;
+        
         return data;
     },
 

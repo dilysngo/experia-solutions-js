@@ -10,7 +10,9 @@
             @submit.prevent="register"
         >
             <div class="box-input">
-                <label for="firstName">Firs Name</label>
+                <label for="firstName">
+                    First Name <span class="requied">*</span>
+                </label>
                 <input
                     id="firstName"
                     type="text"
@@ -22,7 +24,9 @@
                 >
             </div>
             <div class="box-input">
-                <label for="lastName">Last Name</label>
+                <label for="lastName">
+                    Last Name <span class="requied">*</span>
+                </label>
                 <input
                     id="lastName"
                     type="text"
@@ -34,7 +38,9 @@
                 >
             </div>
             <div class="box-input">
-                <label for="phone">Phone No</label>
+                <label for="phone">
+                    Phone <span class="requied">*</span>
+                </label>
                 <input
                     id="phone"
                     type="text"
@@ -47,7 +53,9 @@
                 >
             </div>
             <div class="box-input">
-                <label for="email">Email</label>
+                <label for="email">
+                    Email <span class="requied">*</span>
+                </label>
                 <input
                     id="email"
                     type="text"
@@ -59,7 +67,9 @@
                 >
             </div>
             <div class="box-input box-input-pass">
-                <label for="pass">Password</label>
+                <label for="pass">
+                    Password <span class="requied">*</span>    
+                </label>
                 <input
                     id="pass"
                     type="password"
@@ -71,7 +81,9 @@
                 >
             </div>
             <div class="box-input box-input-pass">
-                <label for="cf-pass">Comfirm Password</label>
+                <label for="cf-pass">
+                    Comfirm Password <span class="requied">*</span>
+                </label>
                 <input
                     id="cf-pass"
                     type="password"
@@ -111,10 +123,11 @@
 </template>
 <script>
 import {mapGetters, mapActions} from 'vuex';
-
+import moment from 'moment';
 export default {
     layout: 'blank',
     data: () => ({
+        dataUser: '',
         messError: '',
         errorFirstName: '',
         errorLastName: '',
@@ -134,6 +147,9 @@ export default {
         ...mapActions('user', [
             'signup'
         ]),
+        ...mapActions('screen', [
+            'createScreen'
+        ]),
         async register() {
             if (!this.validateFirstName())
                 return;
@@ -150,13 +166,37 @@ export default {
                 this.messError = 'Comfirm password incorrect';
                 return;
             }
-            let register = await this.signup(this.data).catch(err => {
+            this.dataUser = await this.signup(this.data).catch(err => {
                 this.messError = err.message;
                 return false;
             });
-            if (!this.messError)
 
-                this.$router.push('/screens');
+            if (!this.messError) {
+                let dataCreate = {
+                    userId: this.dataUser.id,
+                    template: {
+                        id: 0,
+                        code: 0,
+                        name: '',
+                        slug: '',
+                        isDrag: true,
+                        template: null,
+                        ratio: '',
+                        category: '',
+                    },
+                    name: `Screen-${moment(new Date()).format('MM/DD/YYYY hh:mm:ss')} ${this.dataUser.id}`,
+                    categoryId: 1,
+                    ratioId: 3,
+                    slug: ''
+                };
+                const data = await this.createScreen(dataCreate).catch(err => {
+                    this.messError = err.message;
+                    return false;
+                });
+
+                if (!this.messError) 
+                    this.$router.push('/screens');
+            }
         },
         validateFirstName() {
             if (!this.data.firstName) {

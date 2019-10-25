@@ -9,7 +9,9 @@
             @submit.prevent="login"
         >
             <div class="box-input">
-                <label for="email">Email</label>
+                <label for="email">
+                    Email <span class="requied">*</span> 
+                </label>
                 <input
                     id="email"
                     type="email"
@@ -17,10 +19,13 @@
                     maxlength="100"
                     v-model="dataUser.email"
                     class="form-input"
+                    :class="{'error' : error.email}"
                 >
             </div>
             <div class="box-input">
-                <label for="pass">Password</label>
+                <label for="pass">
+                    Password <span class="requied">*</span>
+                </label>
                 <input
                     id="pass"
                     type="password"
@@ -28,6 +33,7 @@
                     maxlength="20"
                     v-model="dataUser.password"
                     class="form-input"
+                    :class="{'error' : error.password}"
                 >
             </div>
             <div class="box-error">
@@ -86,6 +92,10 @@ export default {
     middleware: ['non-authentication'],
     data: () => ({
         errorMessage: '',
+        error: {
+            email: '',  
+            password: '',
+        },
         dataUser: {
             email: '',  
             password: '',
@@ -128,16 +138,19 @@ export default {
         },
         validateEmail() {
             if (!this.dataUser.email) {
-                this.errorMessage = 'The email is required.';
+                this.error.email = 'The email is required.';
+                this.errorMessage = this.error.email;
                 return false;
             }
             else {
                 const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 if (!regex.test(this.dataUser.email)) {
-                    this.errorMessage = 'Must be a valid email.';
+                    this.error.email = 'Must be a  valid email.';
+                    this.errorMessage = this.error.email;
                     return false;   
                 }
                 else {
+                    this.error.email = '';
                     this.errorMessage = '';
                     return true;
                 }
@@ -145,14 +158,17 @@ export default {
         },
         validatePassword() {    
             if (!this.dataUser.password) {
-                this.errorMessage = 'The password is required.';
+                this.error.password = 'The password is required.';
+                this.errorMessage = this.error.password;
                 return false;
             }
             if (this.dataUser.password.length < 6 || this.dataUser.password.length > 20) {
-                this.errorMessage = 'Must be at least 6 and maximum 20 characters.';
+                this.error.password = 'Must be at least 6 and maximum 20 characters.';
+                this.errorMessage = this.error.password;
                 return false;
             }
             else {
+                this.error.password = '';
                 this.errorMessage = '';
                 return true;
             }

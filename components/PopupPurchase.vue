@@ -87,7 +87,7 @@
 import {mapGetters, mapActions} from 'vuex';
 import FilterSelect from '~/components/FilterSelect';
 import Multiselect from 'vue-multiselect';
-import moment from "moment";
+import moment from 'moment';
 export default {
     components: {
         Multiselect,
