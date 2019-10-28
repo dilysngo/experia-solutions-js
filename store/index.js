@@ -6,6 +6,7 @@ import screen from './modules/screen';
 import playlist from './modules/playlist';
 import ratio from './modules/ratio';
 import category from './modules/category';
+import requirement from './modules/requirement';
 import socket from './modules/socket';
 import {getCookie} from '../helpers/dataHelper';
 
@@ -34,7 +35,8 @@ export default function() {
             playlist,
             ratio,
             category,
-            socket
+            socket,
+            requirement
         }
     });
 };

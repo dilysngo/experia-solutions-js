@@ -292,9 +292,6 @@ export default {
         ...mapGetters('user', ['userAuth']),
         ...mapGetters('media', ['mediaList'])
     },   
-    mounted() {
-        console.log('mediaList', this.mediaList);      
-    },
     methods: {
         ...mapActions('media', 
             ['findMedias', 'createMedia', 'uploadMedia', 'updateThumbnail', 'deleteMedia']),

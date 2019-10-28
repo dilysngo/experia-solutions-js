@@ -29,6 +29,7 @@
     "socket.io-client": "^2.2.0",
     "tls": "0.0.1",
     "vee-validate": "^2.2.5",
+    "sweetalert2": "^8.18.3",
     "vue-ckeditor2": "^2.0.3",
     "vue-color": "^2.4.5",
     "vue-multiselect": "^2.1.6",

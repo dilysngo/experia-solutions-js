@@ -31,7 +31,20 @@
                             @selectUsers="handleSelectUser"
                             @preview="handlePreview($event, template.ratio)"
                         />
-                    </div>
+                    </div>  
+                    <div
+                        class="col-md-3 block-default"
+                        v-if="this.userAuth.role.code!==1"
+                    >
+                        <button
+                            class="btn-add-more-screen"
+                            id="addMedia"
+                            @click="handlerSendRequest"
+                        >
+                            <i class="icon-plus icon-site" />
+                        </button>
+                        <p>Add more screens</p>
+                    </div>               
                 </div>
                 <div class="paginate">
                     <no-ssr>
@@ -49,6 +62,10 @@
         <popup-review
             ref="popupReview"
             id="popupReview"
+        />   
+        <popup-request 
+            ref="popupRequest"
+            id="popupRequest"
         />   
         <popup-purchase
             ref="popupPurchase"
@@ -72,6 +89,7 @@ import Pagination from '~/components/Pagination';
 import PopupConfirm from '~/components/PopupConfirm';
 import PopupReview from '~/components/PopupReview';
 import PopupPurchase from '~/components/PopupPurchase';
+import PopupRequest from '~/components/PopupRequest';
 
 export default {
     middleware: ['authentication'],
@@ -80,7 +98,8 @@ export default {
         Pagination,
         PopupConfirm,
         PopupReview,
-        PopupPurchase
+        PopupPurchase,
+        PopupRequest
     },
     data() {
         return {
@@ -136,15 +155,15 @@ export default {
         },
         async handleDelete(data) {
             if (data.length > 0){
-                data.forEach(id => {
-                    this.removeScreen(id);
-                });
+                data.forEach(id => this.removeScreen(id));
             }
             else {  
                 await this.deleteScreen(data.id);
                 await this.getSreens();
             }
-
+        },
+        async handlerSendRequest(){
+            this.$refs.popupRequest.open();
         },
         async removeScreen(id){
             let result = await this.deleteScreen(id).catch(err => {

@@ -35,3 +35,104 @@
         height: 500px;
     }
 }
+
+#popupRequest {
+    .modal-dialog {
+        font-size: 16.25px;
+        overflow: hidden;
+        .btn-normal-request{
+            color: $color-primary;
+            font-family: $font-primary;
+            font-size: 13px;
+            font-weight: normal;
+            padding: 8px 12px;
+            @include border-radius(3px);
+            border: 1px solid #dcdcdc;
+            background-color: transparent;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.07);
+            height: 36px;
+            display: inline-block;
+            vertical-align: top;
+            min-width: 112px;
+            text-align: center;
+            margin-left: 6px;
+            @include transition(all, 0.2s, ease);
+            cursor: pointer;
+            &:focus {     
+                background-color: $color-third;
+                color: #ffffff;
+                border-color: $color-third;  
+            }
+            &:hover{
+                background-color: $color-third;
+                color: #ffffff;
+                border-color: $color-third;
+            }
+        }
+    }
+    .template-body {
+        height: 500px;
+    }
+    .text-description{
+        margin-bottom: 45px;
+        margin-top: -30px;
+    }
+    .btn-submit-request{
+        text-align: center;
+        color: $color-second;
+        font-family: $font-second;
+        font-size: 12px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        border-radius: 3px;
+        border: 0;
+        box-shadow: none;
+        padding: 12px 40px;
+        background-color: $color-third;
+        margin-right: 25px;
+        &:focus{
+            outline: 0;
+        }
+    }
+}
+.container-screens {
+    .block-default {
+        background-color: #ffffff;
+        border-radius: 7px;
+        margin-bottom: 30px;
+
+        height: calc(100% - 30px);
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 223px;
+        margin-left: 16px;
+        .btn-add-more-screen{
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            border: 1px solid #ededed;
+            background-color: #ffffff;
+            margin-bottom: 31px;
+            .icon-site{
+                font-size: 30px;
+                color: $color-third;
+            }
+            &:focus{
+                outline: 0;
+            }
+        }
+        p{
+            font-size: 14px;
+        }
+    }
+}
+.line-gray{
+    width: 100%;
+    height: 1px;
+    border-radius: 4px;
+    background-color: #f2f2f2;
+    margin-bottom: 14px;
+    margin-top: 42px;
+}
