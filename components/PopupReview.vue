@@ -151,7 +151,7 @@ export default {
                 this.musicPlay.play();                      
             }
             else
-                this.musicPlay.pause(); 
+                this.musicPlay ? this.musicPlay.pause() : this.musicPlay = '';
             this.counter = 0;
             this.time = data.time;
             this.data = null;

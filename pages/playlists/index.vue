@@ -65,8 +65,8 @@
         <playlist-detail
             id="playlistDetail"
             ref="playlistDetail"
-            @cancel="handleCancel"
             @save="updateListPlaylist"
+            @cancel="handleCancel"
         />
     </section>
 </template>
@@ -124,6 +124,9 @@ export default {
             this.skip = data;
             await this.getPlaylists();
         },
+        async updateListPlaylist() {
+            await this.getPlaylists();
+        },        
         async getPlaylists() {
             this.list = [];
             let options = {
@@ -154,9 +157,6 @@ export default {
         handlePreview(item) {
             if (item)
                 this.$refs.popupReview.open(item);
-        },
-        async updateListPlaylist() {
-            await this.getPlaylists();
         },
         async handleCancel(id) {
             await this.getPlaylists();
