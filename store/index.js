@@ -35,8 +35,8 @@ export default function() {
             playlist,
             ratio,
             category,
-            socket,
-            requirement
+            requirement,
+            socket
         }
     });
 };

@@ -44,6 +44,17 @@
                     Media Library
                 </nuxt-link>
             </li>
+            <li 
+                class="item-menu"
+                v-if="userAuth.role.code===1"
+            >
+                <nuxt-link
+                    to="/requirement"
+                    class="menu-link"
+                >
+                    Requets From User
+                </nuxt-link>
+            </li>            
             <li
                 class="item-menu item-create-menu"
                 v-if="$route.path.toString() === '/screens' && userAuth.role.code===1"

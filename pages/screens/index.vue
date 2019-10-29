@@ -34,7 +34,7 @@
                     </div>  
                     <div
                         class="col-md-3 block-default"
-                        v-if="this.userAuth.role.code!==1"
+                        v-if="userAuth.role.code!==1"
                     >
                         <button
                             class="btn-add-more-screen"
