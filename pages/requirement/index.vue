@@ -22,7 +22,7 @@
                                 :key="index"
                             >
                                 <td>{{ result.user.email }}</td>
-                                <td>{{ result.user.firstName + result.user.lastName }}</td>
+                                <td>{{ result.user.firstName + ' ' + result.user.lastName }}</td>
                                 <td> {{ formatDate(result.createdAt) }} </td>
                                 <td>{{ result.numberRequests }}</td>
                                 <!-- <td>{{ result.status }}</td> -->
