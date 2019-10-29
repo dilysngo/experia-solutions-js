@@ -185,8 +185,8 @@ export default {
                         category: '',
                     },
                     name: `Screen-${moment(new Date()).format('MM/DD/YYYY hh:mm:ss')} ${this.dataUser.id}`,
-                    categoryId: 1,
-                    ratioId: 3,
+                    // categoryId: 1,
+                    // ratioId: 3,
                     slug: ''
                 };
                 const data = await this.createScreen(dataCreate).catch(err => {

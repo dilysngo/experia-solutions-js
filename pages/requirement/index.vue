@@ -30,7 +30,7 @@
                                     <i v-if="result.status==='done'">
                                         <img src="~/assets/images/tickDone.svg">
                                     </i>
-                                    <i v-else >
+                                    <i v-else>
                                         <img src="~/assets/images/tick.svg">
                                     </i>
                                 </td>
@@ -58,7 +58,6 @@
                 ref="popupConfirm"
                 id="deleteScreen"
                 @success="handlerSuccess"
-                @cancel="handleCancel"
             />
         </section>
     </div>
