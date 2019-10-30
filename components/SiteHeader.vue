@@ -17,7 +17,7 @@
             </div>
             <div class="info-account">
                 <a href="/profile">
-                    <h6>{{ userAuth && userAuth.profile && userAuth.profile.firstName }}</h6>
+                    <h6>{{ userDetail && userDetail.firstName }}</h6>
                 </a>
                 <a
                     class="log-out"
