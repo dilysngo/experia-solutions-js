@@ -18,7 +18,7 @@
                         </thead>
                         <tbody>
                             <tr
-                                v-for="(result, index) in requirementList"
+                                v-for="(result, index) in requirements"
                                 :key="index"
                             >
                                 <td>{{ result.user.email }}</td>
@@ -64,11 +64,13 @@
     </div>
 </template>
 <script>
+
 import {mapGetters, mapActions} from 'vuex';
 import PopupConfirm from '~/components/PopupConfirm';
 import {pagination} from '~/helpers/dataHelper';
 import Pagination from '~/components/Pagination';
 import moment from 'moment';
+
 export default {
     layout: 'default',
     components: {
@@ -106,7 +108,7 @@ export default {
         formatDate(date) {
             return moment(date).format('YYYY-MM-DD');
         },  
-        async handlerUpdateStatus(obj) {   
+        handlerUpdateStatus(obj) {   
             this.$refs.popupConfirm.open(obj);
         },
 
