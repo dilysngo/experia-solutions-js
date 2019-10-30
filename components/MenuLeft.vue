@@ -52,7 +52,8 @@
                     to="/requirement"
                     class="menu-link"
                 >
-                    Requets From User
+                    <img src="~/assets/images/notification.svg">
+                    Requirements
                 </nuxt-link>
             </li>            
             <li
