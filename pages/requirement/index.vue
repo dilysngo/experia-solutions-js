@@ -44,13 +44,15 @@
                     </table>
                 </div>
                 <div class="paginate">
-                    <pagination
-                        id="pagination"
-                        :skip="skip"
-                        :limit="limit"
-                        :total="total" 
-                        @change="changePage"
-                    />
+                    <no-ssr>
+                        <pagination
+                            id="pagination"
+                            :skip="skip"
+                            :limit="limit"
+                            :total="total" 
+                            @change="changePage"
+                        />
+                    </no-ssr>
                 </div>
             </div>
             <popup-confirm
@@ -84,12 +86,17 @@ export default {
             keyword: '',
         };
     },
-    async created() {
+    async created(){
         await this.getRequirements();
     },
     computed: {
-        ...mapGetters('requirement', ['requirementList', 'requirementPagination']),
-        ...mapGetters('user', ['userAuth'])
+        ...mapGetters('requirement', [
+            'requirementList', 
+            'requirementPagination'
+        ]),
+        ...mapGetters('user', [
+            'userAuth'
+        ])
     },
     methods: {
         ...mapActions('requirement', [
