@@ -23,11 +23,10 @@
                             >
                                 <td>{{ result.user.email }}</td>
                                 <td>{{ result.user.firstName + ' ' + result.user.lastName }}</td>
-                                <td> {{ formatDate(result.createdAt) }} </td>
+                                <td>{{ formatDate(result.createdAt) }}</td>
                                 <td>{{ result.numberRequests }}</td>
-                                <!-- <td>{{ result.status }}</td> -->
                                 <td>
-                                    <i v-if="result.status==='done'">
+                                    <i v-if="result.status=='done'">
                                         <img src="~/assets/images/tickDone.svg">
                                     </i>
                                     <i v-else>

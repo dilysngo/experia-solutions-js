@@ -1,9 +1,9 @@
 <template>
     <div class="site-header d-flex justify-content-end align-content-center">
         <div class="box-status d-flex align-items-center">
-            <p class="free-account">
+            <!-- <p class="free-account">
                 Free Account - <span>14 days left </span>
-            </p>
+            </p> -->
         </div>
         <div class="box-account d-flex align-items-center">
             <div class="wrapper-avatar">
