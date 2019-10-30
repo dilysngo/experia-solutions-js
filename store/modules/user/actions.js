@@ -12,9 +12,9 @@ export default {
         return data;
     },
     async getUser({commit}, id) {
-        const user = await this.$axios.$get(`/api/users/${id}`);
-        commit(types.USER_DETAIL, user);
-        return user;
+        const data = await this.$axios.$get(`/api/users/${id}`);
+        commit(types.USER_DETAIL, data);
+        return data;
     },
     async getProfileFB({commit}, token) {
         const data = await this.$axios.$get(`https://graph.facebook.com/me?fields=id,name,email,birthday&access_token=${token}`);

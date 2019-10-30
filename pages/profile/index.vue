@@ -130,14 +130,15 @@
                         Change
                     </button>
                 </div>       
-            </div>              
-        </div>     
+            </div>
+        </div>  
     </div>
 </template>
 <script>
 import {mapGetters, mapActions} from 'vuex';
 import {convertToUrlAvatar} from '~/helpers/dataHelper';
-import moment from "moment";
+import moment from 'moment';
+
 export default {
     middleware: ['authentication'],
     data: () => ({
@@ -149,7 +150,7 @@ export default {
         errorPhone: '',
         user: '',
         errorEmail: '',
-        errorBirthday: '',
+        errorBirthday: '',  
         errorAdress: '',
         data: {
             firstName: '',
@@ -158,14 +159,14 @@ export default {
             email: '',
             birthday: '',
             address: ''
-        },
+        },  
     }),
     computed: {
-        ...mapGetters('user',['userAuth']),
+        ...mapGetters('user',['userAuth', 'userDetail']),
     },
     async mounted(){
         this.data = await this.getUser(this.userAuth.id);
-        this.imageData = convertToUrlAvatar(this.data.avatar);
+        this.imageData = convertToUrlAvatar(this.userDetail.avatar);
     },
     methods: {
         ...mapActions("user", ["getUser", "uploadAvatar", "updateProfileUser"]),
@@ -186,18 +187,32 @@ export default {
 
             if (this.file){
                 let upload = await this.uploadAvatar(this.file).catch(err => {
-                    if (err)
-                        console.log('err', err.message);
+                    if (err) {
+                        this.$notify({
+                            group: 'error',
+                            title: 'Update failed',
+                            text: err.message
+                        });
+                        return;
+                    }
                 });
             }
-
-            var data = await this.updateProfileUser(this.data);
+            var data = await this.updateProfileUser(this.data).catch(err => {
+                if (err) {
+                    this.$notify({
+                        group: 'error',
+                        title: 'Update failed',
+                        text: err.message
+                    });
+                }
+                return;
+            });
             this.$notify({
                 group: 'success',
                 title: 'Success',
                 text: 'Successfully updated!',
             });
-            this.mounted;                                       
+            location.reload();
         },
 
         validateFirstName() {

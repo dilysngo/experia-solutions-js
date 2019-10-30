@@ -10,9 +10,9 @@
                 <a href="/profile">
                     <img 
                         class="img-avatar"
-                        :src="userAuth && userAuth.profile && imageData || 'images/default-avatar.jpg'"
+                        :src="imageData ? imageData : 'images/default-avatar.jpg'"
                         alt="Avatar"
-                    >
+                    >                    
                 </a>    
             </div>
             <div class="info-account">
@@ -38,18 +38,20 @@ export default {
         imageData: '',
     }),
     computed: {
-        ...mapGetters('user', [
-            'userAuth'
-        ])
+        ...mapGetters('user',['userAuth', 'userDetail'])
     },
     async mounted(){
-        if (this.userAuth.profile.avatar)
-            this.imageData = convertToUrlAvatar(this.userAuth.profile.avatar);
+        this.handlerGetUser();
     },
     methods: {
         ...mapActions('user', [
-            'signout'
-        ])
+            'signout',
+            'getUser'
+        ]),
+        async handlerGetUser() {
+            this.data = await this.getUser(this.userAuth.id);
+            this.imageData = convertToUrlAvatar(this.userDetail.avatar);
+        },
     }
 };
 </script>

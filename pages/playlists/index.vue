@@ -165,11 +165,9 @@ export default {
             this.forceRerender();
         },
         forceRerender() {
-        // Remove my-component from the DOM
             this.renderComponent = false;
             
             this.$nextTick(() => {
-            // Add the component back in
                 this.renderComponent = true;
             });
         }

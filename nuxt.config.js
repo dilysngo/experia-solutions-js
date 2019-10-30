@@ -17,9 +17,10 @@ module.exports = {
             {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
         ],
         script: [
-            {src: '/js/ckeditor/ckeditor.js'}, /* eslint-disable */
+            {src: '/js/ckeditor/ckeditor.js'},
             {src: 'https://apis.google.com/js/api.js', async: true, defer: true},
-            {src: '//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'}
+            {src: '//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'},
+            {src: 'https://www.bugherd.com/sidebarv2.js?apikey=ydbtuozvnzkvjst0cd9hiw', async: true}
         ],
     },
     css: [
@@ -42,7 +43,6 @@ module.exports = {
         {src: '~/plugins/socket.io', ssr: false},
         {src: '~/plugins/event-bus', ssr: false},
         {src: '~/plugins/vue-notification', ssr: false},
-        // {src: '~/plugins/vue-ckeditor2', ssr: false},
         {src: '~/plugins/vue-color', ssr: false},
     ],
     /*
@@ -53,7 +53,6 @@ module.exports = {
             'jquery',
             'bootstrap',
             'vue-notification',
-            // 'vue-ckeditor2',
             'vue-color',
         ],
         plugins: [
@@ -69,7 +68,7 @@ module.exports = {
         extend(config, {isDev, isClient}) {
             config.node = {
                 fs: 'empty'
-            }
+            };
             if (isDev && isClient) {
                 config.module.rules.push({
                     enforce: 'pre',
