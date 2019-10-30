@@ -82,7 +82,7 @@
             </div>
             <div class="box-input box-input-pass">
                 <label for="cf-pass">
-                    Comfirm Password <span class="requied">*</span>
+                    Confirm Password <span class="requied">*</span>
                 </label>
                 <input
                     id="cf-pass"
