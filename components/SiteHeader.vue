@@ -50,7 +50,7 @@ export default {
         ]),
         async handlerGetUser() {
             this.data = await this.getUser(this.userAuth.id);
-            this.imageData = convertToUrlAvatar(this.userDetail.avatar);
+            this.userDetail.avatar ? this.imageData = convertToUrlAvatar(this.userDetail.avatar) : this.imageData = '';
         },
     }
 };
