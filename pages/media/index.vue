@@ -190,7 +190,7 @@
             role="dialog"
             aria-labelledby="myLargeModalLabel" 
             aria-hidden="true"
-            @click="closeMedia"
+            @click.self="closeMedia"
         >
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -341,7 +341,7 @@ export default {
             this.type = item.value;
             await this.getAllMedia();
         },
-        showMedia(item) {
+        showMedia(item) {   
             this.mediaShow = item;
             if (item.type === this.mediaType.Video) {
                 let frameVideo = document.getElementById('videoDisplay');
