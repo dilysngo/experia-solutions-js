@@ -159,7 +159,7 @@ export default {
                 this.data = data.data.template.template;
             });
         },
-        close(){
+        close() {
             this.music ? this.music.pause() : '';                           // pause music in screen
             this.musicPlay ? this.musicPlay.pause() : '';                   // pause music in playlist
             clearInterval(this.interval);
