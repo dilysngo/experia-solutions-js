@@ -51,11 +51,19 @@
             </div>
             <div class="template-using">
                 <a 
+                    v-if="userAuth.role.code===1"
                     @click="usingTemplate"
                     class="btn-link"
                 >
                     Using template
                 </a>
+                <a 
+                    v-else
+                    @click="handlerTeamplate"
+                    class="btn-link"
+                >
+                    Using template
+                </a>                
                 <a 
                     @click="editTemplate"
                     class="btn-link m-l-20"
@@ -92,6 +100,8 @@ import {convertToDateString} from '~/helpers/dateHelper';
 import ElementContainer from '~/components/elements/ElementContainer';
 import Vue from 'vue';
 import {mapGetters, mapActions} from 'vuex';
+import * as Swal from 'sweetalert2';
+
 Vue.component('element-container', ElementContainer);
 
 export default {
@@ -135,6 +145,9 @@ export default {
         }, 200);
     },
     methods: {
+        handlerTeamplate() {
+            Swal.fire('Comming soon!','The system is under maintenance, please contact admin!','warning');
+        },
         deleteItem() {
             this.$emit('delete', this.template);
         },
