@@ -6,7 +6,7 @@
         role="dialog" 
         :aria-labelledby="id" 
         aria-hidden="true"
-        @click="close()"        
+        @click.self="close()"        
     >
         <div 
             class="modal-dialog modal-dialog-centered text-center"
@@ -24,6 +24,7 @@
                     <div
                         class="container-preview"  
                         :style="{fontSize: sizeScale + 'px'}"
+                        @click="handlerPauseMusic()"
                     >
                         <element-container
                             :ref="'elementContainer'"
@@ -61,6 +62,7 @@ export default {
         return {
             data: null,
             music: '',
+            flagMusic: 0,
             musicPlay: '',
             flag: false,
             sizeScale: null,
@@ -89,7 +91,8 @@ export default {
             'getNameScreen'
         ]),
         open(data, ratioValue) {
-            if (data.style){
+            this.music = '';
+            if (data.style && data.style.music) {
                 this.music = new Audio();
                 this.music.setAttribute('src',`${data.style.music}`);   
                 this.music.load();
@@ -144,7 +147,8 @@ export default {
             });  
         },
         getScreen(data) {
-            if (data.data.template.template.style.music) {
+            this.musicPlay = '';
+            if (data.data.template.template && data.data.template.template.style && data.data.template.template.style.music) {
                 this.musicPlay = new Audio();
                 this.musicPlay.setAttribute('src',`${data.data.template.template.style.music}`);   
                 this.musicPlay.load();
@@ -158,6 +162,16 @@ export default {
             this.$nextTick(() => {
                 this.data = data.data.template.template;
             });
+        },
+        handlerPauseMusic() {
+            if (this.music) {
+                this.flagMusic ++; 
+                this.flagMusic % 2 !== 0 ? this.music.pause() : this.music.play();
+            }
+            if (this.musicPlay) {
+                this.flagMusic ++; 
+                this.flagMusic % 2 !== 0 ? this.musicPlay.pause() : this.musicPlay.play();
+            }            
         },
         close() {
             this.music ? this.music.pause() : '';                           // pause music in screen
