@@ -53,7 +53,7 @@
                     class="menu-link"
                 >
                     <img src="~/assets/images/notification.svg">
-                    Requirements
+                    Requests
                 </nuxt-link>
             </li>            
             <li

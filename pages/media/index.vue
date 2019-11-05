@@ -290,7 +290,7 @@ export default {
     },
     computed: {
         ...mapGetters('user', ['userAuth']),
-        ...mapGetters('media', ['mediaList'])
+        ...mapGetters('media', ['mediaList', 'mediaPagination'])
     },   
     methods: {
         ...mapActions('media', 
@@ -308,7 +308,13 @@ export default {
                 if (err)
                     console.log(err.message);
             });
-            this.total = data && data.pagination && data.pagination.total;
+
+            if (data && data.pagination && data.pagination.total && this.mediaPagination)
+                this.total = data.pagination.total + this.mediaPagination.total;              
+            else if (data && data.pagination && data.pagination.total)
+                this.total = data.pagination.total;
+            else if (this.mediaPagination)
+                this.total = this.mediaPagination.total;
         },
         async changeMedia(event) {
             this.loading = true;

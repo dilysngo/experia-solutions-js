@@ -3,7 +3,7 @@
         <section class="list-requirement">
             <div class="container">
                 <h2>
-                    Requirements
+                    Requests
                 </h2>
                 <div class="content-requirement">
                     <table class="tbl-requirement">
