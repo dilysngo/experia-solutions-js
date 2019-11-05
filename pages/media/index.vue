@@ -309,12 +309,7 @@ export default {
                     console.log(err.message);
             });
 
-            if (data && data.pagination && data.pagination.total && this.mediaPagination)
-                this.total = data.pagination.total + this.mediaPagination.total;              
-            else if (data && data.pagination && data.pagination.total)
-                this.total = data.pagination.total;
-            else if (this.mediaPagination)
-                this.total = this.mediaPagination.total;
+            this.userAuth.role.code === 1 ? this.total = data.pagination.total : this.total = data.pagination.total + this.mediaPagination.total;
         },
         async changeMedia(event) {
             this.loading = true;

@@ -667,6 +667,7 @@ input[type="radio"]{
     right: 12px;
     top: 12px;
     z-index: 10;
+    outline: none;
     cursor: pointer;
     &.border-black{
         border: 1px solid $black;
