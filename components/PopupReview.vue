@@ -164,14 +164,16 @@ export default {
             });
         },
         handlerPauseMusic() {
-            if (this.music) {
-                this.flagMusic ++; 
-                this.flagMusic % 2 !== 0 ? this.music.pause() : this.music.play();
-            }
-            if (this.musicPlay) {
-                this.flagMusic ++; 
-                this.flagMusic % 2 !== 0 ? this.musicPlay.pause() : this.musicPlay.play();
-            }            
+            if (this.music)
+                console.log(this.music);
+            // if (this.music) {
+            //     this.flagMusic ++; 
+            //     this.flagMusic % 2 !== 0 ? this.music.pause() : this.music.play();
+            // }
+            // if (this.musicPlay) {
+            //     this.flagMusic ++; 
+            //     this.flagMusic % 2 !== 0 ? this.musicPlay.pause() : this.musicPlay.play();
+            // }            
         },
         close() {
             this.music ? this.music.pause() : '';                           // pause music in screen
