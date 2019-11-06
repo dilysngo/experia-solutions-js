@@ -112,9 +112,8 @@ export default {
             keyword: '',
         };
     },
-    async created() {
-        await this.getSreens();
-    },
+    // async created() {
+    // },
     computed: {
         ...mapGetters('screen', ['screenList', 'screenPagination']),
         ...mapGetters('user', ['userAuth'])
