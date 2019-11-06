@@ -98,7 +98,7 @@ export default {
         PopupReview
     },
     async created() {
-        await this.getPlaylists();
+        // await this.getPlaylists();
     },
     computed: {
         ...mapGetters('playlist', [
