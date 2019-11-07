@@ -35,11 +35,6 @@ export default {
         time: 0,
         counter: 0,
     }),
-    components: {
-        
-    },
-    async created() {
-    },
     async mounted() {
         await this.getPlaylistBySlug();
         window.onresize = () => {

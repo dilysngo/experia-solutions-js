@@ -97,9 +97,9 @@ export default {
         PopupConfirm,
         PopupReview
     },
-    // async created() {
-    //     await this.getPlaylists();
-    // },
+    async created() {
+        await this.getPlaylists();
+    },
     computed: {
         ...mapGetters('playlist', [
             'playlistList',
