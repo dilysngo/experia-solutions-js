@@ -33,9 +33,6 @@ export default {
         unitScale: 13 / 928, // fontSize/containerWidth,
         ratioSize: null,
     }),
-    components: {
-        
-    },
     async created() {
         await this.getBannerBySlug();
     },
