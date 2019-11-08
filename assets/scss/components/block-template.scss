@@ -2,7 +2,8 @@
     margin-bottom: 30px;
     .template-thumbnail{
         position: relative;
-        border: 1px dashed #ddd;
+        // border: 1px dashed #ddd;
+        border: 1px solid #ddd;
         border-radius: 7px 7px 0 0;
         overflow: hidden;
         .img-thumb{

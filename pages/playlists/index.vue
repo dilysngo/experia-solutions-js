@@ -80,6 +80,7 @@ import PopupConfirm from '~/components/PopupConfirm';
 import PopupReview from '~/components/PopupReview';
 
 export default {
+    middleware: ['authentication'],
     data() {
         return {
             skip: 0,
