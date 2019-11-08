@@ -6,7 +6,6 @@ export default {
             condition = {};
 
         const data = await this.$axios.$get(`api/requirement?keyword=${condition.keyword || ''}&skip=${condition.skip || ''}&limit=${condition.limit || ''}`);
-        console.log('data ======>', data);
         commit(types.REQUIREMENT_LIST, data.results);
         commit(types.REQUIREMENT_PAGINATION, data.pagination);
         return data;
