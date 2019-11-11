@@ -104,12 +104,9 @@ export default {
         weather: null,
         interval: null
     }),
-    created() {
-        this.reset();
-    },
-    watch: {
-       
-    },
+    // created() {
+    //     this.reset();
+    // },
     methods: {
         reset() {
             console.log('Reset media', this.source);

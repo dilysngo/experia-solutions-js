@@ -126,14 +126,6 @@ export default {
     created() {
         this.reset();
     },
-    mounted() {
-    },
-    watch: {
-       
-    },
-    components: {
-        // ElementContainer
-    },
     methods: {
         async reset() {
             console.log('Reset media', this.source);
