@@ -104,9 +104,9 @@ export default {
         weather: null,
         interval: null
     }),
-    // created() {
-    //     this.reset();
-    // },
+    created() {
+        this.reset();
+    },
     methods: {
         reset() {
             console.log('Reset media', this.source);
@@ -138,7 +138,6 @@ export default {
                     }, 60000);
                 }
             }
-
             // if (!this.style.height)
             //     this.source.style.height = 150 / 13 + 'em';
             // if (!this.style.width)

@@ -123,9 +123,9 @@ export default {
         ratioSize: null,
         sizeChange: 1,
     }),
-    // created() {
-    //     this.reset();
-    // },
+    created() {
+        this.reset();
+    },
     methods: {
         async reset() {
             console.log('Reset media', this.source);
