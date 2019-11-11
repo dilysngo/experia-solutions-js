@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="setting-content">
-            <no-ssr>
+            <client-only>
                 <div class="row">
                     <div
                         class="col-md-6 p-r-5"
@@ -867,7 +867,7 @@
                         </template>
                     </div>
                 </div>
-            </no-ssr>
+            </client-only>
         </div>
         <!-- <div class="setting-footer" v-if="controls.btnSubmit && controls.btnSubmit.enable">
             <button class="setting-btn action" @click="save">save</button>

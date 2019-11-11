@@ -44,7 +44,7 @@
                     </table>
                 </div>
                 <div class="paginate">
-                    <no-ssr>
+                    <client-only>
                         <pagination
                             id="pagination"
                             :skip="skip"
@@ -52,7 +52,7 @@
                             :total="total" 
                             @change="changePage"
                         />
-                    </no-ssr>
+                    </client-only>
                 </div>
             </div>
             <popup-confirm

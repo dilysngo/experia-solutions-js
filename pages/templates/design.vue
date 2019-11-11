@@ -81,12 +81,12 @@
                                 class="box-pts"
                                 v-show="pickersBackground"
                             >
-                                <no-ssr>
+                                <client-only>
                                     <pts-picker
                                         v-model="backgroundDefault"
                                         @input="changeBackground"
                                     />
-                                </no-ssr>
+                                </client-only>
                                 <span
                                     @click="pickersBackground = false"
                                     class="pts-close"

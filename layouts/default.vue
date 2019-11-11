@@ -11,7 +11,7 @@
                 </div>
             </div>
         </div>
-        <no-ssr>
+        <client-only>
             <notifications
                 group="success"
                 position="top right"
@@ -42,8 +42,8 @@
                     </div>
                 </template>
             </notifications>
-        </no-ssr>
-        <no-ssr>
+        </client-only>
+        <client-only>
             <notifications
                 group="warning"
                 position="top right"
@@ -74,8 +74,8 @@
                     </div>
                 </template>
             </notifications>
-        </no-ssr> 
-        <no-ssr>
+        </client-only> 
+        <client-only>
             <notifications
                 group="error" 
                 position="top right"
@@ -106,7 +106,7 @@
                     </div>
                 </template>
             </notifications>
-        </no-ssr>   
+        </client-only>   
     </div>
 </template>
 
