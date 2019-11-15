@@ -34,7 +34,7 @@
                     </div>  
                     <div
                         class="col-md-3 block-default"
-                        v-if="userAuth.role.code!==1"
+                        v-if="!isAdmin"
                     >
                         <button
                             class="btn-add-more-screen"
@@ -90,6 +90,7 @@ import PopupConfirm from '~/components/PopupConfirm';
 import PopupReview from '~/components/PopupReview';
 import PopupPurchase from '~/components/PopupPurchase';
 import PopupRequest from '~/components/PopupRequest';
+import {Roles} from '~/common/commonType';
 
 export default {
     middleware: ['authentication'],
@@ -110,10 +111,14 @@ export default {
             limit: 12,
             total: 0,
             keyword: '',
+            isAdmin: false
+
         };
     },
     async created() {
         await this.getSreens();
+        this.isAdmin = this.userAuth.role.code === Roles.Admin;
+
     },
     computed: {
         ...mapGetters('screen', ['screenList', 'screenPagination']),

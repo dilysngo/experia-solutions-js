@@ -16,12 +16,12 @@
                 </button>
                 <div class="modal-body">
                     <h3 class="box-title modal-title m-b-30">
-                        Request to admin 
+                        Admin Request 
                     </h3>
                     <p
                         class="text-description text-center"
                     >
-                        Choose number of screen you need upgrade    
+                        Please select how many screens you would like to add
                     </p>
                     <div class="row group-button no-gutters m-b-20">
                         <div 
@@ -61,9 +61,9 @@ export default {
         return {
             dataSelect: '',
             dataScreen: [
-                {name: '3 Screen', value: 3},
-                {name: '5 Screen', value: 5},
-                {name: '7 Screen', value: 7}
+                {name: '1 Screen', value: 1},
+                {name: '2 Screen', value: 2},
+                {name: '3+ Screen', value: 3}
             ],
         };
     },

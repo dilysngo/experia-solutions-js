@@ -65,6 +65,7 @@ import {convertToString} from '~/helpers/dateHelper';
 import {Roles} from '~/common/commonType';
 
 export default {
+    middleware: ['authentication'],
     components: {
         FilterSelect,
         BlockTemplate,

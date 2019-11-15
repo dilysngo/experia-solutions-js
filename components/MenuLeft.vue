@@ -46,7 +46,7 @@
             </li>
             <li 
                 class="item-menu"
-                v-if="userAuth.role.code===1"
+                v-if="isAdmin"
             >
                 <nuxt-link
                     to="/requirement"
@@ -58,7 +58,7 @@
             </li>            
             <li
                 class="item-menu item-create-menu"
-                v-if="$route.path.toString() === '/screens' && userAuth.role.code===1"
+                v-if="$route.path.toString() === '/screens' && isAdmin"
             >
                 <a
                     @click="createNew('screen')"
@@ -70,7 +70,7 @@
             </li>
             <li
                 class="item-menu item-create-menu"
-                v-if="$route.path.toString() === '/templates'"
+                v-if="$route.path.toString() === '/templates' && isAdmin"
             >
                 <a
                     @click="createNew('template')"
@@ -87,9 +87,18 @@
 <script>
 import {mapGetters, mapActions} from 'vuex';
 import {convertToString} from '~/helpers/dateHelper';
+import {Roles} from '~/common/commonType';
 
 export default {
     middleware: ['authentication'],
+    data() {
+        return {
+            isAdmin: false,
+        };
+    },
+    created() {
+        this.isAdmin = this.userAuth.role.code === Roles.Admin;
+    },
     computed: {
         ...mapGetters('socket', [
             'hasMenuNewMessage'

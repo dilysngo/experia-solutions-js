@@ -42,7 +42,7 @@
                     <i class="icon-trash icon-site" />
                 </a>                         
                 <a 
-                    v-if="userAuth.role.code===1"                          
+                    v-if="isAdmin"                          
                     class="btn-link"
                     @click="selectUsers"
                 >
@@ -51,7 +51,7 @@
             </div>
             <div class="template-using">
                 <a 
-                    v-if="userAuth.role.code===1"
+                    v-if="isAdmin"
                     @click="usingTemplate"
                     class="btn-link"
                 >

@@ -24,7 +24,16 @@
                                 <td>{{ result.user.email }}</td>
                                 <td>{{ result.user.firstName + ' ' + result.user.lastName }}</td>
                                 <td>{{ formatDate(result.createdAt) }}</td>
-                                <td>{{ result.numberRequests }}</td>
+                                <td
+                                    v-if="result.numberRequests===3"
+                                >
+                                    {{ '+' + result.numberRequests }}
+                                </td>
+                                <td
+                                    v-else
+                                >
+                                    {{ result.numberRequests }}
+                                </td>                                
                                 <td>
                                     <i v-if="result.status=='done'">
                                         <img src="~/assets/images/tickDone.svg">
@@ -72,6 +81,7 @@ import Pagination from '~/components/Pagination';
 import moment from 'moment';
 
 export default {
+    middleware: ['authentication'],
     layout: 'default',
     components: {
         PopupConfirm,

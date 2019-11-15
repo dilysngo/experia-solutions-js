@@ -96,7 +96,7 @@
                                 </div>
                                 <div 
                                     class="g-action d-flex"
-                                    v-if="userAuth.role.code===1"
+                                    v-if="isAdmin"
                                 >
                                     <a
                                         @click="showMedia(gItem)"
@@ -241,6 +241,7 @@ import {convertToSize, convertToUrl, pagination} from '~/helpers/dataHelper';
 import Pagination from '~/components/Pagination';
 import PopupConfirm from '~/components/PopupConfirm';
 import Loading from '~/components/Loading';
+import {Roles} from '~/common/commonType';
 
 export default {
     middleware: ['authentication'],
@@ -271,6 +272,7 @@ export default {
             skip: 0,
             limit: 11,
             total: 0,
+            isAdmin: false,
             timeOut: null,
             mediaShow: null,
             convertToUrl: convertToUrl,
@@ -287,6 +289,7 @@ export default {
     },
     async created() {
         await this.getAllMedia();
+        this.isAdmin = this.userAuth.role.code === Roles.Admin;
     },
     computed: {
         ...mapGetters('user', ['userAuth']),
