@@ -54,6 +54,10 @@
         }
     }
     .template-using{
+        .icon-site{
+            font-size: 16px;
+            color: $color-primary;
+        }
         .btn-link{
             font-size: 14px;
             border-radius: 4px;
@@ -61,6 +65,14 @@
             color: #000000;
             padding: 9px 27px;
         }
+        .btn-link:hover{
+            i:before{
+                color: $color-third;
+            }
+            img:before{
+                color: $color-third;
+            }
+        }        
     }
     .template-info{
         padding: 8px 16px 10px;

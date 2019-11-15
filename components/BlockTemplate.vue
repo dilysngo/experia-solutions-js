@@ -26,18 +26,21 @@
                 <a 
                     @click="previewTemplate" 
                     class="btn-link"
+                    title="Preview"
                 >
                     <i class="icon-play icon-site" />
                 </a>
                 <a
                     @click="editTemplate" 
                     class="btn-link"
+                    title="Edit"
                 >
                     <i class="icon-creative icon-site" />
                 </a>
                 <a 
                     class="btn-link"
                     @click="deleteItem"
+                    title="Delete"
                 >
                     <i class="icon-trash icon-site" />
                 </a>                         
@@ -52,31 +55,35 @@
             <div class="template-using">
                 <a 
                     v-if="isAdmin"
-                    @click="usingTemplate"
+                    @click="usingTemplate" 
                     class="btn-link"
+                    title="Using template"
                 >
-                    Using template
+                    <img src="~/assets/images/Using.svg">
                 </a>
                 <a 
                     v-else
-                    @click="handlerTeamplate"
+                    @click="handlerTeamplate" 
                     class="btn-link"
+                    title="Using template"
                 >
-                    Using template
-                </a>                
+                    <img src="~/assets/images/Using.svg">
+                </a>
                 <a 
                     @click="editTemplate"
                     class="btn-link m-l-20"
                     v-if="isAdmin"
+                    title="Edit template"
                 >
-                    Edit template
+                    <i class="icon-creative icon-site" />
                 </a>   
                 <a 
                     @click="deleteTemplate"
                     class="btn-link m-l-20"
                     v-if="isAdmin"
+                    title="Delete template"
                 >
-                    Delete template
+                    <i class="icon-trash icon-site" />
                 </a>                           
             </div>
         </div>
