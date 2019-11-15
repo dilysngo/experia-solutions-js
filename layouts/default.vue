@@ -116,13 +116,10 @@ import MenuLeft from '~/components/MenuLeft';
 import SiteHeader from '~/components/SiteHeader';
 
 export default {
+    middleware: ['authentication'],
     components: {
         MenuLeft,
         SiteHeader
-    },
-    created() {
-        // if (process.browser && this.$auth.isAuthenticated())
-        //     this.connectMessageSocket();
     },
     methods: {
         ...mapActions('socket', [

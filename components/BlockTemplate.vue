@@ -70,7 +70,14 @@
                     v-if="isAdmin"
                 >
                     Edit template
-                </a>            
+                </a>   
+                <a 
+                    @click="deleteTemplate"
+                    class="btn-link m-l-20"
+                    v-if="isAdmin"
+                >
+                    Delete template
+                </a>                           
             </div>
         </div>
         <div class="template-info">
@@ -156,6 +163,9 @@ export default {
         },
         usingTemplate() {
             this.$emit('usingTemplate', this.template);
+        },
+        deleteTemplate() {
+            this.$emit('deleteTemplate', this.template);
         },
         previewTemplate() {
             this.$emit('preview', this.templateData);
