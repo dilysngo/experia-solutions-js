@@ -115,6 +115,7 @@ import ElementContainer from '~/components/elements/ElementContainer';
 import Vue from 'vue';
 import {mapGetters, mapActions} from 'vuex';
 import * as Swal from 'sweetalert2';
+import {Roles} from '~/common/commonType';
 
 Vue.component('element-container', ElementContainer);
 
@@ -130,14 +131,11 @@ export default {
                 dateCreate: '10/10'
             }),
         },
-        isAdmin: {
-            type: Boolean,
-            default: false
-        }
     },
     data: () => ({
         templateData: null,
         sizeScale: null,
+        isAdmin: false,
         unitScale: 13 / 928 // fontSize/containerWidth
     }),
     created() {
@@ -146,9 +144,10 @@ export default {
             else    
                 this.templateData = this.template.template.template;
         }, 100);
+        this.isAdmin = this.userAuth.role.code === Roles.Admin;
     },
     computed: {
-        ...mapGetters('user',['userAuth'])  
+        ...mapGetters('user', ['userAuth'])  
     },    
     mounted() {
         setTimeout(() => {
