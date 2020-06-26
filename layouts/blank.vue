@@ -16,6 +16,11 @@ import BannerLeft from '~/components/BannerLeft';
 export default {
     components: {
         BannerLeft,
-    }
+    },
+    mounted() {
+        
+        console.log('login');
+        
+    },
 };
 </script>

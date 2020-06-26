@@ -5,6 +5,10 @@
 </template>
 <script>
 export default {
-    
+    mounted() {
+        
+        console.log('render');
+        
+    },
 };
 </script>

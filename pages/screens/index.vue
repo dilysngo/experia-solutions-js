@@ -93,7 +93,7 @@ import PopupRequest from '~/components/PopupRequest';
 import {Roles} from '~/common/commonType';
 
 export default {
-    middleware: ['authentication'],
+    //middleware: ['authentication'],
     components: {
         BlockTemplate,
         Pagination,
@@ -117,7 +117,7 @@ export default {
     },
     async created() {
         await this.getSreens();
-        this.isAdmin = this.userAuth.role.code === Roles.Admin;
+        this.isAdmin = 1;
 
     },
     computed: {

@@ -4,7 +4,7 @@
             <h3>Sign In</h3>
             <h2>Welcome to Eperia Group</h2>
         </div>
-        <form 
+        <form
             class="container-form d-flex flex-wrap"
             @submit.prevent="login"
         >
@@ -116,6 +116,9 @@ export default {
                 version: 'v4.0'    
             });
         };
+
+        console.log('login');
+        
     },
     methods: {
         ...mapActions('user', [
